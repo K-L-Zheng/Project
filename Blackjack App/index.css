@@ -1,0 +1,108 @@
+:root {
+    --main-radius: 5px;
+    --main-padding: 5px;
+}
+
+.container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 0.25fr 2fr 1fr 0.5fr;
+    grid-template-areas:
+        "title title title"
+        "chat game-info high-score"
+        "chat buttons high-score"
+        "chat buttons chips-bets";
+    grid-gap: .125rem;
+}
+
+#game-title {
+    font-weight: 900;
+    background: orange;
+    grid-area: title;
+    border-radius: var(--main-radius);
+    padding: var(--main-padding);
+}
+
+#chat-bar {
+    background: red;
+    grid-area: chat;
+    border-radius: var(--main-radius);
+    padding: var(--main-padding);
+}
+
+#game-information {
+    background: green;
+    grid-area: game-info;
+    border-radius: var(--main-radius);
+    padding: var(--main-padding);
+}
+
+.buttons {
+    background: purple;
+    grid-area: buttons;
+    border-radius: var(--main-radius);
+    padding: var(--main-padding);
+    display: flex;
+    place-content: center;
+}
+
+#high-score {
+    background: yellow;
+    grid-area: high-score;
+    border-radius: var(--main-radius);
+    padding: var(--main-padding);
+}
+
+#chips-bets {
+    background: blue;
+    grid-area: chips-bets;
+    border-radius: var(--main-radius);
+    padding: var(--main-padding);
+}
+
+body {
+    text-align: center;
+    font-family: Garamond, Georgia, "Times New Roman";
+    font-weight: bold;
+
+}
+
+div {
+    display: inline-block;
+}
+
+html {
+    background-color: #836953;
+    color: white;
+    font-size: 2em;
+}
+button {
+    font-family: Garamond, Georgia, "Times New Roman";
+    font-size: 1em;
+    color: white;
+    background-color: #6d8353;
+    border-radius: 20px;
+    border-style: none;
+    padding: 1em;
+    margin: 0.25em;
+    margin-right: 0.1em;
+    margin-left: 0.1em;
+}
+
+.money {
+    text-align: center;
+    display: inline;
+}
+
+#chips {
+    float: left;
+}
+
+#bet {
+    float: right;
+}
+
+input[type="number"] {
+    width: 5em;
+}
