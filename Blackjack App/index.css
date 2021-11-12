@@ -1,7 +1,11 @@
 :root {
     --main-radius: 5px;
     --main-padding: 5px;
+    --main-border-style: double;
+    --main-box-shadow: 0 0 .25em 0;
+    --bg-opacity: 0.5;
 }
+
 
 .container {
     display: grid;
@@ -22,6 +26,9 @@
     grid-area: title;
     border-radius: var(--main-radius);
     padding: var(--main-padding);
+    border-style: var(--main-border-style);
+    box-shadow: var(--main-box-shadow);
+    opacity: var(--bg-opacity);
 }
 
 #chat-bar {
@@ -29,6 +36,9 @@
     grid-area: chat;
     border-radius: var(--main-radius);
     padding: var(--main-padding);
+    border-style: var(--main-border-style);
+    box-shadow: var(--main-box-shadow);
+    opacity: var(--bg-opacity);
 }
 
 #game-information {
@@ -36,6 +46,9 @@
     grid-area: game-info;
     border-radius: var(--main-radius);
     padding: var(--main-padding);
+    border-style: var(--main-border-style);
+    box-shadow: var(--main-box-shadow);
+    opacity: var(--bg-opacity);
 }
 
 .buttons {
@@ -43,8 +56,11 @@
     grid-area: buttons;
     border-radius: var(--main-radius);
     padding: var(--main-padding);
-    display: flex;
-    place-content: center;
+    border-style: var(--main-border-style);
+    box-shadow: var(--main-box-shadow);
+    display: grid;
+    grid-template-rows: repeat (5, 1fr);
+    overflow: auto;
 }
 
 #high-score {
@@ -52,6 +68,9 @@
     grid-area: high-score;
     border-radius: var(--main-radius);
     padding: var(--main-padding);
+    border-style: var(--main-border-style);
+    box-shadow: var(--main-box-shadow);
+    opacity: var(--bg-opacity);
 }
 
 #chips-bets {
@@ -59,17 +78,15 @@
     grid-area: chips-bets;
     border-radius: var(--main-radius);
     padding: var(--main-padding);
+    border-style: var(--main-border-style);
+    box-shadow: var(--main-box-shadow);
+    opacity: var(--bg-opacity);
 }
 
 body {
     text-align: center;
     font-family: Garamond, Georgia, "Times New Roman";
     font-weight: bold;
-
-}
-
-div {
-    display: inline-block;
 }
 
 html {
@@ -79,15 +96,15 @@ html {
 }
 button {
     font-family: Garamond, Georgia, "Times New Roman";
-    font-size: 1em;
+    font-size: max(.5em);
     color: white;
-    background-color: #6d8353;
+    background-color: #cf3939;
     border-radius: 20px;
-    border-style: none;
-    padding: 1em;
-    margin: 0.25em;
-    margin-right: 0.1em;
-    margin-left: 0.1em;
+}
+
+#bet-sbmt {
+    background-color: blueviolet;
+    padding: 0.5em 1em 0.5em 1em;
 }
 
 .money {
