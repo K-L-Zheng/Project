@@ -305,13 +305,15 @@ button:first-child:hover {
 .code-ed-con {
     color: white;
     text-align: center;
-    width: 95%;
     margin: auto;
+    padding: 2.5%;
+    width: fit-content;
 }
 
 .code-ed {
     background-color: #f1f1f1;;
     border-radius: .3em;
+    max-width: 941px;
 }
 
 .code-ed-mid {
@@ -381,6 +383,10 @@ button:first-child:hover {
 
 .code-ed-mid button:hover {
     background-color: #E7E9EB;
+}
+
+.code-ed img {
+    max-width: 100%;
 }
 
 .code-ed-con .try-code-btn button {
