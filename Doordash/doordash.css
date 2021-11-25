@@ -1,0 +1,294 @@
+body {
+    margin: 0;
+    /* overflow-x: hidden; */
+}
+
+button {
+    border-radius: 4em;
+    border: none;
+    cursor: pointer;
+    padding: .7em;
+    font-weight: bold;
+}
+
+.top-con {
+    text-align: center;
+    position: relative;
+    outline: yellow 1px solid;
+}
+
+.top-con .sign-bar {
+    position: absolute;
+    right: 0;
+    margin: 1em 1.5em;
+}
+
+.top-con .sign-bar button {
+    padding: 1em;
+}
+
+.top-con .sign-bar button:first-of-type {
+    background: transparent;
+    color: white;
+}
+
+.top-con .dd-title {
+    position: absolute;
+    left: 50%;
+    margin-top: 1em;
+    transform: translate(-50%, 30%);
+    display: none;
+}
+
+.top-con .dd-title svg {
+    margin-inline: .4em;
+}
+
+.top-con img {
+    width: 100%;
+}
+
+.top-con .img-content-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.top-con .img-content-wrap h1 {
+    width: 80%;
+    margin: .75em auto;
+}
+
+.top-con .img-content-wrap .input-con {
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    border-radius: 4em;
+    padding: .8em .4em;
+    border: none;
+    width: 25em;
+    margin: auto;
+}
+
+.top-con .img-content-wrap .input-con input {
+    font-size: 1em;
+    border-radius: 4em;
+    border: none;
+    outline: none;
+    width: 85%;
+}
+
+.top-con .img-content-wrap .input-con:focus-within {
+    outline: rgb(73 105 245) 2px solid;
+}
+
+.mid-top-con {
+    width: 60%;
+    margin: auto;
+}
+
+.mid-con {
+    width: 30em;
+    margin: auto;
+}
+
+.mid-con img {
+    width: 20%;
+}
+
+.mid-con .text-box {
+    width: 70%;
+    display: inline-block;
+}
+
+.mid-con button {
+    color: rgb(235, 23, 0);
+    background: transparent;
+}
+
+.mid-lower-con {
+    position: relative;
+    padding-top: 9em;
+}
+
+.mid-lower-con .text-box {
+    width: 30%;
+    margin: 0 3em 8em;
+}
+
+.mid-lower-con button, .lower-con button {
+    background: rgb(235, 23, 0);
+    color: white;
+    transition: background-color 0.15s;
+}
+
+.mid-lower-con button:hover, .lower-con button:hover {
+background-color: rgb(217, 20, 0);
+}
+
+.mid-lower-con img {
+    width: 60%;
+    position: absolute;
+    top: 3em;
+    right: 0;
+    z-index: 1;
+}
+
+.lower-con {
+    background: rgb(255, 240, 237);
+    position: relative;
+    height: 38em;
+}
+
+.lower-con .text-box {
+    width: 30%;
+    position: absolute;
+    top: 10em;
+    right: 3em;
+}
+
+.lower-con img {
+    width: 60%;
+    position: absolute;
+    top: 6em;
+    left: 0;
+}
+
+.bottom-con {
+    background: rgb(25, 25, 25);
+    color: white;
+    padding-bottom: 1em;
+}
+
+ .bottom-con .list-row {
+    display: flex;
+    align-items: flex-end;
+}
+
+.bottom-con ul{
+    list-style-type: none;
+    width: 100%;
+    padding-left: 3px;
+}
+
+.bottom-con li {
+    margin-bottom: .75em;
+}
+
+a {
+    color: rgb(196, 196, 196);
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.bottom-con .svg-con {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bottom-con .svg-con div{
+    padding: 2px 8px;
+    border-radius: 8px;
+    margin: 6px;
+    background-color: rgb(73, 73, 73);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.bottom-con .svg-con div:hover {
+    opacity: 1;
+}
+
+.bottom-con .third-row-lists {
+    justify-content: space-between;
+}
+
+.bottom-con .third-row-lists ul {
+    align-self: flex-start;
+    width: fit-content;
+}
+
+.lower-nav-bar {
+    display: flex;
+    align-items: center;
+    background: rgb(25, 25, 25);
+    padding-bottom: 2em;
+}
+
+svg {
+    vertical-align: middle;
+}
+
+.lower-nav-bar a {
+    margin-inline: .4em;
+}
+
+.lower-nav-bar a:hover {
+    color: rgb(196, 196, 196);
+}
+
+.lower-nav-bar span {
+    color: rgb(196, 196, 196);
+    font-size: .85em;
+}
+
+.lower-nav-bar .right-svg-grp {
+    display: inline-block;
+    margin-left: auto;
+}
+
+.lower-nav-bar .right-svg-grp svg {
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.lower-nav-bar .right-svg-grp svg:hover {
+    opacity: 1;
+}
+
+@media screen and (min-width: 960px) {
+    .top-con .dd-title {
+        display: block;
+    }
+
+    .top-con img {
+        width: 135%;
+        position: relative;
+        right: 17.5%;
+        z-index: -1;
+    }
+
+    .top-con .img-content-wrap {
+        width: 100%;
+        top: 45%;
+    }
+
+    .top-con .img-content-wrap h1 {
+        font-size: 4em;
+        width: 75%;
+        margin: 0 auto .5em;
+    }
+
+    .top-con .img-content-wrap svg:first-of-type {
+        display: none;
+    }
+
+    .mid-top-con h3:first-child {
+        font-size: 2em;
+    }
+
+    .mid-lower-con button, .lower-con button {
+        font-size: 1em;
+    }
+
+    .bottom-con .list-row {
+        width: 50%;
+    }
+}
