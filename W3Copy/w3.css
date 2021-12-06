@@ -1234,6 +1234,10 @@ p {
     letter-spacing: .25em;
 }
 
+.bottom-con a {
+    color: white;
+}
+
 .bottom-con a:hover {
     color: #4CAF50;
 }
@@ -1275,7 +1279,6 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     text-decoration: none;
 }
 
