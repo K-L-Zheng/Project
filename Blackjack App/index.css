@@ -18,6 +18,7 @@
         "chat buttons high-score"
         "chat buttons chips-bets";
     grid-gap: .125rem;
+    background: url("/images/playing-cards-svgrepo-com.svg") center/100px fixed;
 }
 
 #game-title {
