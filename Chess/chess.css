@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+    display: flex;
+    height: 100vh;
+}
+
+    #board-wrapper {
+        margin: auto;
+        padding-inline: 5px;
+    }
+
+        #cap-light-pcs {
+            position: relative;
+            height: 3rem;
+            width: 100%;
+            background-color: #7C6559;
+            box-sizing: border-box;
+            padding-top: 7px;
+            margin-bottom: 5px;
+        }
+
+            .pawn-promo {
+                position: absolute;
+                display: flex;
+                gap: 5px;
+                visibility: hidden;
+            }
+
+                .pawn-promo span {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    box-sizing: border-box;
+                    padding-block: 8px;
+                    row-gap: 8px;
+                    width: 6rem;
+                    box-shadow: 2px 2px 5px #231D19;
+                    border-radius: 4px;
+                    background-color: cadetblue;
+                    opacity: 90%;
+                }
+
+                .pawn-promo .light-promo {
+                    top: 46px;
+                }
+
+            #cap-light-pcs #turn {
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+                font-weight: bold;
+                color: white;
+            }
+
+        #cap-dark-pcs {
+            height: 3rem;
+            width: 100%;
+            background-color: #7C6559;
+            box-sizing: border-box;
+            padding-top: 7px;
+            margin-top: 5px;
+        }
+
+                .pawn-promo .dark-promo {
+                    bottom: 372px;
+                }
+
+        #board {
+            display: grid;
+            grid-template-areas: 
+
+            "a8 b8 c8 d8 e8 f8 g8 h8"
+            "a7 b7 c7 d7 e7 f7 g7 h7"
+            "a6 b6 c6 d6 e6 f6 g6 h6"
+            "a5 b5 c5 d5 e5 f5 g5 h5"
+            "a4 b4 c4 d4 e4 f4 g4 h4"
+            "a3 b3 c3 d3 e3 f3 g3 h3"
+            "a2 b2 c2 d2 e2 f2 g2 h2"
+            "a1 b1 c1 d1 e1 f1 g1 h1";
+
+            grid-template-rows: repeat(8, 6rem);
+            grid-template-columns: repeat(8, 6rem);
+
+            gap: 5px;
+        }
+
+            #board div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .light-sq {
+                background-color: #D8C8BF;
+            }
+
+            .dark-sq {
+                background-color: #8E7366;
+            }
+
+                .dark-pc {
+                    font-size: 5rem;
+                    color: #405059;
+                    text-shadow: 0 2px #231D19;
+                }
+
+                .light-pc {
+                    font-size: 5rem;
+                    color: #A5BDC8;
+                    text-shadow: 0 2px #231D19;
+                }
+
