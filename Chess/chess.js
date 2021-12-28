@@ -726,27 +726,28 @@ function castling(id) {
 function check(id) {
     let kingSpace;
 
-    if (players[0] === "light-pc") {
-        kingSpace = document.querySelector(".dark-pc.king").parentElement.id;
-        let moves = [];
+    kingSpace = document.querySelector(".dark-pc.king").parentElement.id;
+    let checkingPieces = [];
 
-        //right diagonal movement
-            //up movement
-        for (i = 1; i < Math.min(9 - (kingSpace.charCodeAt(0) - 96), 9 - kingSpace[1]); i++) {
-            
-            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children.length &&
-                document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains(players[0]) &&
-                (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains("bishop") ||
-                document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains("queen")))
-            {//doesn't work cause king will remain in "check" unless checking piece loses its class
-                document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.add("checking");
+    //right diagonal movement
+        //up movement
+    for (i = 1; i < Math.min(9 - (kingSpace.charCodeAt(0) - 96), 9 - kingSpace[1]); i++) {
+        
+        if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children.length) {
+            //issue: puts king in check despite the diag being a dark piece
+            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains(".dark-pc")) {
+                break;
+            }
+            else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains("queen")) {
+                checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].id);
                 break;
             }
         }
+    }
 
-        if (document.querySelector(".checking").length === 0) {
-            document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
-        }
+    if (checkingPieces.length !== 0) {
+        document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
+    }
     //         //down movement
     //     for (i = 1; i < Math.min(kingSpace.charCodeAt(0) - 96, kingSpace[1]); i++) {
             
@@ -856,5 +857,4 @@ function check(id) {
     // }
     // else {
     //     kingSpace = document.querySelector(".light-pc.king").parentElement.id;
-    }
 }
