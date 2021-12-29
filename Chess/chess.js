@@ -101,9 +101,11 @@ function movePiece(id) {
 function clearsBoard() {
     let allSquares = document.querySelectorAll(".light-sq, .dark-sq");
 
-    for (i = 0; i < allSquares.length; i++ ) {
-        if (allSquares[i].style.outline === "rgb(71, 58, 51) solid 5px")
-        allSquares[i].style.outline = "none";
+    for (let i = 0; i < allSquares.length; i++ ) {
+
+        if (allSquares[i].style.outline === "rgb(71, 58, 51) solid 5px" || (allSquares[i].style.outline === "red solid 5px" && !(allSquares[i].children.length && allSquares[i].children[0].classList.contains("king")))) {
+            allSquares[i].style.outline = "none";
+        }
     }
 }
 //complete
@@ -169,13 +171,13 @@ function pawnMoves(id) {
         switch (true) {
             //movement for light-pc
             case players[0] === "light-pc":
-                for (i = 1; i < 3 && document.querySelector("#" + id[0] + (+id[1] + i)).children.length === 0; i++) {
+                for (let i = 1; i < 3 && document.querySelector("#" + id[0] + (+id[1] + i)).children.length === 0; i++) {
                     moves.push(id[0] + (+id[1] + i));
                 }
                 break;
             //movement for dark-pc
             case players[0] === "dark-pc":
-                for (i = 1; i < 3 && document.querySelector("#" + id[0] + (+id[1] - i)).children.length === 0; i++) {
+                for (let i = 1; i < 3 && document.querySelector("#" + id[0] + (+id[1] - i)).children.length === 0; i++) {
                     moves.push(id[0] + (+id[1] - i));
                 }
         }
@@ -218,7 +220,7 @@ function pawnMoves(id) {
         }
     }
 
-    for (i = 0; i < moves.length; i++) {
+    for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
@@ -311,7 +313,7 @@ function bishopMoves(id) {
 
     //right diagonal movement
         //up movement
-    for (i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), 9 - id[1]); i++) {
+    for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), 9 - id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
@@ -325,7 +327,7 @@ function bishopMoves(id) {
         }
     }
         //down movement
-    for (i = 1; i < Math.min(id.charCodeAt(0) - 96, id[1]); i++) {
+    for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
@@ -340,7 +342,7 @@ function bishopMoves(id) {
     }
     //left diagonal movement
         //up movement
-    for (i = 1; i < Math.min(id.charCodeAt(0) - 96, 9 - id[1]); i++) {
+    for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, 9 - id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
@@ -354,7 +356,7 @@ function bishopMoves(id) {
         }
     }
         //down movement
-    for (i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), id[1]); i++) {
+    for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
@@ -368,7 +370,7 @@ function bishopMoves(id) {
         }
     }
 
-    for (i = 0; i < moves.length; i++) {
+    for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
@@ -432,7 +434,7 @@ function knightMoves(id) {
         }
     }
 
-    for (i = 0; i < moves.length; i++) {
+    for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
@@ -442,7 +444,7 @@ function rookMoves(id) {
 
     //vertical movement
         //upward movement
-    for (i = 1; i < 9 - id[1]; i++) {
+    for (let i = 1; i < 9 - id[1]; i++) {
         
         if (document.querySelector("#" + id[0] + (+id[1] + i)).children.length === 0) {
             moves.push(id[0] + (+id[1] + i));
@@ -456,7 +458,7 @@ function rookMoves(id) {
         }
     }
         //downward movement
-    for (i = 1; i < id[1]; i++) {
+    for (let i = 1; i < id[1]; i++) {
         
         if (document.querySelector("#" + id[0] + (+id[1] - i)).children.length === 0) {
             moves.push(id[0] + (+id[1] - i));
@@ -471,7 +473,7 @@ function rookMoves(id) {
     }
     //horizontal movement
         //rightward movement
-    for (i = 1; i < 9 - (id.charCodeAt(0) - 96); i++) {
+    for (let i = 1; i < 9 - (id.charCodeAt(0) - 96); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
@@ -485,7 +487,7 @@ function rookMoves(id) {
         }
     }
         //leftward movement
-    for (i = 1; i < id.charCodeAt(0) - 96; i++) {
+    for (let i = 1; i < id.charCodeAt(0) - 96; i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
@@ -499,7 +501,7 @@ function rookMoves(id) {
         }
     }
 
-    for (i = 0; i < moves.length; i++) {
+    for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
@@ -509,7 +511,7 @@ function queenMoves(id) {
 
     //right diagonal movement
         //up movement
-    for (i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), 9 - id[1]); i++) {
+    for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), 9 - id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
@@ -523,7 +525,7 @@ function queenMoves(id) {
         }
     }
         //down movement
-    for (i = 1; i < Math.min(id.charCodeAt(0) - 96, id[1]); i++) {
+    for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
@@ -538,7 +540,7 @@ function queenMoves(id) {
     }
     //left diagonal movement
         //up movement
-    for (i = 1; i < Math.min(id.charCodeAt(0) - 96, 9 - id[1]); i++) {
+    for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, 9 - id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
@@ -552,7 +554,7 @@ function queenMoves(id) {
         }
     }
         //down movement
-    for (i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), id[1]); i++) {
+    for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), id[1]); i++) {
         
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
@@ -568,7 +570,7 @@ function queenMoves(id) {
 
     //vertical movement
         //upward movement
-    for (i = 1; i < 9 - id[1]; i++) {
+    for (let i = 1; i < 9 - id[1]; i++) {
         
         if (document.querySelector("#" + id[0] + (+id[1] + i)).children.length === 0) {
             moves.push(id[0] + (+id[1] + i));
@@ -582,7 +584,7 @@ function queenMoves(id) {
         }
     }
         //downward movement
-    for (i = 1; i < id[1]; i++) {
+    for (let i = 1; i < id[1]; i++) {
        
         if (document.querySelector("#" + id[0] + (+id[1] - i)).children.length === 0) {
             moves.push(id[0] + (+id[1] - i));
@@ -597,7 +599,7 @@ function queenMoves(id) {
     }
     //horizontal movement
         //rightward movement
-    for (i = 1; i < 9 - (id.charCodeAt(0) - 96); i++) {
+    for (let i = 1; i < 9 - (id.charCodeAt(0) - 96); i++) {
        
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
@@ -611,7 +613,7 @@ function queenMoves(id) {
         }
     }
         //leftward movement
-    for (i = 1; i < id.charCodeAt(0) - 96; i++) {
+    for (let i = 1; i < id.charCodeAt(0) - 96; i++) {
       
         if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children.length === 0) {
             moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
@@ -625,7 +627,7 @@ function queenMoves(id) {
         }
     }
 
-    for (i = 0; i < moves.length; i++) {
+    for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
@@ -681,7 +683,7 @@ function kingMoves(id) {
     //checks for regular moves
     for (j = 1; j > -2; j--) { //evaluating each rank
         
-        for (i = -1; i < 2; i++) { //evaluating each file
+        for (let i = -1; i < 2; i++) { //evaluating each file
             //checks ranks and files to see if they exist && spaces to make sure they don't have a piece on them
             if (id.charCodeAt(0) + i >= 97 && id.charCodeAt(0) + i <= 104 && +id[1] + j > 0 && +id[1] + j < 9) {
                 
@@ -692,7 +694,7 @@ function kingMoves(id) {
         }
     }
 
-    for (i = 0; i < moves.length; i++) {
+    for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
@@ -724,32 +726,46 @@ function castling(id) {
 }
 //incomplete || mark the pieces checking the king || when all pieces checking the king is removed, remove the red outline
 function check(id) {
-    let kingSpace;
+    for (let i = 0; i < players.length; i++) {
+        let kingSpace = document.querySelector("." + players[i] + ".king").parentElement.id;
+        //right diagonal movement
+            //up movement
+        for (let j = 1; j < Math.min(9 - (kingSpace.charCodeAt(0) - 96), 9 - kingSpace[1]); j++) {
 
-    kingSpace = document.querySelector(".dark-pc.king").parentElement.id;
-    let checkingPieces = [];
-
-    //right diagonal movement
-        //up movement
-    for (i = 1; i < Math.min(9 - (kingSpace.charCodeAt(0) - 96), 9 - kingSpace[1]); i++) {
-        
-        if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children.length) {
-            //issue: puts king in check despite the diag being a dark piece
-            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains(".dark-pc")) {
-                break;
+            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children.length) {
+                
+                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].classList.contains(players[i])) {
+                    document.querySelector("#" + kingSpace).style.outline = "rgb(71, 58, 51) solid 5px";
+                    break;
+                }
+                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].classList.contains("queen")) {
+                    document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
+                    break;
+                }
             }
-            else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].classList.contains("queen")) {
-                checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] + i)).children[0].id);
-                break;
+        }
+        //this unchecks the checks from above
+        for (let j = 1; j < Math.min(kingSpace.charCodeAt(0) - 96, kingSpace[1]); j++) {
+
+            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children.length) {
+                
+                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children[0].classList.contains(players[i])) {
+                    document.querySelector("#" + kingSpace).style.outline = "rgb(71, 58, 51) solid 5px";
+                    break;
+                }
+                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children[0].classList.contains("queen")) {
+                    document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
+                    break;
+                }
+                else {
+                    document.querySelector("#" + kingSpace).style.outline = "rgb(71, 58, 51) solid 5px";
+                    break;
+                }
             }
         }
     }
-
-    if (checkingPieces.length !== 0) {
-        document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
-    }
     //         //down movement
-    //     for (i = 1; i < Math.min(kingSpace.charCodeAt(0) - 96, kingSpace[1]); i++) {
+    //     for (let i = 1; i < Math.min(kingSpace.charCodeAt(0) - 96, kingSpace[1]); i++) {
             
     //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] - i)).children.length === 0) {
     //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] - i));
@@ -764,7 +780,7 @@ function check(id) {
     //     }
     //     //left diagonal movement
     //         //up movement
-    //     for (i = 1; i < Math.min(kingSpace.charCodeAt(0) - 96, 9 - kingSpace[1]); i++) {
+    //     for (let i = 1; i < Math.min(kingSpace.charCodeAt(0) - 96, 9 - kingSpace[1]); i++) {
             
     //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] + i)).children.length === 0) {
     //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] + i));
@@ -778,7 +794,7 @@ function check(id) {
     //         }
     //     }
     //         //down movement
-    //     for (i = 1; i < Math.min(9 - (kingSpace.charCodeAt(0) - 96), kingSpace[1]); i++) {
+    //     for (let i = 1; i < Math.min(9 - (kingSpace.charCodeAt(0) - 96), kingSpace[1]); i++) {
             
     //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] - i)).children.length === 0) {
     //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] - i));
@@ -794,7 +810,7 @@ function check(id) {
     
     //     //vertical movement
     //         //upward movement
-    //     for (i = 1; i < 9 - kingSpace[1]; i++) {
+    //     for (let i = 1; i < 9 - kingSpace[1]; i++) {
             
     //         if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + i)).children.length === 0) {
     //             moves.push(kingSpace[0] + (+kingSpace[1] + i));
@@ -808,7 +824,7 @@ function check(id) {
     //         }
     //     }
     //         //downward movement
-    //     for (i = 1; i < kingSpace[1]; i++) {
+    //     for (let i = 1; i < kingSpace[1]; i++) {
            
     //         if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] - i)).children.length === 0) {
     //             moves.push(kingSpace[0] + (+kingSpace[1] - i));
@@ -823,7 +839,7 @@ function check(id) {
     //     }
     //     //horizontal movement
     //         //rightward movement
-    //     for (i = 1; i < 9 - (kingSpace.charCodeAt(0) - 96); i++) {
+    //     for (let i = 1; i < 9 - (kingSpace.charCodeAt(0) - 96); i++) {
            
     //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + kingSpace[1]).children.length === 0) {
     //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) + i) + kingSpace[1]);
@@ -837,7 +853,7 @@ function check(id) {
     //         }
     //     }
     //         //leftward movement
-    //     for (i = 1; i < kingSpace.charCodeAt(0) - 96; i++) {
+    //     for (let i = 1; i < kingSpace.charCodeAt(0) - 96; i++) {
           
     //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + kingSpace[1]).children.length === 0) {
     //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + kingSpace[1]);
@@ -851,7 +867,7 @@ function check(id) {
     //         }
     //     }
     
-    //     for (i = 0; i < moves.length; i++) {
+    //     for (let i = 0; i < moves.length; i++) {
     //         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     //     }
     // }
