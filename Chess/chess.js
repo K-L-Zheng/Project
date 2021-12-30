@@ -1,10 +1,10 @@
-//condense if-else statements into ternary operators
 let turn = 1;
 let players = ["light-pc", "dark-pc"];
 let activePiece;
 let lastMovedPiece;
 let promoPieceCount = 0;
-let kingCheck = false;
+let checkingPieces = [];
+let kingInCheck = false;
 //complete
 function possibleMoves(id) {
     let boardSpace = document.querySelector("#" + id);
@@ -20,24 +20,30 @@ function possibleMoves(id) {
             activePiece = document.querySelector("#" + boardSpace.children[0].id);
             let boardPiece = boardSpace.children[0];
     
-            switch (true) {
-                case boardPiece.classList.contains("pawn"):
-                    pawnMoves(id);
-                    break;
-                case boardPiece.classList.contains("bishop"):
-                    bishopMoves(id);
-                    break;
-                case boardPiece.classList.contains("knight"):
-                    knightMoves(id);
-                    break;
-                case boardPiece.classList.contains("rook"):
-                    rookMoves(id);
-                    break;
-                case boardPiece.classList.contains("queen"):
-                    queenMoves(id);
-                    break;
-                case boardPiece.classList.contains("king"):
-                    kingMoves(id);
+            if (kingInCheck === false) {
+
+                switch (true) {
+                    case boardPiece.classList.contains("pawn"):
+                        pawnMoves(id);
+                        break;
+                    case boardPiece.classList.contains("bishop"):
+                        bishopMoves(id);
+                        break;
+                    case boardPiece.classList.contains("knight"):
+                        knightMoves(id);
+                        break;
+                    case boardPiece.classList.contains("rook"):
+                        rookMoves(id);
+                        break;
+                    case boardPiece.classList.contains("queen"):
+                        queenMoves(id);
+                        break;
+                    case boardPiece.classList.contains("king"):
+                        kingMoves(id);
+                }
+            }
+            else {
+                checkMoves();
             }
         }
     }
@@ -90,7 +96,7 @@ function movePiece(id) {
         }
         //stores the last moved piece
         lastMovedPiece = activePiece.id;
-        check(id);
+        check();
         //change player's turn & record total overall turns
         players.reverse();
         turn += .5;
@@ -724,153 +730,261 @@ function castling(id) {
         }
     }
 }
-//incomplete || mark the pieces checking the king || when all pieces checking the king is removed, remove the red outline
-function check(id) {
+//complete 
+function check() {
+
     for (let i = 0; i < players.length; i++) {
         let kingSpace = document.querySelector("." + players[i] + ".king").parentElement.id;
-        //right diagonal movement
-            //up movement
+        //right diagonal check
+            //up check
         for (let j = 1; j < Math.min(9 - (kingSpace.charCodeAt(0) - 96), 9 - kingSpace[1]); j++) {
 
             if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children.length) {
                 
                 if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].classList.contains(players[i])) {
-                    document.querySelector("#" + kingSpace).style.outline = "rgb(71, 58, 51) solid 5px";
                     break;
+                }
+                else if (j === 1 && players[i] === "light-pc" && document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].classList.contains("pawn")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].id);
                 }
                 else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].classList.contains("queen")) {
-                    document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
-                    break;
-                }
-            }
-        }
-        //this unchecks the checks from above
-        for (let j = 1; j < Math.min(kingSpace.charCodeAt(0) - 96, kingSpace[1]); j++) {
-
-            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children.length) {
-                
-                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children[0].classList.contains(players[i])) {
-                    document.querySelector("#" + kingSpace).style.outline = "rgb(71, 58, 51) solid 5px";
-                    break;
-                }
-                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] - j)).children[0].classList.contains("queen")) {
-                    document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (+kingSpace[1] + j)).children[0].id);
                     break;
                 }
                 else {
-                    document.querySelector("#" + kingSpace).style.outline = "rgb(71, 58, 51) solid 5px";
                     break;
                 }
             }
         }
+            //down check
+        for (let j = 1; j < Math.min(kingSpace.charCodeAt(0) - 96, kingSpace[1]); j++) {
+
+            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (kingSpace[1] - j)).children.length) {
+                
+                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (kingSpace[1] - j)).children[0].classList.contains(players[i])) {
+                    break;
+                }
+                else if (j === 1 && players[i] === "dark-pc" && document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (kingSpace[1] - j)).children[0].classList.contains("pawn")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (kingSpace[1] - j)).children[0].id);
+                }
+                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (kingSpace[1] - j)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (kingSpace[1] - j)).children[0].classList.contains("queen")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (kingSpace[1] - j)).children[0].id);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        //left diagonal check
+            //up check
+        for (let j = 1; j < Math.min(kingSpace.charCodeAt(0) - 96, 9 - kingSpace[1]); j++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] + j)).children.length) {
+
+                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] + j)).children[0].classList.contains(players[i])) {
+                    break;
+                }
+                else if (j === 1 && players[i] === "light-pc" && document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] + j)).children[0].classList.contains("pawn")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] + j)).children[0].id);
+                }
+                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] + j)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] + j)).children[0].classList.contains("queen")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + (+kingSpace[1] + j)).children[0].id);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+            //down check
+        for (let j = 1; j < Math.min(9 - (kingSpace.charCodeAt(0) - 96), kingSpace[1]); j++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (kingSpace[1] - j)).children.length) {
+
+                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (kingSpace[1] - j)).children[0].classList.contains(players[i])) {
+                    break;
+                }
+                else if (j === 1 && players[i] === "dark-pc" && document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (kingSpace[1] - j)).children[0].classList.contains("pawn")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (kingSpace[1] - j)).children[0].id);
+                }
+                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (kingSpace[1] - j)).children[0].classList.contains("bishop") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (kingSpace[1] - j)).children[0].classList.contains("queen")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + (kingSpace[1] - j)).children[0].id);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        //vertical check
+            //up check
+        for (let j = 1; j < 9 - kingSpace[1]; j++) {
+            
+            if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + j)).children.length) {
+
+                if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + j)).children[0].classList.contains(players[i])) {
+                    break;
+                }
+                else if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + j)).children[0].classList.contains("rook") || document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + j)).children[0].classList.contains("queen")) {
+                    checkingPieces.push(document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + j)).children[0].id);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+            //down check
+        for (let j = 1; j < kingSpace[1]; j++) {
+
+            if (document.querySelector("#" + kingSpace[0] + (kingSpace[1] - j)).children.length) {
+
+                if (document.querySelector("#" + kingSpace[0] + (kingSpace[1] - j)).children[0].classList.contains(players[i])) {
+                    break;
+                }
+                else if (document.querySelector("#" + kingSpace[0] + (kingSpace[1] - j)).children[0].classList.contains("rook") || document.querySelector("#" + kingSpace[0] + (kingSpace[1] - j)).children[0].classList.contains("queen")) {
+                    checkingPieces.push(document.querySelector("#" + kingSpace[0] + (kingSpace[1] - j)).children[0].id);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        //horizontal check
+            //right check
+        for (let j = 1; j < 9 - (kingSpace.charCodeAt(0) - 96); j++) {
+        
+            if(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + kingSpace[1]).children.length) {
+
+                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + kingSpace[1]).children[0].classList.contains(players[i])) {
+                    break;
+                }
+                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + kingSpace[1]).children[0].classList.contains("rook") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + kingSpace[1]).children[0].classList.contains("queen")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + j) + kingSpace[1]).children[0].id);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+            //left check
+        for (let j = 1; j < kingSpace.charCodeAt(0) - 96; j++) {
+                
+            if(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + kingSpace[1]).children.length) {
+
+                if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + kingSpace[1]).children[0].classList.contains(players[i])) {
+                    break;
+                }
+                else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + kingSpace[1]).children[0].classList.contains("rook") || document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + kingSpace[1]).children[0].classList.contains("queen")) {
+                    checkingPieces.push(document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - j) + kingSpace[1]).children[0].id);
+                    break;
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        //(-1, -2)
+        if ((kingSpace.charCodeAt(0) - 1) >= 97 && (kingSpace.charCodeAt(0) - 1) <= 104 && (kingSpace[1] - 2) >= 1 && (kingSpace[1] - 2) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) - 1) + (kingSpace[1] - 2);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        //(1, -2)    
+        if ((kingSpace.charCodeAt(0) + 1) >= 97 && (kingSpace.charCodeAt(0) + 1) <= 104 && (kingSpace[1] - 2) >= 1 && (kingSpace[1] - 2) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) + 1) + (kingSpace[1] - 2);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        //(2, -1)
+        if ((kingSpace.charCodeAt(0) + 2) >= 97 && (kingSpace.charCodeAt(0) + 2) <= 104 && (kingSpace[1] - 1) >= 1 && (kingSpace[1] - 1) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) + 2) + (kingSpace[1] - 1);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        //(2, 1)
+        if ((kingSpace.charCodeAt(0) + 2) >= 97 && (kingSpace.charCodeAt(0) + 2) <= 104 && (+kingSpace[1] + 1) >= 1 && (+kingSpace[1] + 1) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) + 2) + (+kingSpace[1] + 1);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        //(1, 2)
+        if ((kingSpace.charCodeAt(0) + 1) >= 97 && (kingSpace.charCodeAt(0) + 1) <= 104 && (+kingSpace[1] + 2) >= 1 && (+kingSpace[1] + 2) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) + 1) + (+kingSpace[1] + 2);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        //(-1, 2)
+        if ((kingSpace.charCodeAt(0) - 1) >= 97 && (kingSpace.charCodeAt(0) - 1) <= 104 && (+kingSpace[1] + 2) >= 1 && (+kingSpace[1] + 2) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) - 1) + (+kingSpace[1] + 2);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        //(-2, 1)
+        if ((kingSpace.charCodeAt(0) - 2) >= 97 && (kingSpace.charCodeAt(0) - 2) <= 104 && (+kingSpace[1] + 1) >= 1 && (+kingSpace[1] + 1) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) - 2) + (+kingSpace[1] + 1);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        //(-2, -1)    
+        if ((kingSpace.charCodeAt(0) - 2) >= 97 && (kingSpace.charCodeAt(0) - 2) <= 104 && (kingSpace[1] - 1) >= 1 && (kingSpace[1] - 1) <= 8) {
+            let knightCheck = String.fromCharCode(kingSpace.charCodeAt(0) - 2) + (kingSpace[1] - 1);
+            if (document.querySelector("#" + knightCheck).children.length && document.querySelector("#" + knightCheck).children[0].classList.contains("knight") && !document.querySelector("#" + knightCheck).children[0].classList.contains(players[i])) {
+                checkingPieces.push(document.querySelector("#" + knightCheck).children[0].id);
+            }
+        }
+        
+        if (checkingPieces.length !== 0) {
+            document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
+            kingInCheck = true;
+        }
+        else {
+            document.querySelector("#" + kingSpace).style.outline = "none";
+            kingInCheck = false;
+            checkingPieces = [];
+        }
     }
-    //         //down movement
-    //     for (let i = 1; i < Math.min(kingSpace.charCodeAt(0) - 96, kingSpace[1]); i++) {
-            
-    //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] - i)).children.length === 0) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] - i));
-    //         }
-    //         else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] - i)).children[0].classList.contains(players[1])) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] - i));
-    //             break;
-    //         }
-    //         else {
-    //             break;
-    //         }
-    //     }
-    //     //left diagonal movement
-    //         //up movement
-    //     for (let i = 1; i < Math.min(kingSpace.charCodeAt(0) - 96, 9 - kingSpace[1]); i++) {
-            
-    //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] + i)).children.length === 0) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] + i));
-    //         }
-    //         else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] + i)).children[0].classList.contains(players[1])) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + (+kingSpace[1] + i));
-    //             break;
-    //         }
-    //         else {
-    //             break;
-    //         }
-    //     }
-    //         //down movement
-    //     for (let i = 1; i < Math.min(9 - (kingSpace.charCodeAt(0) - 96), kingSpace[1]); i++) {
-            
-    //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] - i)).children.length === 0) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] - i));
-    //         }
-    //         else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] - i)).children[0].classList.contains(players[1])) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) + i) + (+kingSpace[1] - i));
-    //             break;
-    //         }
-    //         else {
-    //             break;
-    //         }
-    //     }
-    
-    //     //vertical movement
-    //         //upward movement
-    //     for (let i = 1; i < 9 - kingSpace[1]; i++) {
-            
-    //         if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + i)).children.length === 0) {
-    //             moves.push(kingSpace[0] + (+kingSpace[1] + i));
-    //         }
-    //         else if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] + i)).children[0].classList.contains(players[1])) {
-    //             moves.push(kingSpace[0] + (+kingSpace[1] + i));
-    //             break;
-    //         }
-    //         else {
-    //             break;
-    //         }
-    //     }
-    //         //downward movement
-    //     for (let i = 1; i < kingSpace[1]; i++) {
-           
-    //         if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] - i)).children.length === 0) {
-    //             moves.push(kingSpace[0] + (+kingSpace[1] - i));
-    //         }
-    //         else if (document.querySelector("#" + kingSpace[0] + (+kingSpace[1] - i)).children[0].classList.contains(players[1])) {
-    //             moves.push(kingSpace[0] + (+kingSpace[1] - i));
-    //             break;
-    //         }
-    //         else {
-    //             break;
-    //         }
-    //     }
-    //     //horizontal movement
-    //         //rightward movement
-    //     for (let i = 1; i < 9 - (kingSpace.charCodeAt(0) - 96); i++) {
-           
-    //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + kingSpace[1]).children.length === 0) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) + i) + kingSpace[1]);
-    //         }
-    //         else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) + i) + kingSpace[1]).children[0].classList.contains(players[1])) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) + i) + kingSpace[1]);
-    //             break;
-    //         }
-    //         else {
-    //             break;
-    //         }
-    //     }
-    //         //leftward movement
-    //     for (let i = 1; i < kingSpace.charCodeAt(0) - 96; i++) {
-          
-    //         if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + kingSpace[1]).children.length === 0) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + kingSpace[1]);
-    //         }
-    //         else if (document.querySelector("#" + String.fromCharCode(kingSpace.charCodeAt(0) - i) + kingSpace[1]).children[0].classList.contains(players[1])) {
-    //             moves.push(String.fromCharCode(kingSpace.charCodeAt(0) - i) + kingSpace[1]);
-    //             break;
-    //         }
-    //         else {
-    //             break;
-    //         }
-    //     }
-    
-    //     for (let i = 0; i < moves.length; i++) {
-    //         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
-    //     }
-    // }
-    // else {
-    //     kingSpace = document.querySelector(".light-pc.king").parentElement.id;
+}
+
+function checkMoves() {
+    let possibleCheckMoves = [];
+
+    for(let i = 0; i < checkingPieces.length; i++) {
+        
+        switch(true) {
+            case document.querySelector("#" + checkingPieces[i]).classList.contains("pawn"):
+
+                break;
+            case document.querySelector("#" + checkingPieces[i]).classList.contains("bishop"):
+
+                break;
+            case document.querySelector("#" + checkingPieces[i]).classList.contains("knight"):
+
+                break;
+            case document.querySelector("#" + checkingPieces[i]).classList.contains("rook"):
+                
+                if (document.querySelector("#" + checkingPieces[i]).parentElement.id[0] === document.querySelector("." + players[0] + ".king").parentElement.id[0]) {
+                    
+                    if (document.querySelector("#" + checkingPieces[i]).parentElement.id[1] < document.querySelector("." + players[0] + ".king").parentElement.id[1]) {
+                        
+                    }
+                }
+                else {
+
+                }
+                break;
+            case document.querySelector("#" + checkingPieces[i]).classList.contains("queen"):
+                
+        }
+    }
 }
