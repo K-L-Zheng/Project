@@ -4,7 +4,8 @@ let activePiece;
 let lastMovedPiece;
 let promoPieceCount = 0;
 let checkingPieces = [];
-let kingInCheck = false;
+let allPiecesNoKings = ["dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"]
+let kingInCheck = false; 
 //complete
 function possibleMoves(id) {
     let boardSpace = document.querySelector("#" + id);
@@ -103,7 +104,7 @@ function movePiece(id) {
         document.querySelector("#turnCount").innerHTML = Math.floor(turn);
     }
 }
-//incomplete || erase all outline when 
+//complete
 function clearsBoard() {
     let allSquares = document.querySelectorAll(".light-sq, .dark-sq");
 
@@ -117,7 +118,6 @@ function clearsBoard() {
 //complete
 function pawnMoves(id) {
     let moves = [];
-    let boardSpace = document.querySelector("#" + id);
     //en passant possibility for light-pcs
     if (players[0] === "light-pc" && id[1] ==="5") {
 
@@ -708,7 +708,7 @@ function kingMoves(id) {
 function castling(id) {
     if (!activePiece.classList.contains("moved")) {
         
-        if(activePiece.id === "light-king") {
+        if (activePiece.id === "light-king") {
 
             switch (true) {
                 case id === "c1":
@@ -957,34 +957,65 @@ function check() {
 }
 
 function checkMoves() {
-    let possibleCheckMoves = [];
+    let opPieces;
+    //needs a lot of work || opposing player's possible moves go through own pieces || need to include promoted pawn pieces || possible pawn moves look off
+    if (players[0] === "light-pc") {
+        opPieces = allPiecesNoKings.filter(pc => pc.includes("dark"));
+    }
+    else {
+        opPieces = allPiecesNoKings.filter(pc => pc.includes("light"));
+    }
 
-    for(let i = 0; i < checkingPieces.length; i++) {
-        
-        switch(true) {
-            case document.querySelector("#" + checkingPieces[i]).classList.contains("pawn"):
+    for (i = 0; i < opPieces.length; i++) {
 
+        switch (true) {
+            case document.querySelector("#" + opPieces[i]).classList.contains("pawn"):
+                pawnMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
                 break;
-            case document.querySelector("#" + checkingPieces[i]).classList.contains("bishop"):
-
+            case document.querySelector("#" + opPieces[i]).classList.contains("bishop"):
+                bishopMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
                 break;
-            case document.querySelector("#" + checkingPieces[i]).classList.contains("knight"):
-
+            case document.querySelector("#" + opPieces[i]).classList.contains("knight"):
+                knightMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
                 break;
-            case document.querySelector("#" + checkingPieces[i]).classList.contains("rook"):
-                
-                if (document.querySelector("#" + checkingPieces[i]).parentElement.id[0] === document.querySelector("." + players[0] + ".king").parentElement.id[0]) {
-                    
-                    if (document.querySelector("#" + checkingPieces[i]).parentElement.id[1] < document.querySelector("." + players[0] + ".king").parentElement.id[1]) {
-                        
-                    }
-                }
-                else {
-
-                }
+            case document.querySelector("#" + opPieces[i]).classList.contains("rook"):
+                rookMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
                 break;
-            case document.querySelector("#" + checkingPieces[i]).classList.contains("queen"):
-                
+            case document.querySelector("#" + opPieces[i]).classList.contains("queen"):
+                queenMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
         }
     }
 }
+    // let possibleCheckMoves = [];
+    // [1, 1, 2, 2, 3].filter((element, index, array) => array.indexOf(element) !== index) // [1, 2]
+    // for(let i = 0; i < checkingPieces.length; i++) {
+        
+    //     switch(true) {
+    //         case document.querySelector("#" + checkingPieces[i]).classList.contains("pawn"):
+
+    //             break;
+    //         case document.querySelector("#" + checkingPieces[i]).classList.contains("bishop"):
+
+    //             break;
+    //         case document.querySelector("#" + checkingPieces[i]).classList.contains("knight"):
+
+    //             break;
+    //         case document.querySelector("#" + checkingPieces[i]).classList.contains("rook"):
+                
+    //             if (document.querySelector("#" + checkingPieces[i]).parentElement.id[0] === document.querySelector("." + players[0] + ".king").parentElement.id[0]) {
+                    
+    //                 if (document.querySelector("#" + checkingPieces[i]).parentElement.id[1] < document.querySelector("." + players[0] + ".king").parentElement.id[1]) {
+
+    //                 }
+    //                 else {
+
+    //                 }
+    //             }
+    //             else {
+
+    //             }
+    //             break;
+    //         case document.querySelector("#" + checkingPieces[i]).classList.contains("queen"):
+                
+    //     }
+    // }
