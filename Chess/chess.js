@@ -3,9 +3,7 @@ let players = ["light-pc", "dark-pc"];
 let activePiece;
 let lastMovedPiece;
 let promoPieceCount = 0;
-let checkingPieces = [];
 let allPiecesNoKings = ["dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"]
-let kingInCheck = false; 
 //complete
 function possibleMoves(id) {
     let boardSpace = document.querySelector("#" + id);
@@ -20,31 +18,25 @@ function possibleMoves(id) {
         if (!pawnPromo.includes(false)) {
             activePiece = document.querySelector("#" + boardSpace.children[0].id);
             let boardPiece = boardSpace.children[0];
-    
-            if (kingInCheck === false) {
 
-                switch (true) {
-                    case boardPiece.classList.contains("pawn"):
-                        pawnMoves(id);
-                        break;
-                    case boardPiece.classList.contains("bishop"):
-                        bishopMoves(id);
-                        break;
-                    case boardPiece.classList.contains("knight"):
-                        knightMoves(id);
-                        break;
-                    case boardPiece.classList.contains("rook"):
-                        rookMoves(id);
-                        break;
-                    case boardPiece.classList.contains("queen"):
-                        queenMoves(id);
-                        break;
-                    case boardPiece.classList.contains("king"):
-                        kingMoves(id);
-                }
-            }
-            else {
-                checkMoves();
+            switch (true) {
+                case boardPiece.classList.contains("pawn"):
+                    pawnMoves(id);
+                    break;
+                case boardPiece.classList.contains("bishop"):
+                    bishopMoves(id);
+                    break;
+                case boardPiece.classList.contains("knight"):
+                    knightMoves(id);
+                    break;
+                case boardPiece.classList.contains("rook"):
+                    rookMoves(id);
+                    break;
+                case boardPiece.classList.contains("queen"):
+                    queenMoves(id);
+                    break;
+                case boardPiece.classList.contains("king"):
+                    kingMoves(id);
             }
         }
     }
@@ -115,7 +107,7 @@ function clearsBoard() {
         }
     }
 }
-//complete
+//add check moves
 function pawnMoves(id) {
     let moves = [];
     //en passant possibility for light-pcs
@@ -313,7 +305,7 @@ function pawnPromotion(id) {
             document.querySelector("#" + document.querySelector("#" + id).parentElement.id[6] + document.querySelector("#" + id).parentElement.id[7]).appendChild(newPiece);
     }
 }
-//complete
+//add check moves
 function bishopMoves(id) {
     let moves = [];
 
@@ -380,7 +372,7 @@ function bishopMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
+//add check moves
 function knightMoves(id) {
     let moves = [];
     //(-1, -2)
@@ -448,62 +440,180 @@ function knightMoves(id) {
 function rookMoves(id) {
     let moves = [];
 
-    //vertical movement
-        //upward movement
-    for (let i = 1; i < 9 - id[1]; i++) {
-        
-        if (document.querySelector("#" + id[0] + (+id[1] + i)).children.length === 0) {
-            moves.push(id[0] + (+id[1] + i));
+    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
+        //vertical movement
+            //upward movement
+        for (let i = 1; i < 9 - id[1]; i++) {
+            
+            if (document.querySelector("#" + id[0] + (+id[1] + i)).children.length === 0) {
+                document.querySelector("#" + id[0] + (+id[1] + i)).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(id[0] + (+id[1] + i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + id[0] + (+id[1] + i)).children[0]);
+            }
+            else if (document.querySelector("#" + id[0] + (+id[1] + i)).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + id[0] + (+id[1] + i)).prepend(document.querySelector("#" + id).children[0]);  
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(id[0] + (+id[1] + i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + id[0] + (+id[1] + i)).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else if (document.querySelector("#" + id[0] + (+id[1] + i)).children[0].classList.contains(players[1])) {
-            moves.push(id[0] + (+id[1] + i));
-            break;
-        }
-        else {
-            break;
-        }
-    }
         //downward movement
-    for (let i = 1; i < id[1]; i++) {
-        
-        if (document.querySelector("#" + id[0] + (+id[1] - i)).children.length === 0) {
-            moves.push(id[0] + (+id[1] - i));
+        for (let i = 1; i < id[1]; i++) {
+
+            if (document.querySelector("#" + id[0] + (+id[1] - i)).children.length === 0) {
+                document.querySelector("#" + id[0] + (+id[1] - i)).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(id[0] + (+id[1] - i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + id[0] + (+id[1] - i)).children[0]);
+            }
+            else if (document.querySelector("#" + id[0] + (+id[1] - i)).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + id[0] + (+id[1] - i)).prepend(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(id[0] + (+id[1] - i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + id[0] + (+id[1] - i)).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else if (document.querySelector("#" + id[0] + (+id[1] - i)).children[0].classList.contains(players[1])) {
-            moves.push(id[0] + (+id[1] - i));
-            break;
+        //horizontal movement
+            //rightward movement
+        for (let i = 1; i < 9 - (id.charCodeAt(0) - 96); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children.length === 0) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children[0]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).prepend(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else {
-            break;
+            //leftward movement
+        for (let i = 1; i < id.charCodeAt(0) - 96; i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children.length === 0) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children[0]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).prepend(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
         }
     }
-    //horizontal movement
-        //rightward movement
-    for (let i = 1; i < 9 - (id.charCodeAt(0) - 96); i++) {
-        
-        if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children.length === 0) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
+    else {
+        //vertical movement
+            //upward movement
+        for (let i = 1; i < 9 - id[1]; i++) {
+            
+            if (document.querySelector("#" + id[0] + (+id[1] + i)).children.length === 0) {
+                moves.push(id[0] + (+id[1] + i));
+            }
+            else if (document.querySelector("#" + id[0] + (+id[1] + i)).children[0].classList.contains(players[1])) {
+                moves.push(id[0] + (+id[1] + i));
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children[0].classList.contains(players[1])) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
-            break;
+            //downward movement
+        for (let i = 1; i < id[1]; i++) {
+            
+            if (document.querySelector("#" + id[0] + (+id[1] - i)).children.length === 0) {
+                moves.push(id[0] + (+id[1] - i));
+            }
+            else if (document.querySelector("#" + id[0] + (+id[1] - i)).children[0].classList.contains(players[1])) {
+                moves.push(id[0] + (+id[1] - i));
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else {
-            break;
+        //horizontal movement
+            //rightward movement
+        for (let i = 1; i < 9 - (id.charCodeAt(0) - 96); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children.length === 0) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + id[1]).children[0].classList.contains(players[1])) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) + i) + id[1]);
+                break;
+            }
+            else {
+                break;
+            }
         }
-    }
-        //leftward movement
-    for (let i = 1; i < id.charCodeAt(0) - 96; i++) {
-        
-        if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children.length === 0) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
-        }
-        else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children[0].classList.contains(players[1])) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
-            break;
-        }
-        else {
-            break;
+            //leftward movement
+        for (let i = 1; i < id.charCodeAt(0) - 96; i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children.length === 0) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + id[1]).children[0].classList.contains(players[1])) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) - i) + id[1]);
+                break;
+            }
+            else {
+                break;
+            }
         }
     }
 
@@ -511,7 +621,7 @@ function rookMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
+//add check moves
 function queenMoves(id) {
     let moves = [];
 
@@ -637,7 +747,7 @@ function queenMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//need to add inability to move to dangerous boardspaces
+//need to add inability to move to dangerous boardspaces + add check moves
 function kingMoves(id) {
     let moves = [];
     //checks for the possibility of castling
@@ -730,11 +840,12 @@ function castling(id) {
         }
     }
 }
-//complete 
+//need to add pawn check 
 function check() {
 
     for (let i = 0; i < players.length; i++) {
         let kingSpace = document.querySelector("." + players[i] + ".king").parentElement.id;
+        let checkingPieces = [];
         //right diagonal check
             //up check
         for (let j = 1; j < Math.min(9 - (kingSpace.charCodeAt(0) - 96), 9 - kingSpace[1]); j++) {
@@ -946,46 +1057,44 @@ function check() {
         
         if (checkingPieces.length !== 0) {
             document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
-            kingInCheck = true;
         }
         else {
             document.querySelector("#" + kingSpace).style.outline = "none";
-            kingInCheck = false;
             checkingPieces = [];
         }
     }
 }
 
-function checkMoves() {
-    let opPieces;
-    //needs a lot of work || opposing player's possible moves go through own pieces || need to include promoted pawn pieces || possible pawn moves look off
-    if (players[0] === "light-pc") {
-        opPieces = allPiecesNoKings.filter(pc => pc.includes("dark"));
-    }
-    else {
-        opPieces = allPiecesNoKings.filter(pc => pc.includes("light"));
-    }
+// function checkMoves() {
+//     let opPieces;
+//     //needs a lot of work || opposing player's possible moves go through own pieces || need to include promoted pawn pieces || possible pawn moves look off
+//     if (players[0] === "light-pc") {
+//         opPieces = allPiecesNoKings.filter(pc => pc.includes("dark"));
+//     }
+//     else {
+//         opPieces = allPiecesNoKings.filter(pc => pc.includes("light"));
+//     }
 
-    for (i = 0; i < opPieces.length; i++) {
+//     for (i = 0; i < opPieces.length; i++) {
 
-        switch (true) {
-            case document.querySelector("#" + opPieces[i]).classList.contains("pawn"):
-                pawnMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
-                break;
-            case document.querySelector("#" + opPieces[i]).classList.contains("bishop"):
-                bishopMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
-                break;
-            case document.querySelector("#" + opPieces[i]).classList.contains("knight"):
-                knightMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
-                break;
-            case document.querySelector("#" + opPieces[i]).classList.contains("rook"):
-                rookMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
-                break;
-            case document.querySelector("#" + opPieces[i]).classList.contains("queen"):
-                queenMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
-        }
-    }
-}
+//         switch (true) {
+//             case document.querySelector("#" + opPieces[i]).classList.contains("pawn"):
+//                 pawnMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
+//                 break;
+//             case document.querySelector("#" + opPieces[i]).classList.contains("bishop"):
+//                 bishopMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
+//                 break;
+//             case document.querySelector("#" + opPieces[i]).classList.contains("knight"):
+//                 knightMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
+//                 break;
+//             case document.querySelector("#" + opPieces[i]).classList.contains("rook"):
+//                 rookMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
+//                 break;
+//             case document.querySelector("#" + opPieces[i]).classList.contains("queen"):
+//                 queenMoves(document.querySelector("#" + opPieces[i]).parentElement.id);
+//         }
+//     }
+// }
     // let possibleCheckMoves = [];
     // [1, 1, 2, 2, 3].filter((element, index, array) => array.indexOf(element) !== index) // [1, 2]
     // for(let i = 0; i < checkingPieces.length; i++) {
