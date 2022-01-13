@@ -305,66 +305,184 @@ function pawnPromotion(id) {
             document.querySelector("#" + document.querySelector("#" + id).parentElement.id[6] + document.querySelector("#" + id).parentElement.id[7]).appendChild(newPiece);
     }
 }
-//add check moves
+//complete
 function bishopMoves(id) {
     let moves = [];
 
-    //right diagonal movement
-        //up movement
-    for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), 9 - id[1]); i++) {
+    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
+        //right diagonal movement
+            //up movement
+        for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), 9 - id[1]); i++) {
         
-        if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children.length === 0) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children.length === 0) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children[0]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).prepend(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children[0].classList.contains(players[1])) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
-            break;
+            //down movement
+        for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, id[1]); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children.length === 0) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children[0]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).prepend(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else {
-            break;
+        //left diagonal movement
+            //up movement
+        for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, 9 - id[1]); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children.length === 0) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children[0]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).prepend(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
+        }
+            //down movement
+        for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), id[1]); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children.length === 0) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).appendChild(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children[0]);
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children[0].classList.contains(players[1])) {
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).prepend(document.querySelector("#" + id).children[0]);    
+                check();
+
+                if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                    moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
+                }
+
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children[0]);
+                break;
+            }
+            else {
+                break;
+            }
         }
     }
-        //down movement
-    for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, id[1]); i++) {
-        
-        if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children.length === 0) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
+    else {
+        //right diagonal movement
+            //up movement
+        for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), 9 - id[1]); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children.length === 0) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i)).children[0].classList.contains(players[1])) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + i));
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children[0].classList.contains(players[1])) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
-            break;
+            //down movement
+        for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, id[1]); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children.length === 0) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i)).children[0].classList.contains(players[1])) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] - i));
+                break;
+            }
+            else {
+                break;
+            }
         }
-        else {
-            break;
+        //left diagonal movement
+            //up movement
+        for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, 9 - id[1]); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children.length === 0) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children[0].classList.contains(players[1])) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
+                break;
+            }
+            else {
+                break;
+            }
         }
-    }
-    //left diagonal movement
-        //up movement
-    for (let i = 1; i < Math.min(id.charCodeAt(0) - 96, 9 - id[1]); i++) {
-        
-        if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children.length === 0) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
-        }
-        else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i)).children[0].classList.contains(players[1])) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) - i) + (+id[1] + i));
-            break;
-        }
-        else {
-            break;
-        }
-    }
-        //down movement
-    for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), id[1]); i++) {
-        
-        if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children.length === 0) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
-        }
-        else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children[0].classList.contains(players[1])) {
-            moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
-            break;
-        }
-        else {
-            break;
+            //down movement
+        for (let i = 1; i < Math.min(9 - (id.charCodeAt(0) - 96), id[1]); i++) {
+            
+            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children.length === 0) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
+            }
+            else if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i)).children[0].classList.contains(players[1])) {
+                moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] - i));
+                break;
+            }
+            else {
+                break;
+            }
         }
     }
 
@@ -840,7 +958,7 @@ function castling(id) {
         }
     }
 }
-//need to add pawn check 
+//complete
 function check() {
 
     for (let i = 0; i < players.length; i++) {
