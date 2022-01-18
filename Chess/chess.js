@@ -3,7 +3,7 @@ let players = ["light-pc", "dark-pc"];
 let activePiece;
 let lastMovedPiece;
 let promoPieceCount = 0;
-let allPiecesNoKings = ["dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"]
+let remainingPieces = ["dark-king", "dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-king", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"]
 //complete
 function possibleMoves(id) {
     let boardSpace = document.querySelector("#" + id);
@@ -41,14 +41,13 @@ function possibleMoves(id) {
         }
     }
 }
-//complete
+//incomplete
 function movePiece(id) {
     let boardSpace = document.querySelector("#" + id);
-    let style = boardSpace.style.outline;
     //style.outline order needs to be this way, 
     //if solid and 5px are switched then the if statement will return false
     //hexcode color is converted into RGB format
-    if (style === "rgb(71, 58, 51) solid 5px") {
+    if (boardSpace.style.outline === "rgb(71, 58, 51) solid 5px") {
         //moves piece
         boardSpace.appendChild(activePiece);
         //checks for castling
@@ -57,6 +56,8 @@ function movePiece(id) {
         if (boardSpace.children.length === 2) {
             boardSpace.children[0].style.fontSize = "2rem";
             boardSpace.children[0].style.paddingLeft = "10px";
+            //removes the captured piece from the array of remaining pieces
+            remainingPieces.splice(remainingPieces.indexOf(boardSpace.children[0].id), 1);
 
             switch (true) {
                 case players[0] === "light-pc":
@@ -81,19 +82,25 @@ function movePiece(id) {
             //checks for pawn promotion
             if (id[1] === "8" || id[1] === "1") {
                 document.querySelector("#promo-" + id).style.visibility = "visible";
+                remainingPieces.splice(remainingPieces.indexOf(boardSpace.children[0].id), 1);
                 activePiece.remove();
             }
         }
         else {
             activePiece.classList.add("moved");
         }
-        //stores the last moved piece
-        lastMovedPiece = activePiece.id;
-        check();
-        //change player's turn & record total overall turns
-        players.reverse();
-        turn += .5;
-        document.querySelector("#turnCount").innerHTML = Math.floor(turn);
+        //fix this, need to select all the promo columns and check for visibility
+        if (document.querySelectorAll(".promo").style.visibility === "visible".length) {
+            //stores the last moved piece
+            lastMovedPiece = activePiece.id;
+            check();
+            //clears moved piece's possible moves, change player's turn, check for checkmate/stalemate, record total overall turns
+            clearsBoard();
+            players.reverse();
+            mate();
+            turn += .5;
+            document.querySelector("#turnCount").innerHTML = Math.floor(turn);
+        }
     }
 }
 //complete
@@ -107,7 +114,7 @@ function clearsBoard() {
         }
     }
 }
-//opposing pawns switch when right next to each other - difficulty replicating
+//complete
 function pawnMoves(id) {
     let moves = [];
 
@@ -123,14 +130,14 @@ function pawnMoves(id) {
                 }
 
                 if (samePiece && document.querySelector("#" + lastMovedPiece).classList.contains("moved-once")) {
-                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).appendChild(document.querySelector("#" + id).children[0]);    
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + (+id[1] + 1)).appendChild(document.querySelector("#" + id).children[0]);    
                     check();
     
                     if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
                         moves.push(String.fromCharCode(id.charCodeAt(0) - 1) + (+id[1] + 1));
                     }
     
-                    document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).children[0]);
+                    document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + (+id[1] + 1)).children[0]);
                 }
             }
 
@@ -163,14 +170,14 @@ function pawnMoves(id) {
                 }
 
                 if (samePiece && document.querySelector("#" + lastMovedPiece).classList.contains("moved-once")) {
-                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).appendChild(document.querySelector("#" + id).children[0]);    
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + (+id[1] - 1)).appendChild(document.querySelector("#" + id).children[0]);    
                     check();
     
                     if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
                         moves.push(String.fromCharCode(id.charCodeAt(0) - 1) + (+id[1] - 1));
                     }
     
-                    document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).children[0]);
+                    document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + (+id[1] - 1)).children[0]);
                 }
             }
 
@@ -430,16 +437,18 @@ function enPassant(id) {
         if (players[0] === "light-pc" && id[1] === "6") {
             document.querySelector("#" + lastMovedPiece).style.fontSize = "2rem";
             document.querySelector("#" + lastMovedPiece).style.paddingLeft = "10px";
+            remainingPieces.splice(remainingPieces.indexOf(lastMovedPiece), 1);
             document.querySelector("#cap-dark-pcs").appendChild(document.querySelector("#" + lastMovedPiece));
         }
         else if (players[0] === "dark-pc" && id[1] === "3") {
             document.querySelector("#" + lastMovedPiece).style.fontSize = "2rem";
             document.querySelector("#" + lastMovedPiece).style.paddingLeft = "10px";
+            remainingPieces.splice(remainingPieces.indexOf(lastMovedPiece), 1);
             document.querySelector("#cap-light-pcs").appendChild(document.querySelector("#" + lastMovedPiece));
         }
     }
 }
-//complete
+//incomplete
 function pawnPromotion(id) {
     let newPiece = document.createElement("i");
     //checks for piece selection & creates a new piece based on the selection
@@ -458,6 +467,7 @@ function pawnPromotion(id) {
             }
             
             document.querySelector("#" + document.querySelector("#" + id).parentElement.id[6] + document.querySelector("#" + id).parentElement.id[7]).appendChild(newPiece);
+            lastMovedPiece = newPiece.id;
             break;
         case document.querySelector("#" + id).classList.contains("knight"):
             document.querySelector("#" + id).parentElement.style.visibility = "hidden";
@@ -473,6 +483,7 @@ function pawnPromotion(id) {
             }
             
             document.querySelector("#" + document.querySelector("#" + id).parentElement.id[6] + document.querySelector("#" + id).parentElement.id[7]).appendChild(newPiece);
+            lastMovedPiece = newPiece.id;
             break;
         case document.querySelector("#" + id).classList.contains("rook"):
             document.querySelector("#" + id).parentElement.style.visibility = "hidden";
@@ -488,6 +499,7 @@ function pawnPromotion(id) {
             }
             
             document.querySelector("#" + document.querySelector("#" + id).parentElement.id[6] + document.querySelector("#" + id).parentElement.id[7]).appendChild(newPiece);
+            lastMovedPiece = newPiece.id;
             break;
         case document.querySelector("#" + id).classList.contains("bishop"):
             document.querySelector("#" + id).parentElement.style.visibility = "hidden";
@@ -503,7 +515,10 @@ function pawnPromotion(id) {
             }
             
             document.querySelector("#" + document.querySelector("#" + id).parentElement.id[6] + document.querySelector("#" + id).parentElement.id[7]).appendChild(newPiece);
+            lastMovedPiece = newPiece.id;
     }
+
+    check();
 }
 //complete
 function bishopMoves(id) {
@@ -1437,55 +1452,99 @@ function queenMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//need to add inability to move to dangerous boardspaces + add check moves
+//complete
 function kingMoves(id) {
     let moves = [];
-    //checks for the possibility of castling
-    switch (true) {
-        //castling for light
-        case players[0] === "light-pc" && !document.querySelector("#" + id).children[0].classList.contains("moved"):
-            //castling queenside
-            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 3) + id[1]).children.length === 0 &&
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 2) + id[1]).children.length === 0 &&
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).children.length === 0 &&
-                document.querySelector("#a1").children.length &&
-                document.querySelector("#a1").children[0].classList.contains("light-pc") &&
-                !document.querySelector("#a1").children[0].classList.contains("moved"))
-            {
-                document.querySelector("#c1").style.outline = "#473A33 5px solid";
-            }
-            //castling kingside
-            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).children.length === 0 &&
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 2) + id[1]).children.length === 0 &&
-                document.querySelector("#h1").children.length &&
-                document.querySelector("#h1").children[0].classList.contains("light-pc") &&
-                !document.querySelector("#h1").children[0].classList.contains("moved"))
-            {
-                document.querySelector("#g1").style.outline = "#473A33 5px solid";
-            }
-            break;
-        //castling for dark
-        case players[0] === "dark-pc" && !document.querySelector("#" + id).children[0].classList.contains("moved"):
-            //castling queenside
-            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 3) + id[1]).children.length === 0 &&
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 2) + id[1]).children.length === 0 &&
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).children.length === 0 &&
-                document.querySelector("#a8").children.length &&
-                document.querySelector("#a8").children[0].classList.contains("dark-pc") &&
-                !document.querySelector("#a8").children[0].classList.contains("moved"))
-            {
-                document.querySelector("#c8").style.outline = "#473A33 5px solid";
-            }
-            //castling kingside
-            if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).children.length === 0 &&
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 2) + id[1]).children.length === 0 &&
-                document.querySelector("#h8").children.length &&
-                document.querySelector("#h8").children[0].classList.contains("dark-pc") &&
-                !document.querySelector("#h8").children[0].classList.contains("moved"))
-            {
-                document.querySelector("#g8").style.outline = "#473A33 5px solid";
-            }
+
+    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+        //checks for the possibility of castling
+        switch (true) {
+            //castling for light
+            case players[0] === "light-pc" && !document.querySelector("#" + id).children[0].classList.contains("moved"):
+                //castling queenside
+                if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 3) + id[1]).children.length === 0 &&
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 2) + id[1]).children.length === 0 &&
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).children.length === 0 &&
+                    document.querySelector("#a1").children.length &&
+                    document.querySelector("#a1").children[0].classList.contains("light-pc") &&
+                    !document.querySelector("#a1").children[0].classList.contains("moved"))
+                {
+                    document.querySelector("#c1").appendChild(document.querySelector("#" + id).children[0]);    
+                    check();
+    
+                    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                        moves.push("c1");
+                    }
+                    else {
+                        document.querySelector("." + players[0] + ".king").parentElement.style.outline = "none";
+                    }
+                    
+                    document.querySelector("#" + id).appendChild(document.querySelector("#c1").children[0]);
+                }
+                //castling kingside
+                if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).children.length === 0 &&
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 2) + id[1]).children.length === 0 &&
+                    document.querySelector("#h1").children.length &&
+                    document.querySelector("#h1").children[0].classList.contains("light-pc") &&
+                    !document.querySelector("#h1").children[0].classList.contains("moved"))
+                {
+                    document.querySelector("#g1").appendChild(document.querySelector("#" + id).children[0]);    
+                    check();
+    
+                    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                        moves.push("g1");
+                    }
+                    else {
+                        document.querySelector("." + players[0] + ".king").parentElement.style.outline = "none";
+                    }
+                    
+                    document.querySelector("#" + id).appendChild(document.querySelector("#g1").children[0]);
+                }
+                break;
+            //castling for dark
+            case players[0] === "dark-pc" && !document.querySelector("#" + id).children[0].classList.contains("moved"):
+                //castling queenside
+                if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 3) + id[1]).children.length === 0 &&
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 2) + id[1]).children.length === 0 &&
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) - 1) + id[1]).children.length === 0 &&
+                    document.querySelector("#a8").children.length &&
+                    document.querySelector("#a8").children[0].classList.contains("dark-pc") &&
+                    !document.querySelector("#a8").children[0].classList.contains("moved"))
+                {
+                    document.querySelector("#c8").appendChild(document.querySelector("#" + id).children[0]);    
+                    check();
+    
+                    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                        moves.push("c8");
+                    }
+                    else {
+                        document.querySelector("." + players[0] + ".king").parentElement.style.outline = "none";
+                    }
+                    
+                    document.querySelector("#" + id).appendChild(document.querySelector("#c8").children[0]);
+                }
+                //castling kingside
+                if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).children.length === 0 &&
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 2) + id[1]).children.length === 0 &&
+                    document.querySelector("#h8").children.length &&
+                    document.querySelector("#h8").children[0].classList.contains("dark-pc") &&
+                    !document.querySelector("#h8").children[0].classList.contains("moved"))
+                {
+                    document.querySelector("#g8").appendChild(document.querySelector("#" + id).children[0]);    
+                    check();
+    
+                    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                        moves.push("g8");
+                    }
+                    else {
+                        document.querySelector("." + players[0] + ".king").parentElement.style.outline = "none";
+                    }
+                    
+                    document.querySelector("#" + id).appendChild(document.querySelector("#g8").children[0]);
+                }
+        }
     }
+
     //checks for regular moves
     for (j = 1; j > -2; j--) { //evaluating each rank
         
@@ -1494,7 +1553,20 @@ function kingMoves(id) {
             if (id.charCodeAt(0) + i >= 97 && id.charCodeAt(0) + i <= 104 && +id[1] + j > 0 && +id[1] + j < 9) {
                 
                 if (document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + j)).children.length === 0 || document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + j)).children[0].classList.contains(players[1])) {
-                    moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + j));
+                    document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + j)).prepend(document.querySelector("#" + id).children[0]);    
+                    check();
+    
+                    if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
+                        //makes sure opposing kings cannot move next to each other
+                        if (Math.abs(document.querySelector("." + players[0] + ".king").parentElement.id.charCodeAt(0) - document.querySelector("." + players[1] + ".king").parentElement.id.charCodeAt(0)) > 1 || Math.abs(document.querySelector("." + players[0] + ".king").parentElement.id[1] - document.querySelector("." + players[1] + ".king").parentElement.id[1]) > 1) {
+                            moves.push(String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + j));
+                        }
+                    }
+                    else {
+                        document.querySelector("." + players[0] + ".king").parentElement.style.outline = "none";
+                    }
+                    
+                    document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + i) + (+id[1] + j)).children[0]);
                 }
             }
         }
@@ -1506,27 +1578,25 @@ function kingMoves(id) {
 }
 //complete
 function castling(id) {
-    if (!activePiece.classList.contains("moved")) {
-        
-        if (activePiece.id === "light-king") {
 
-            switch (true) {
-                case id === "c1":
-                    document.querySelector("#d1").appendChild(document.querySelector("#light-rook-a"));
-                    break;
-                case id === "g1":
-                    document.querySelector("#f1").appendChild(document.querySelector("#light-rook-b"));
-            }
+    if (activePiece.id === "light-king") {
+
+        switch (true) {
+            case id === "c1":
+                document.querySelector("#d1").appendChild(document.querySelector("#light-rook-a"));
+                break;
+            case id === "g1":
+                document.querySelector("#f1").appendChild(document.querySelector("#light-rook-b"));
         }
-        else if (activePiece.id === "dark-king") {
+    }
+    else if (activePiece.id === "dark-king") {
 
-            switch (true) {
-                case id === "c8":
-                    document.querySelector("#d8").appendChild(document.querySelector("#dark-rook-a"));
-                    break;
-                case id === "g8":
-                    document.querySelector("#f8").appendChild(document.querySelector("#dark-rook-b"));
-            }
+        switch (true) {
+            case id === "c8":
+                document.querySelector("#d8").appendChild(document.querySelector("#dark-rook-a"));
+                break;
+            case id === "g8":
+                document.querySelector("#f8").appendChild(document.querySelector("#dark-rook-b"));
         }
     }
 }
@@ -1751,6 +1821,111 @@ function check() {
         else {
             document.querySelector("#" + kingSpace).style.outline = "none";
             checkingPieces = [];
+        }
+    }
+}
+//complete
+function mate() {
+    if (players[0] === "light-pc") {
+        let lightPieces = remainingPieces.filter(pc => pc.includes("light"));
+
+        for (let i = 0; i < lightPieces.length; i++) {
+            switch (true) {
+                case lightPieces[i].includes("pawn"):
+                    pawnMoves(document.querySelector("#" + lightPieces[i]).parentElement.id);
+                    break;
+                case lightPieces[i].includes("bishop"):
+                    bishopMoves(document.querySelector("#" + lightPieces[i]).parentElement.id);
+                    break;
+                case lightPieces[i].includes("knight"):
+                    knightMoves(document.querySelector("#" + lightPieces[i]).parentElement.id);
+                    break;
+                case lightPieces[i].includes("rook"):
+                    rookMoves(document.querySelector("#" + lightPieces[i]).parentElement.id);
+                    break;
+                case lightPieces[i].includes("queen"):
+                    queenMoves(document.querySelector("#" + lightPieces[i]).parentElement.id);
+                    break;
+                case lightPieces[i].includes("king"):
+                    kingMoves(document.querySelector("#" + lightPieces[i]).parentElement.id);
+            }
+        }
+
+        let allSquares = document.querySelectorAll(".light-sq, .dark-sq");
+        let noMoves = true;
+
+        for (let i = 0; i < allSquares.length; i++ ) {
+
+            if (allSquares[i].style.outline === "rgb(71, 58, 51) solid 5px") {
+                for (let j = i; j < allSquares.length; j++ ) {
+
+                    if (allSquares[j].style.outline !== "red solid 5px") {
+                        allSquares[j].style.outline = "none";
+                    }
+                }
+                noMoves = false;
+                break;
+            }
+        }
+
+        if (noMoves === true) {
+            if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
+                console.log("~DARK WINS!~");
+            }
+            else {
+                console.log("STALEMATE!");
+            }
+        }
+    }
+    else {
+        let darkPieces = remainingPieces.filter(pc => pc.includes("dark"));
+
+        for (let i = 0; i < darkPieces.length; i++) {
+            switch (true) {
+                case darkPieces[i].includes("pawn"):
+                    pawnMoves(document.querySelector("#" + darkPieces[i]).parentElement.id);
+                    break;
+                case darkPieces[i].includes("bishop"):
+                    bishopMoves(document.querySelector("#" + darkPieces[i]).parentElement.id);
+                    break;
+                case darkPieces[i].includes("knight"):
+                    knightMoves(document.querySelector("#" + darkPieces[i]).parentElement.id);
+                    break;
+                case darkPieces[i].includes("rook"):
+                    rookMoves(document.querySelector("#" + darkPieces[i]).parentElement.id);
+                    break;
+                case darkPieces[i].includes("queen"):
+                    queenMoves(document.querySelector("#" + darkPieces[i]).parentElement.id);
+                    break;
+                case darkPieces[i].includes("king"):
+                    kingMoves(document.querySelector("#" + darkPieces[i]).parentElement.id);
+            }
+        }
+
+        let allSquares = document.querySelectorAll(".light-sq, .dark-sq");
+        let noMoves = true;
+
+        for (let i = 0; i < allSquares.length; i++ ) {
+    
+            if (allSquares[i].style.outline === "rgb(71, 58, 51) solid 5px") {
+                for (let j = i; j < allSquares.length; j++ ) {
+
+                    if (allSquares[j].style.outline !== "red solid 5px") {
+                        allSquares[j].style.outline = "none";
+                    }
+                }
+                noMoves = false;
+                break;
+            }
+        }
+
+        if (noMoves === true) {
+            if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
+                console.log("~LIGHT WINS!~");
+            }
+            else {
+                console.log("STALEMATE!");
+            }
         }
     }
 }
