@@ -89,8 +89,9 @@ function movePiece(id) {
         else {
             activePiece.classList.add("moved");
         }
-        //fix this, need to select all the promo columns and check for visibility
-        if (document.querySelectorAll(".promo").style.visibility === "visible".length) {
+        //broken
+        let promoVis = [...document.querySelectorAll(".promo").style.visibility];
+        if (!promoVis.includes("visible")) {
             //stores the last moved piece
             lastMovedPiece = activePiece.id;
             check();
