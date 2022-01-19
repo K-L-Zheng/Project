@@ -41,7 +41,7 @@ function possibleMoves(id) {
         }
     }
 }
-//incomplete
+//complete
 function movePiece(id) {
     let boardSpace = document.querySelector("#" + id);
     //style.outline order needs to be this way, 
@@ -89,8 +89,13 @@ function movePiece(id) {
         else {
             activePiece.classList.add("moved");
         }
-        //broken
-        let promoVis = [...document.querySelectorAll(".promo").style.visibility];
+
+        let promoVis = [];
+
+        for (let i = 0; i < document.querySelectorAll(".light-promo,.dark-promo").length; i++) {
+            promoVis.push(document.querySelectorAll(".light-promo,.dark-promo")[i].style.visibility);
+        }
+
         if (!promoVis.includes("visible")) {
             //stores the last moved piece
             lastMovedPiece = activePiece.id;
@@ -449,7 +454,7 @@ function enPassant(id) {
         }
     }
 }
-//incomplete
+//complete
 function pawnPromotion(id) {
     let newPiece = document.createElement("i");
     //checks for piece selection & creates a new piece based on the selection
@@ -457,8 +462,8 @@ function pawnPromotion(id) {
         case document.querySelector("#" + id).classList.contains("queen"):
             document.querySelector("#" + id).parentElement.style.visibility = "hidden";
             promoPieceCount += 1;
-            //turn ends before new piece is created so the active player is the opposing player
-            if (players[0] === "dark-pc") {
+
+            if (players[0] === "light-pc") {
                 newPiece.classList = "fas fa-chess-queen light-pc queen promo";
                 newPiece.id = "light-queen-promo-" + promoPieceCount;
             }
@@ -474,7 +479,7 @@ function pawnPromotion(id) {
             document.querySelector("#" + id).parentElement.style.visibility = "hidden";
             promoPieceCount += 1;
 
-            if (players[0] === "dark-pc") {
+            if (players[0] === "light-pc") {
                 newPiece.classList = "fas fa-chess-knight light-pc knight promo";
                 newPiece.id = "light-knight-promo-" + promoPieceCount;
             }
@@ -490,7 +495,7 @@ function pawnPromotion(id) {
             document.querySelector("#" + id).parentElement.style.visibility = "hidden";
             promoPieceCount += 1;
 
-            if (players[0] === "dark-pc") {
+            if (players[0] === "light-pc") {
                 newPiece.classList = "fas fa-chess-rook light-pc rook promo";
                 newPiece.id = "light-rook-promo-" + promoPieceCount;
             }
@@ -506,7 +511,7 @@ function pawnPromotion(id) {
             document.querySelector("#" + id).parentElement.style.visibility = "hidden";
             promoPieceCount += 1;
 
-            if (players[0] === "dark-pc") {
+            if (players[0] === "light-pc") {
                 newPiece.classList = "fas fa-chess-bishop light-pc bishop promo";
                 newPiece.id = "light-bishop-promo-" + promoPieceCount;
             }
@@ -518,8 +523,15 @@ function pawnPromotion(id) {
             document.querySelector("#" + document.querySelector("#" + id).parentElement.id[6] + document.querySelector("#" + id).parentElement.id[7]).appendChild(newPiece);
             lastMovedPiece = newPiece.id;
     }
-
+    //stores the last moved piece
+    lastMovedPiece = activePiece.id;
     check();
+    //clears moved piece's possible moves, change player's turn, check for checkmate/stalemate, record total overall turns
+    clearsBoard();
+    players.reverse();
+    mate();
+    turn += .5;
+    document.querySelector("#turnCount").innerHTML = Math.floor(turn);
 }
 //complete
 function bishopMoves(id) {
@@ -1871,9 +1883,11 @@ function mate() {
 
         if (noMoves === true) {
             if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
+                document.querySelector("#win-screen").innerHTML = "~DARK WINS!~";
                 console.log("~DARK WINS!~");
             }
             else {
+                document.querySelector("#win-screen").innerHTML = "STALEMATE!";
                 console.log("STALEMATE!");
             }
         }
@@ -1922,11 +1936,15 @@ function mate() {
 
         if (noMoves === true) {
             if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
+                document.querySelector("#win-screen").innerHTML = "~LIGHT WINS!~";
                 console.log("~LIGHT WINS!~");
             }
             else {
+                document.querySelector("#win-screen").innerHTML = "STALEMATE!";
                 console.log("STALEMATE!");
             }
         }
     }
 }
+
+//need to make pieces unable to move away into a check
