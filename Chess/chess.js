@@ -1882,13 +1882,14 @@ function mate() {
         }
 
         if (noMoves === true) {
+            document.querySelector("#win-screen").style.visibility = "visible";
+            document.querySelector("#win-screen").style.opacity = "100%";
+
             if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
-                document.querySelector("#win-screen").innerHTML = "~DARK WINS!~";
-                console.log("~DARK WINS!~");
+                document.querySelector("#win-screen").innerHTML = "~ DARK WINS ~";
             }
             else {
                 document.querySelector("#win-screen").innerHTML = "STALEMATE!";
-                console.log("STALEMATE!");
             }
         }
     }
@@ -1935,13 +1936,15 @@ function mate() {
         }
 
         if (noMoves === true) {
+            document.querySelector("#win-screen").style.visibility = "visible";
+            document.querySelector("#win-screen").style.opacity = "100%";
+            document.querySelector("#win-screen").style.color = "white";
+
             if (document.querySelector("." + players[0] + ".king").parentElement.style.outline === "red solid 5px") {
-                document.querySelector("#win-screen").innerHTML = "~LIGHT WINS!~";
-                console.log("~LIGHT WINS!~");
+                document.querySelector("#win-screen").innerHTML = "~ LIGHT WINS ~";
             }
             else {
                 document.querySelector("#win-screen").innerHTML = "STALEMATE!";
-                console.log("STALEMATE!");
             }
         }
     }
