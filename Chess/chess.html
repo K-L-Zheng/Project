@@ -10,6 +10,7 @@
 </head>
 <body>
     <div id="board-wrapper">
+        <div id="turn">TURN: <span id="turnCount">1</span></div>
         <div id="cap-light-pcs">
             <div class="pawn-promo">
                 <span id= "promo-a8" class="light-promo">
@@ -62,7 +63,7 @@
                     <i id="light-bishop-promo-h" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
             </div>
-            <div id="turn">TURN: <span id="turnCount">1</span></div>
+            <div id="dark-timer" class="timer">00:00:00</div>
         </div>
         <div id="board">
             <div class="light-sq" id="a8" onclick="possibleMoves(this.id)">
@@ -245,6 +246,7 @@
                     <i id="dark-queen-promo-h" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
             </div>
+            <div id="light-timer" class="timer">00:00:00</div>
         </div>
         <div id="win-screen">~ LIGHT WINS ~</div>
     </div>
