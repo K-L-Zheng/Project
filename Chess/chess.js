@@ -1541,5 +1541,5 @@ setInterval(function() {
     output(Math.floor(delta / 1000)); // in seconds
     // alternatively just show wall clock time:
     output(new Date().toUTCString());
-}, 10); // update about every second
+}, 10); // update about every 10 milliseconds
 }
