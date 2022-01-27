@@ -113,6 +113,7 @@ function movePiece(id) {
             if (matchStarted === true) {
                 turn += .5;
                 document.querySelector("#turnCount").innerHTML = Math.floor(turn);
+                timer();
             }
         }
     }
@@ -1534,12 +1535,14 @@ function mate() {
 }
 //incomplete
 function timer() {
-    var start = Date.now();
-setInterval(function() {
-    var delta = Date.now() - start; // milliseconds elapsed since start
+    let timeRemaining = 10 * 60
+    let start = Date.now();
 
-    output(Math.floor(delta / 1000)); // in seconds
-    // alternatively just show wall clock time:
-    output(new Date().toUTCString());
-}, 10); // update about every 10 milliseconds
+    setInterval(function() {
+        let delta = Date.now() - start; // milliseconds elapsed since start
+
+        document.querySelector("#dark-timer").innerHTML = timeRemaining - (Math.floor(delta / 1000)); // in minutes
+        // alternatively just show wall clock time:
+        // output(new Date().toUTCString());
+    }, 1000); // update about every second
 }
