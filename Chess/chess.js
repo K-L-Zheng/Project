@@ -4,14 +4,15 @@ let players = ["light-pc", "dark-pc"];
 let activePiece;
 let lastMovedPiece;
 let promoPieceCount = 0;
-let remainingPieces = ["dark-king", "dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-king", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"]
+let remainingPieces = ["dark-king", "dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-king", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"];
+let intervalID;
 //complete
 function possibleMoves(id) {
     let boardSpace = document.querySelector("#" + id);
     movePiece(id);
     clearsBoard();
-    //checks for a piece and player's turn and assigns piece as active piece
-    if (boardSpace.children.length && boardSpace.children[0].classList.contains(players[0])) {
+    //checks for a piece and player's turn and win-screen visibility
+    if (boardSpace.children.length && boardSpace.children[0].classList.contains(players[0]) && document.querySelector("#win-screen").style.visibility !== "visible") {
         //creates an array of boolean values indicating the visibility of each promo column
         let pawnPromo = [...document.querySelectorAll(".light-promo,.dark-promo")];
         pawnPromo = pawnPromo.map(promo => promo.style.visibility !== "visible" ? true : false);
@@ -109,11 +110,11 @@ function movePiece(id) {
             clearsBoard();
             players.reverse();
             mate();
+            timer();
 
             if (matchStarted === true) {
                 turn += .5;
                 document.querySelector("#turnCount").innerHTML = Math.floor(turn);
-                timer();
             }
         }
     }
@@ -162,14 +163,14 @@ function pawnMoves(id) {
             }
 
             if (samePiece && document.querySelector("#" + lastMovedPiece).classList.contains("moved-once")) {
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).appendChild(document.querySelector("#" + id).children[0]);    
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + (+id[1] + 1)).appendChild(document.querySelector("#" + id).children[0]);    
                 check();
 
                 if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
                     moves.push(String.fromCharCode(id.charCodeAt(0) + 1) + (+id[1] + 1));
                 }
 
-                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).children[0]);
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + (+id[1] + 1)).children[0]);
             }
         }
     }
@@ -202,14 +203,14 @@ function pawnMoves(id) {
             }
 
             if (samePiece && document.querySelector("#" + lastMovedPiece).classList.contains("moved-once")) {
-                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).appendChild(document.querySelector("#" + id).children[0]);    
+                document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + (+id[1] - 1)).appendChild(document.querySelector("#" + id).children[0]);    
                 check();
 
                 if (document.querySelector("." + players[0] + ".king").parentElement.style.outline !== "red solid 5px") {
                     moves.push(String.fromCharCode(id.charCodeAt(0) + 1) + (+id[1] - 1));
                 }
 
-                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + id[1]).children[0]);
+                document.querySelector("#" + id).appendChild(document.querySelector("#" + String.fromCharCode(id.charCodeAt(0) + 1) + (+id[1] - 1)).children[0]);
             }
         }
     }
@@ -425,6 +426,7 @@ function pawnPromotion(id) {
     clearsBoard();
     players.reverse();
     mate();
+    timer();
 
     if (matchStarted === true) {
         turn += .5;
@@ -1533,16 +1535,52 @@ function mate() {
         }
     }
 }
-//incomplete
+//incomplete || add minutes and maybe hours into timer
 function timer() {
-    let timeRemaining = 10 * 60
-    let start = Date.now();
+    clearInterval(intervalID);
 
-    setInterval(function() {
-        let delta = Date.now() - start; // milliseconds elapsed since start
+    if (matchStarted === true) {
+        let timerID;
 
-        document.querySelector("#dark-timer").innerHTML = timeRemaining - (Math.floor(delta / 1000)); // in minutes
-        // alternatively just show wall clock time:
-        // output(new Date().toUTCString());
-    }, 1000); // update about every second
+        if (players[0] === "light-pc") {
+            timerID = "#light-timer";
+        }
+        else {
+            timerID = "#dark-timer";
+        }
+    
+        let timeRemaining = document.querySelector(timerID).innerHTML;
+        let start = Date.now();
+    
+        intervalID = setInterval(function() {
+            let delta = Date.now() - start; // milliseconds elapsed since start
+    
+            document.querySelector(timerID).innerHTML = timeRemaining - (Math.floor(delta / 1000));
+            // alternatively just show wall clock time:
+            // output(new Date().toUTCString());
+            if (Math.floor(delta / 1000) == timeRemaining) {
+                clearInterval(intervalID);
+                document.querySelector("#win-screen").style.visibility = "visible";
+                document.querySelector("#win-screen").style.opacity = "100%";
+                if (players[0] === "dark-pc") {
+                    document.querySelector("#win-screen").style.color = "white";
+                }
+                matchStarted = false;
+    
+                if (players[0] === "light-pc") {
+                    document.querySelector("#win-screen").innerHTML = "~ DARK WINS ~";
+                }
+                else {
+                    document.querySelector("#win-screen").innerHTML = "~ LIGHT WINS ~";
+                }
+            }
+        }, 1000); // update about every second
+    }
 }
+
+// span around minutes, seconds, etc
+// change min/hours text when seconds hit 0
+
+// alternatively
+
+//multiple setInterval() methods for each time length (hours, mins, seconds)
