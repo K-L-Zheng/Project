@@ -8,6 +8,7 @@ body {
         position: relative;
         margin: auto;
         padding-inline: 5px;
+        opacity: 65%;
     }
 
         #turn {
@@ -124,6 +125,21 @@ body {
                     text-shadow: 0 2px #231D19;
                 }
         
+        #timer-selection {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            #timer-selection button {
+                font-size: 2rem;
+                border-radius: .5rem;
+            }
+
         #win-screen {
             position: absolute;
             left: 20%;

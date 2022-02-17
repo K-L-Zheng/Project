@@ -63,7 +63,7 @@
                     <i id="light-bishop-promo-h" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
             </div>
-            <div id="dark-timer" class="timer">500</div>
+            <div id="dark-timer" class="timer"></div>
         </div>
         <div id="board">
             <div class="light-sq" id="a8" onclick="possibleMoves(this.id)">
@@ -246,9 +246,18 @@
                     <i id="dark-queen-promo-h" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
             </div>
-            <div id="light-timer" class="timer">500</div>
+            <div id="light-timer" class="timer"></div>
         </div>
-        <div id="win-screen">~ LIGHT WINS ~</div>
+        <div id="win-screen"></div>
+    </div>
+    <div id="timer-selection">
+        <button onclick="setTimers(30)">30 Sec</button>
+        <button onclick="setTimers(60)">1 Min</button>
+        <button onclick="setTimers(180)">3 Min</button>
+        <button onclick="setTimers(300)">5 Min</button>
+        <button onclick="setTimers(600)">10 Min</button>
+        <button onclick="setTimers(1800)">30 Min</button>
+        <button onclick="setTimers(3600)">1 Hr</button>
     </div>
     <script src="chess.js"></script>
 </body>
