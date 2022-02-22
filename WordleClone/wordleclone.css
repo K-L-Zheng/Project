@@ -1,0 +1,13 @@
+#container {
+    max-width: 500px;
+    margin: auto;
+    background-color: aliceblue;
+}
+
+    #wordlegrid {
+        outline: black 1px solid;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        aspect-ratio: 5/6;
+        grid-gap: 5px;
+    }
