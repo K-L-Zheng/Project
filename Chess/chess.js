@@ -7,12 +7,18 @@ let promoPieceCount = 0;
 let remainingPieces = ["dark-king", "dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-king", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"];
 let intervalID;
 let clock = [["00", "00", "30"], ["00", "01", "00"], ["00", "03", "00"], ["00", "05", "00"], ["00", "10", "00"], ["00", "30", "00"], ["01", "00", "00"]];
-
+let hoursRemaining;
+let minutesRemaining;
+let secondsRemaining;
 //incomplete
 function setTimers(index) {
 
     document.querySelector("#light-timer").innerHTML = clock[index][0] + ":" + clock[index][1] + ":" + clock[index][2];
     document.querySelector("#dark-timer").innerHTML = clock[index][0] + ":" + clock[index][1] + ":" + clock[index][2];
+
+    hoursRemaining = clock[index][0];
+    minutesRemaining = clock[index][1];
+    secondsRemaining = clock[index][2];
 
     matchStarted = true;
     timer(index);
@@ -20,7 +26,7 @@ function setTimers(index) {
     document.querySelector("#board-wrapper").style.opacity = "100%";
 }
 //incomplete || error
-function timer(index) {
+function timer() {
     clearInterval(intervalID);
 
     if (matchStarted === true) {
@@ -32,22 +38,19 @@ function timer(index) {
         else {
             timerID = "#dark-timer";
         }
-    
-        let hoursRemaining = clock[index][0];
-        let minutesRemaining = clock[index][1];
-        let secondsRemaining = clock[index][2];
-        let start = new Date();
-    
+
+        let startTime = new Date();
+
         intervalID = setInterval(function() {
-            let hoursDelta = new Date().getHours() - start.getHours(); // hours elapsed since start
-            let minutesDelta = new Date().getMinutes() - start.getMinutes(); // minutes elapsed since start
-            let secondsDelta = new Date().getSeconds() - start.getSeconds(); // seconds elapsed since start
+            hoursRemaining -= (new Date().getHours() - startTime.getHours()); // hours elapsed since start
+            minutesRemaining -= (new Date().getMinutes() - startTime.getMinutes()); // minutes elapsed since start
+            secondsRemaining -= (new Date().getSeconds() - startTime.getSeconds()); // seconds elapsed since start
 
-            console.log (hoursDelta);
+            console.log(minutesRemaining);
     
-            document.querySelector(timerID).innerHTML = (hoursRemaining - hoursDelta) + ":" + (minutesRemaining - minutesDelta) + ":" + (secondsRemaining - secondsDelta);
+            document.querySelector(timerID).innerHTML = hoursRemaining + ":" + (minutesRemaining - 1) + ":" + secondsRemaining;
 
-            if (hoursDelta == hoursRemaining && minutesDelta == minutesRemaining && secondsDelta == secondsRemaining) {
+            if (hoursRemaining === 0 && minutesRemaining === 0 && secondsRemaining === 0) {
                 clearInterval(intervalID);
                 document.querySelector("#win-screen").style.visibility = "visible";
                 document.querySelector("#win-screen").style.opacity = "100%";
