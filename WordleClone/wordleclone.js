@@ -1,5 +1,5 @@
-let row = 1;
-let column = 1;
+let row = 0;
+let column = 0;
 let activeBox = document.querySelector("#box" + row + column + " input");
 let validWords = ["sword", "store", "pause", "graph"];
 let validAns = ["sword", "pause"];
@@ -10,7 +10,7 @@ activeBox.onkeyup = nextInput;
 
 function nextInput() {
 
-    if (document.querySelector("#box" + row + column + " input").value.length === 1 && column < 5) {
+    if (document.querySelector("#box" + row + column + " input").value.length === 1 && column < 4) {
         column += 1;
         document.querySelector("#box" + row + column + " input").focus();
         activeBox = document.querySelector("#box" + row + column + " input");
@@ -20,22 +20,29 @@ function nextInput() {
 
 document.addEventListener("keyup", function(keyPress) {
     if (keyPress.code === "Enter") {
-        let attempt = document.querySelector("#box11 input").value + document.querySelector("#box12 input").value + document.querySelector("#box13 input").value + document.querySelector("#box14 input").value + document.querySelector("#box15 input").value;
+        let attempt = document.querySelector("#box00 input").value + document.querySelector("#box01 input").value + document.querySelector("#box02 input").value + document.querySelector("#box03 input").value + document.querySelector("#box04 input").value;
         if (attempt === answer) {
-            document.querySelector("#box11 input").style.backgroundColor = "green";
-            document.querySelector("#box12 input").style.backgroundColor = "green";
-            document.querySelector("#box13 input").style.backgroundColor = "green";
-            document.querySelector("#box14 input").style.backgroundColor = "green";
-            document.querySelector("#box15 input").style.backgroundColor = "green";
+            document.querySelector("#box00 input").style.backgroundColor = "green";
+            document.querySelector("#box01 input").style.backgroundColor = "green";
+            document.querySelector("#box02 input").style.backgroundColor = "green";
+            document.querySelector("#box03 input").style.backgroundColor = "green";
+            document.querySelector("#box04 input").style.backgroundColor = "green";
         }
         else {
-            for (let i = 1; i < 6; i++) {
+            for (let i = 0; i < 5; i++) {
                 for (let x of answer) {
-                    if (document.querySelector("#box1" + i + " input").value === x) {
-                        document.querySelector("#box1" + i + " input").style.backgroundColor = "yellow";
+                    if (attempt[i] === x) {
+                        if (attempt[i] === answer[i]) {
+                            document.querySelector("#box0" + i + " input").style.backgroundColor = "green";
+                            break;
+                        }
+                        else {
+                            document.querySelector("#box0" + i + " input").style.backgroundColor = "yellow";
+                            break;
+                        }
                     }
                     else {
-                        document.querySelector("#box1" + i + " input").style.backgroundColor = "red";
+                        document.querySelector("#box0" + i + " input").style.backgroundColor = "red";
                     }
                 }
             }
