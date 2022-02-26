@@ -1,24 +1,21 @@
 let matchStarted = false;
 let turn = 1;
 let players = ["light-pc", "dark-pc"];
-let activePiece;
-let lastMovedPiece;
+let activePiece, lastMovedPiece;
 let promoPieceCount = 0;
 let remainingPieces = ["dark-king", "dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-king", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"];
 let intervalID;
 let clock = [["00", "00", "30"], ["00", "01", "00"], ["00", "03", "00"], ["00", "05", "00"], ["00", "10", "00"], ["00", "30", "00"], ["01", "00", "00"]];
-let hoursRemaining;
-let minutesRemaining;
-let secondsRemaining;
+let initialHours, initialMinutes, initialSeconds;
 //incomplete
 function setTimers(index) {
 
     document.querySelector("#light-timer").innerHTML = clock[index][0] + ":" + clock[index][1] + ":" + clock[index][2];
     document.querySelector("#dark-timer").innerHTML = clock[index][0] + ":" + clock[index][1] + ":" + clock[index][2];
 
-    hoursRemaining = clock[index][0];
-    minutesRemaining = clock[index][1];
-    secondsRemaining = clock[index][2];
+    initialHours = clock[index][0];
+    initialMinutes = clock[index][1];
+    initialSeconds = clock[index][2];
 
     matchStarted = true;
     timer(index);
@@ -42,13 +39,13 @@ function timer() {
         let startTime = new Date();
 
         intervalID = setInterval(function() {
-            hoursRemaining -= (new Date().getHours() - startTime.getHours()); // hours elapsed since start
-            minutesRemaining -= (new Date().getMinutes() - startTime.getMinutes()); // minutes elapsed since start
-            secondsRemaining -= (new Date().getSeconds() - startTime.getSeconds()); // seconds elapsed since start
+            let hoursRemaining = initialHours - (new Date().getHours() - startTime.getHours()); // hours elapsed since start
+            let minutesRemaining = initialMinutes - (new Date().getMinutes() - startTime.getMinutes()); // minutes elapsed since start
+            let secondsRemaining = initialSeconds - (new Date().getSeconds() - startTime.getSeconds()); // seconds elapsed since start
 
-            console.log(minutesRemaining);
+            console.log(initialMinutes);
     
-            document.querySelector(timerID).innerHTML = hoursRemaining + ":" + (minutesRemaining - 1) + ":" + secondsRemaining;
+            document.querySelector(timerID).innerHTML = hoursRemaining + ":" + minutesRemaining + ":" + secondsRemaining;
 
             if (hoursRemaining === 0 && minutesRemaining === 0 && secondsRemaining === 0) {
                 clearInterval(intervalID);
