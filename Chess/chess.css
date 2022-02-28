@@ -8,7 +8,6 @@ body {
         position: relative;
         margin: auto;
         padding-inline: 5px;
-        opacity: 65%;
     }
 
         #turn {
@@ -124,21 +123,42 @@ body {
                     color: #A5BDC8;
                     text-shadow: 0 2px #231D19;
                 }
-        
-        #timer-selection {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
 
-            #timer-selection button {
-                font-size: 2rem;
-                border-radius: .5rem;
+            #veil {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background-color: hsla(0, 0%, 100%, .35);
+                transform: translate(0, -100%);
             }
+        
+            #timer-selection {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -48%);
+                width: 35%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3px;
+            }
+
+                #timer-selection button {
+                    width: 50%;
+                    font-size: 1.5rem;
+                    color: cadetblue;
+                    font-weight: bold;
+                    padding: 8px 20px;
+                    border-radius: 16px;
+                    border: cadetblue 5px solid;
+                    background-color: white;
+                }
+
+                #timer-selection button:hover {
+                    font-size: 2rem;
+                    width: 100%;
+                }
 
         #win-screen {
             position: absolute;

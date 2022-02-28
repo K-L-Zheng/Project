@@ -5,68 +5,64 @@ let activePiece, lastMovedPiece;
 let promoPieceCount = 0;
 let remainingPieces = ["dark-king", "dark-knight-a", "dark-bishop-a", "dark-queen", "dark-king", "dark-bishop-b", "dark-knight-b", "dark-rook-b", "dark-pawn-a", "dark-pawn-b", "dark-pawn-c", "dark-pawn-d", "dark-pawn-e", "dark-pawn-f", "dark-pawn-g", "dark-pawn-h", "light-king", "light-knight-a", "light-bishop-a", "light-queen", "light-king", "light-bishop-b", "light-knight-b", "light-rook-b", "light-pawn-a", "light-pawn-b", "light-pawn-c", "light-pawn-d", "light-pawn-e", "light-pawn-f", "light-pawn-g", "light-pawn-h"];
 let intervalID;
-let clock = [["00", "00", "30"], ["00", "01", "00"], ["00", "03", "00"], ["00", "05", "00"], ["00", "10", "00"], ["00", "30", "00"], ["01", "00", "00"]];
-let initialHours, initialMinutes, initialSeconds;
-//incomplete
-function setTimers(index) {
+let lightTimeRem;
+let darkTimeRem;
 
-    document.querySelector("#light-timer").innerHTML = clock[index][0] + ":" + clock[index][1] + ":" + clock[index][2];
-    document.querySelector("#dark-timer").innerHTML = clock[index][0] + ":" + clock[index][1] + ":" + clock[index][2];
-
-    initialHours = clock[index][0];
-    initialMinutes = clock[index][1];
-    initialSeconds = clock[index][2];
-
-    matchStarted = true;
-    timer(index);
-    document.querySelector("#timer-selection").style.display = "none";
-    document.querySelector("#board-wrapper").style.opacity = "100%";
-}
-//incomplete || error
-function timer() {
-    clearInterval(intervalID);
+function startTimer(duration) {
+    clearInterval(intervalID); //stops other player's timer
 
     if (matchStarted === true) {
-        let timerID;
+        let initialDuration = duration;
+        let hours, minutes, seconds;
+        let startTime = Date.now();
 
-        if (players[0] === "light-pc") {
-            timerID = "#light-timer";
-        }
-        else {
-            timerID = "#dark-timer";
-        }
+        function timer() {
+            let timeElapsed = Math.trunc((Date.now() - startTime) / 1000); //truncates the elapsed time, ex. 1.01 -> 1
+            let timeRemaining = initialDuration - timeElapsed;
 
-        let startTime = new Date();
+            hours = Math.trunc(timeRemaining / 3600) >= 10 ? Math.trunc(timeRemaining / 3600) : "0" + Math.trunc(timeRemaining / 3600);
+            minutes = Math.trunc(timeRemaining / 60) >= 10 ? (Math.trunc(timeRemaining / 60) % 60 === 0 ? "00" : Math.trunc(timeRemaining / 60)) : "0" + Math.trunc(timeRemaining / 60);
+            seconds = Math.trunc(timeRemaining % 60) >= 10 ? Math.trunc(timeRemaining % 60) : "0" + Math.trunc(timeRemaining % 60);
 
-        intervalID = setInterval(function() {
-            let hoursRemaining = initialHours - (new Date().getHours() - startTime.getHours()); // hours elapsed since start
-            let minutesRemaining = initialMinutes - (new Date().getMinutes() - startTime.getMinutes()); // minutes elapsed since start
-            let secondsRemaining = initialSeconds - (new Date().getSeconds() - startTime.getSeconds()); // seconds elapsed since start
+            if (players[0] === "light-pc") {
+                document.querySelector("#light-timer").innerHTML = hours + ":" + minutes + ":" + seconds;
+                lightTimeRem = timeRemaining;
+            }
+            else {
+                document.querySelector("#dark-timer").innerHTML = hours + ":" + minutes + ":" + seconds;
+                darkTimeRem = timeRemaining;
+            }
 
-            console.log(initialMinutes);
-    
-            document.querySelector(timerID).innerHTML = hoursRemaining + ":" + minutesRemaining + ":" + secondsRemaining;
-
-            if (hoursRemaining === 0 && minutesRemaining === 0 && secondsRemaining === 0) {
+            if (timeRemaining <= 0) {
                 clearInterval(intervalID);
+                matchStarted = false;
+
                 document.querySelector("#win-screen").style.visibility = "visible";
                 document.querySelector("#win-screen").style.opacity = "100%";
-                if (players[0] === "dark-pc") {
-                    document.querySelector("#win-screen").style.color = "white";
-                }
-                matchStarted = false;
-    
+
                 if (players[0] === "light-pc") {
                     document.querySelector("#win-screen").innerHTML = "~ DARK WINS ~";
                 }
                 else {
+                    document.querySelector("#win-screen").style.color = "white";
                     document.querySelector("#win-screen").innerHTML = "~ LIGHT WINS ~";
                 }
             }
-        }, 1000); // update about every second
+        }
+        timer(); //calls the function immediately so we don't have to wait 1000ms for it to start
+        intervalID = setInterval(timer, 1000);
+    }
+
+    else if (document.querySelector("#win-screen").style.visibility !== "visible") {
+        matchStarted = true;
+        
+        document.querySelector("#timer-selection").style.display = "none";
+        document.querySelector("#veil").style.visibility = "hidden";
+
+        darkTimeRem = duration; //stores the initial duration into darkTimeRem, otherwise darkTimeRem === undefined when startTimer() is called on dark's turn
+        startTimer(duration);
     }
 }
-//complete
 function possibleMoves(id) {
     let boardSpace = document.querySelector("#" + id);
     movePiece(id);
@@ -103,7 +99,6 @@ function possibleMoves(id) {
         }
     }
 }
-//complete
 function movePiece(id) {
     let boardSpace = document.querySelector("#" + id);
     //style.outline order needs to be this way, 
@@ -166,7 +161,7 @@ function movePiece(id) {
             clearsBoard();
             players.reverse();
             mate();
-            timer();
+            startTimer(players[0] === "light-pc" ? lightTimeRem : darkTimeRem);
 
             if (matchStarted === true) {
                 turn += .5;
@@ -175,7 +170,6 @@ function movePiece(id) {
         }
     }
 }
-//complete
 function clearsBoard() {
     let allSquares = document.querySelectorAll(".light-sq, .dark-sq");
 
@@ -186,7 +180,6 @@ function clearsBoard() {
         }
     }
 }
-//complete
 function pawnMoves(id) {
     let moves = [];
     //en passant possibility for light-pcs
@@ -387,7 +380,6 @@ function pawnMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
 function enPassant(id) {
     //en passant capture
     if (turn !== 1 && document.querySelector("#" + lastMovedPiece).classList.contains("moved-once") && document.querySelector("#" + lastMovedPiece).parentElement.id[0] === String.fromCharCode(id.charCodeAt(0))) {
@@ -406,7 +398,6 @@ function enPassant(id) {
         }
     }
 }
-//complete
 function pawnPromotion(id) {
     let newPiece = document.createElement("i");
     //checks for piece selection & creates a new piece based on the selection
@@ -481,14 +472,13 @@ function pawnPromotion(id) {
     clearsBoard();
     players.reverse();
     mate();
-    timer();
+    startTimer(players[0] === "light-pc" ? lightTimeRem : darkTimeRem);
 
     if (matchStarted === true) {
         turn += .5;
         document.querySelector("#turnCount").innerHTML = Math.floor(turn);
     }
 }
-//complete
 function bishopMoves(id) {
     let moves = [];
     //right diagonal movement
@@ -612,7 +602,6 @@ function bishopMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
 function knightMoves(id) {
     let moves = [];
     //(-1, -2)
@@ -742,7 +731,6 @@ function knightMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
 function rookMoves(id) {
     let moves = [];
     //vertical movement
@@ -866,7 +854,6 @@ function rookMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
 function queenMoves(id) {
     let moves = [];
     //right diagonal movement
@@ -1104,7 +1091,6 @@ function queenMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
 function kingMoves(id) {
     let moves = [];
 
@@ -1228,7 +1214,6 @@ function kingMoves(id) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
     }
 }
-//complete
 function castling(id) {
 
     if (activePiece.id === "light-king") {
@@ -1252,7 +1237,6 @@ function castling(id) {
         }
     }
 }
-//complete
 function check() {
 
     for (let i = 0; i < players.length; i++) {
@@ -1476,7 +1460,6 @@ function check() {
         }
     }
 }
-//complete
 function mate() {
     if (players[0] === "light-pc") {
         let lightPieces = remainingPieces.filter(pc => pc.includes("light"));
