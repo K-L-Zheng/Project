@@ -153,6 +153,7 @@ body {
                     border-radius: 16px;
                     border: cadetblue 5px solid;
                     background-color: white;
+                    transition: .2s;
                 }
 
                 #timer-selection button:hover {
