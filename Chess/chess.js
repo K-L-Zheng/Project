@@ -378,6 +378,7 @@ function pawnMoves(id) {
 
     for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
+        document.querySelector("#" + moves[i]).style.zIndex = "0";
     }
 }
 function enPassant(id) {
@@ -600,6 +601,7 @@ function bishopMoves(id) {
 
     for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
+        document.querySelector("#" + moves[i]).style.zIndex = "0";
     }
 }
 function knightMoves(id) {
@@ -729,6 +731,7 @@ function knightMoves(id) {
 
     for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
+        document.querySelector("#" + moves[i]).style.zIndex = "0";
     }
 }
 function rookMoves(id) {
@@ -852,6 +855,7 @@ function rookMoves(id) {
 
     for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
+        document.querySelector("#" + moves[i]).style.zIndex = "0";
     }
 }
 function queenMoves(id) {
@@ -1089,6 +1093,7 @@ function queenMoves(id) {
 
     for (let i = 0; i < moves.length; i++) {
         document.querySelector("#" + moves[i]).style.outline = "#473A33 5px solid";
+        document.querySelector("#" + moves[i]).style.zIndex = "0";
     }
 }
 function kingMoves(id) {
@@ -1453,9 +1458,11 @@ function check() {
         
         if (checkingPieces.length !== 0) {
             document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
+            document.querySelector("#" + kingSpace).style.zIndex = "10";
         }
         else {
             document.querySelector("#" + kingSpace).style.outline = "none";
+            document.querySelector("#" + kingSpace).style.zIndex = "0";
             checkingPieces = [];
         }
     }
@@ -1463,7 +1470,7 @@ function check() {
 function mate() {
     if (players[0] === "light-pc") {
         let lightPieces = remainingPieces.filter(pc => pc.includes("light"));
-
+        //test all possible moves of remaining pieces
         for (let i = 0; i < lightPieces.length; i++) {
             switch (true) {
                 case lightPieces[i].includes("pawn"):
@@ -1490,7 +1497,7 @@ function mate() {
         let noMoves = true;
 
         for (let i = 0; i < allSquares.length; i++ ) {
-
+            //if there is a possible move(s), clear the possible move outline(s)
             if (allSquares[i].style.outline === "rgb(71, 58, 51) solid 5px") {
                 for (let j = i; j < allSquares.length; j++ ) {
 
@@ -1502,7 +1509,7 @@ function mate() {
                 break;
             }
         }
-
+        //if no possible moves left, declare winner
         if (noMoves === true) {
             document.querySelector("#win-screen").style.visibility = "visible";
             document.querySelector("#win-screen").style.opacity = "100%";
