@@ -9,7 +9,8 @@ body {
 
         h1 {
             text-align: center;
-            font-size: 4rem;
+            font-size: 6rem;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
 
         #wordlegrid {
@@ -27,10 +28,23 @@ body {
                     top: 50%;
                     left: 50%;
                     transform: translate(-50%, -50%);
+
                     width: 85%;
                     height: 85%;
-                    background-color:rgb(215, 237, 255);
+
                     font-size: 4rem;
+                    font-weight: bold;
+                    text-align: center;
+                    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+                    background-color:rgb(215, 237, 255);
+                    color: rgb(58, 58, 58);
+                    border: none;
+                    caret-color: transparent;
+                }
+
+                #wordlegrid > div > input:focus {
+                    outline: rgb(96, 163, 168) 5px solid;
                 }
 
 

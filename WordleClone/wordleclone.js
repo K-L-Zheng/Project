@@ -1,40 +1,41 @@
 let row = 0;
 let column = 0;
-let activeBox = document.querySelector("#box" + row + column + " input");
-let validWords = ["sword", "store", "pause", "graph"];
-let validAns = ["sword", "pause"];
-let answer = ["s","w", "e", "e", "t"];
+let validWords = ["sword", "store", "pause", "graph", "sweet", "seeds", "speed"];
+let validAns = ["sword", "pause", "sweet", "speed"];
+let answer = ["s","p", "e", "e", "d"];
 let matchedLetters = ["-", "-", "-", "-", "-"];
-let keyboard = ["a", "b", "c", "d", "e", "f", "g" , "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+// let keyboard = ["a", "b", "c", "d", "e", "f", "g" , "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
-activeBox.focus();
-activeBox.onkeyup = nextInput;
+//FIX - mouse clicks directly on letters cause the letters to be undeletable
 
-function nextInput() {
-
-    if (document.querySelector("#box" + row + column + " input").value.length === 1 && column < 4) {
-        column += 1;
-        document.querySelector("#box" + row + column + " input").focus();
-        activeBox = document.querySelector("#box" + row + column + " input");
-        activeBox.onkeyup = nextInput;
+document.addEventListener("keydown", function(keypress) {
+    if (/[A-z]/.test(keypress.key) && /[^\\\][^_]/.test(keypress.key)) { //filters out numbers + special characters, second part filters out [, ], \, ^, _
+        if (column < 5 && keypress.key.length === 1) { //prevent non-letter keys from changing input focus
+            document.querySelector("#box" + row + column++ + " input").focus();
+        }
     }
-}
+    else {
+        keypress.preventDefault(); //prevents key event from activating
+    }
 
-document.addEventListener("keyup", function(keyPress) {
-    if (keyPress.code === "Enter") {
+    if (keypress.code === "Backspace" && column > 0) {
+        document.querySelector("#box" + row + --column + " input").focus();
+    }
+
+    if (keypress.code === "Enter") {
         let attempt = document.querySelector("#box00 input").value + document.querySelector("#box01 input").value + document.querySelector("#box02 input").value + document.querySelector("#box03 input").value + document.querySelector("#box04 input").value;
         if (attempt === answer.join("")) {
-            document.querySelector("#box00 input").style.backgroundColor = "green";
-            document.querySelector("#box01 input").style.backgroundColor = "green";
-            document.querySelector("#box02 input").style.backgroundColor = "green";
-            document.querySelector("#box03 input").style.backgroundColor = "green";
-            document.querySelector("#box04 input").style.backgroundColor = "green";
+            document.querySelector("#box00 input").style.backgroundColor = "rgb(120, 223, 163)";
+            document.querySelector("#box01 input").style.backgroundColor = "rgb(120, 223, 163)";
+            document.querySelector("#box02 input").style.backgroundColor = "rgb(120, 223, 163)";
+            document.querySelector("#box03 input").style.backgroundColor = "rgb(120, 223, 163)";
+            document.querySelector("#box04 input").style.backgroundColor = "rgb(120, 223, 163)";
         }
-        else {
+        else if (validWords.includes(attempt)) { //checks to see if the word is in the word bank
             for (let i = 0; i < 5; i++) {
                 if (answer.includes(attempt[i])) {
                     if (attempt[i] === answer[i]) {
-                        document.querySelector("#box0" + i + " input").style.backgroundColor = "green";
+                        document.querySelector("#box0" + i + " input").style.backgroundColor = "rgb(120, 223, 163)";
                         answer.splice(i, 1, "-"); // placeholder hyphen for spliced letter so the # of elements in the array remains the same
                     }
                     else {
@@ -42,21 +43,30 @@ document.addEventListener("keyup", function(keyPress) {
                     }
                 }
                 else {
-                    document.querySelector("#box0" + i + " input").style.backgroundColor = "red";
+                    document.querySelector("#box0" + i + " input").style.backgroundColor = "rgb(245, 131, 131)";
                 }
             }
             for (let i = 0; i < 5; i++) {
                 if (matchedLetters[i].match(/[A-z]/)) { //checks to see if the element is a letter
                     if (answer.includes(matchedLetters[i])) {
-                        document.querySelector("#box0" + i + " input").style.backgroundColor = "yellow";
+                        document.querySelector("#box0" + i + " input").style.backgroundColor = "rgb(255, 255, 204)";
                         answer.splice(answer.indexOf(matchedLetters[i]), 1, "-");
                     }
                     else {
-                        document.querySelector("#box0" + i + " input").style.backgroundColor = "red";
+                        document.querySelector("#box0" + i + " input").style.backgroundColor = "rgb(245, 131, 131)";
                     }
                 }
             }
         }
+        else { //clears the row
+            document.querySelector("#box00 input").value = "";
+            document.querySelector("#box01 input").value = "";
+            document.querySelector("#box02 input").value = "";
+            document.querySelector("#box03 input").value = "";
+            document.querySelector("#box04 input").value = "";
+            //resets back to 1st box in row
+            document.querySelector("#box00 input").focus();
+            column = 0;
+        }
     }
 })
-
