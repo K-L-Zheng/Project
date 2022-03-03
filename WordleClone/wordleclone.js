@@ -1,8 +1,8 @@
 let row = 0;
 let column = 0;
-let validWords = ["sword", "store", "pause", "graph", "sweet", "seeds", "speed"];
-let validAns = ["sword", "pause", "sweet", "speed"];
-let answer = ["s","p", "e", "e", "d"];
+let validWords = ["sword", "store", "pause", "graph", "sweet", "seeds", "speed", "sbmad", "brand"];
+let validAns = ["sword", "pause", "sweet", "speed", "sbmad"];
+let answer = ["s","b", "m", "a", "d"];
 let matchedLetters = ["-", "-", "-", "-", "-"];
 // let keyboard = ["a", "b", "c", "d", "e", "f", "g" , "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
@@ -10,8 +10,14 @@ let matchedLetters = ["-", "-", "-", "-", "-"];
 
 document.addEventListener("keydown", function(keypress) {
     if (/[A-z]/.test(keypress.key) && /[^\\\][^_]/.test(keypress.key)) { //filters out numbers + special characters, second part filters out [, ], \, ^, _
-        if (column < 5 && keypress.key.length === 1) { //prevent non-letter keys from changing input focus
-            document.querySelector("#box" + row + column++ + " input").focus();
+        if (keypress.key.length === 1) { //prevent non-letter keys from changing input focus
+            if (column < 5) {
+                document.querySelector("#box" + row + column++ + " input").focus();
+                document.activeElement.value = "";
+            }
+            else if (column === 5) {
+                document.activeElement.value = "";
+            }
         }
     }
     else {
@@ -68,5 +74,11 @@ document.addEventListener("keydown", function(keypress) {
             document.querySelector("#box00 input").focus();
             column = 0;
         }
+    }
+})
+
+document.addEventListener("click", function() {
+    if (document.activeElement.parentElement.classList.contains("attempt1")) {
+        column = document.activeElement.parentElement.id[4];
     }
 })
