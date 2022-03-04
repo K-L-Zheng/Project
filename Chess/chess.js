@@ -21,7 +21,11 @@ function startTimer(duration) {
             let timeRemaining = initialDuration - timeElapsed;
 
             hours = timeRemaining / 3600 >= 10 ? Math.trunc(timeRemaining / 3600) : "0" + Math.trunc(timeRemaining / 3600);
-            minutes = timeRemaining / 60 >= 10 ? (Math.trunc(timeRemaining / 60) % 60 === 0 ? "00" : (Math.trunc(timeRemaining / 60) % 60 >= 10 ? Math.trunc(timeRemaining / 60) % 60 : "0" + Math.trunc(timeRemaining / 60) % 60)) : "0" + Math.trunc(timeRemaining / 60);
+            minutes = timeRemaining / 60 >= 10 ?
+                          Math.trunc(timeRemaining / 60) % 60 === 0 ? "00"
+                        : Math.trunc(timeRemaining / 60) % 60 >= 10 ? Math.trunc(timeRemaining / 60) % 60
+                        : "0" + Math.trunc(timeRemaining / 60) % 60
+                    : "0" + Math.trunc(timeRemaining / 60);
             seconds = timeRemaining % 60 >= 10 ? timeRemaining % 60 : "0" + timeRemaining % 60; //doesn't need to be truncated cause timeRemaining is already truncated and the resulting remainder will always be an integer
 
             if (players[0] === "light-pc") {
@@ -60,7 +64,13 @@ function startTimer(duration) {
         document.querySelector("#veil").style.visibility = "hidden";
 
         darkTimeRem = duration; //stores the initial duration into darkTimeRem, otherwise darkTimeRem === undefined when startTimer() is called on dark's turn
-        document.querySelector("#dark-timer").innerHTML = (duration / 3600 >= 10 ? Math.trunc(duration / 3600) : "0" + Math.trunc(duration / 3600)) + ":" + (duration / 60 >= 10 ? (Math.trunc(duration / 60) % 60 === 0 ? "00" : (Math.trunc(duration / 60) % 60 >= 10 ? Math.trunc(duration / 60) % 60 : "0" + Math.trunc(duration / 60) % 60)) : "0" + Math.trunc(duration / 60)) + ":" + (duration % 60 >= 10 ? duration % 60 : "0" + duration % 60);
+        document.querySelector("#dark-timer").innerHTML = (duration / 3600 >= 10 ? Math.trunc(duration / 3600) : "0" + Math.trunc(duration / 3600)) + ":"
+                                                        + (duration / 60 >= 10 ?
+                                                            (Math.trunc(duration / 60) % 60 === 0 ? "00"
+                                                            : (Math.trunc(duration / 60) % 60 >= 10 ? Math.trunc(duration / 60) % 60
+                                                            : "0" + Math.trunc(duration / 60) % 60))
+                                                        : "0" + Math.trunc(duration / 60)) + ":"
+                                                        + (duration % 60 >= 10 ? duration % 60 : "0" + duration % 60);
 
         startTimer(duration);
     }
