@@ -1470,7 +1470,7 @@ function check() {
         
         if (checkingPieces.length !== 0) {
             document.querySelector("#" + kingSpace).style.outline = "red 5px solid";
-            document.querySelector("#" + kingSpace).style.zIndex = "10";
+            document.querySelector("#" + kingSpace).style.zIndex = "1";
         }
         else {
             document.querySelector("#" + kingSpace).style.outline = "none";
