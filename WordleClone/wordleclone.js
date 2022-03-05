@@ -3,7 +3,7 @@ let column = 0;
 const validWords = ["sword", "store", "pause", "graph", "sweet", "seeds", "speed", "sbmad", "brand", "swift", "shift", "dance"];
 const validAns = ["sword", "pause", "sweet", "speed", "sbmad", "swift", "shift", "dance"];
 let answer = "swift";
-// let keyboard = ["a", "b", "c", "d", "e", "f", "g" , "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+// let keyboard = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 let gameWon = false;
 
 document.addEventListener("keydown", function(keypress) {
@@ -102,8 +102,8 @@ document.addEventListener("keydown", function(keypress) {
             }
         }
     }
-    // tab, ctrl z + ctrl y need to be fixed
-    else if (keypress.key === "Backspace") {
+    // ctrl + key need to be fixed
+    else if (keypress.key === "Backspace" || keypress.key === "Tab") {
         keypress.preventDefault();
     }
 })
