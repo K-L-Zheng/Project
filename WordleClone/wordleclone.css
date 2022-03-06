@@ -4,7 +4,7 @@ body {
 }
 
     #container {
-        max-width: 500px;
+        max-width: 450px;
         margin: auto;
     }
 
@@ -22,67 +22,38 @@ body {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
                 aspect-ratio: 5/6;
+                gap: 10px;
+                
+                font-size: 4rem;
+                font-weight: bold;
+                text-align: center;
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
                 user-select: none;
 
             }
 
                 #wordlegrid > div {
-                    position: relative;
+                    background-color:rgb(215, 237, 255);
+                    color: rgb(58, 58, 58);
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    line-height: 0;
                 }
 
-                    #wordlegrid > div > input {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
+            #ans-reveal {
+                border-radius: 12px;
+                border: rgb(96, 163, 168) solid 5px;
+                background-color: rgb(215, 237, 255);
 
-                        width: 85%;
-                        height: 85%;
+                width: 40%;
+                margin: 3rem auto 0;
 
-                        font-size: 4rem;
-                        font-weight: bold;
-                        text-align: center;
-                        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                text-align: center;
+                font-weight: bold;
+                font-size: 3rem;
 
-                        background-color:rgb(215, 237, 255);
-                        color: rgb(58, 58, 58);
-                        border: none;
-                        caret-color: transparent;
-                    }
-
-                    #wordlegrid > div > input:focus {
-                        outline: rgb(96, 163, 168) 5px solid;
-                    }
-            
-            .veil {
-                position: absolute;
-                width: 100%;
-                aspect-ratio: 1/.2;
-                /* outline: red 1px solid; */
-            }
-
-            #av0 {
-                transform: translate(0, -600%);
                 visibility: hidden;
             }
-
-            #av1 {
-                transform: translate(0, -500%);
-            }
-
-            #av2 {
-                transform: translate(0, -400%);
-            }
-
-            #av3 {
-                transform: translate(0, -300%);
-            }
-
-            #av4 {
-                transform: translate(0, -200%);
-            }
-
-            #av5 {
-                transform: translate(0, -100%);
-            }
-
