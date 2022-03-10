@@ -5,17 +5,23 @@ body {
 }
 
     #container {
-        max-width: 450px;
+        outline: red solid 1px;
+        display: inline-block;
+        min-width: clamp(700px, 700px, 100%);
         margin: auto;
+        text-align: center;
     }
 
         h1 {
+            margin-block: 30px;
             text-align: center;
-            font-size: 6rem;
+            font-size: 5rem;
         }
 
         #wrapper {
             position: relative;
+            margin: auto;
+            width: 60%;
         }
 
             #wordlegrid {
@@ -56,3 +62,13 @@ body {
 
                 visibility: hidden;
             }
+
+        #keyboard {
+            outline: blue solid 1px;
+            text-align: center;
+        }
+
+                .kbrow button {
+                    font-size: 2rem;
+                    padding: 1rem;
+                }
