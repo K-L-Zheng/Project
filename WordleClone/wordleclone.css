@@ -1,27 +1,34 @@
 body {
+    margin: 0;
+
     background-color: rgb(141, 182, 168);
+
     user-select: none;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-    #container {
-        outline: red solid 1px;
-        display: inline-block;
-        width: min(700px, 60%);
-        margin: auto;
+    h1 {
+        margin-block: 30px;
         text-align: center;
+        font-size: 5rem;
     }
 
-        h1 {
-            margin-block: 30px;
-            text-align: center;
-            font-size: 5rem;
-        }
+    #container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 80%;
+
+        outline: red solid 1px;
+        margin: auto;
+    }
 
         #wrapper {
             position: relative;
-            margin: auto;
-            width: 60%;
+            width: min(400px, 60%);
+
+            outline: blue solid 1px;
         }
 
             #wordlegrid {
@@ -39,27 +46,32 @@ body {
             }
 
                 #wordlegrid > div {
-                    background-color:rgb(215, 237, 255);
-                    color: rgb(58, 58, 58);
-
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     line-height: 0;
+
+                    background-color:rgb(215, 237, 255);
+                    color: rgb(58, 58, 58);
                 }
 
             #ans-reveal {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                        
+                width: fit-content;
+                padding: 6px 8px;
+
                 border-radius: 12px;
                 border: rgb(96, 163, 168) solid 5px;
                 background-color: rgb(215, 237, 255);
-
-                width: 40%;
-                margin: 3rem auto 0;
-
+        
                 text-align: center;
                 font-weight: bold;
                 font-size: 3rem;
-
+        
                 visibility: hidden;
             }
 

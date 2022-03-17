@@ -67,6 +67,7 @@ document.addEventListener("keydown", function(keypress) {
                         document.querySelector("#box" + row + i).style.backgroundColor = "rgb(245, 131, 131)";
                     }
                 }
+
                 for (let i = 0; i < 5; i++) {
                     if (matchedLetters[i].match(/[a-z]/)) { //checks to see if the element is a letter
                         if (answerLetters.includes(matchedLetters[i])) {
@@ -78,6 +79,7 @@ document.addEventListener("keydown", function(keypress) {
                         }
                     }
                 }
+
                 if (row < 5) {
                     document.querySelector("#box" + row + (column - 1)).style.outline = "";
 
@@ -92,6 +94,8 @@ document.addEventListener("keydown", function(keypress) {
 
                     gameEnded = true;
                 }
+
+                
             }
             else { //clears the row
                 document.querySelector("#box" + row + "0").innerHTML = "";
