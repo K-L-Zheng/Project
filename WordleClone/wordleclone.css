@@ -1,6 +1,12 @@
-body {
-    margin: 0;
+:root {
+    --board-width: 400;
+    --kb-width: 600;
+    --container-padding: 60;
+}
 
+body {
+    position: relative;
+    margin: auto;
     background-color: rgb(141, 182, 168);
 
     user-select: none;
@@ -8,41 +14,39 @@ body {
 }
 
     h1 {
-        margin-block: 30px;
+        margin-block: min(48px, calc(48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
         text-align: center;
-        font-size: 5rem;
+        font-size: min(80px, calc(80 / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
     }
 
     #container {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: center;
+        align-content: center;
         flex-wrap: wrap;
-        width: 80%;
+        column-gap: clamp(calc(var(--container-padding) * 1px), 5.5vw, 200px);
+        row-gap: clamp(calc(var(--container-padding) * 1px), 8vh, 200px);
 
-        outline: red solid 1px;
-        margin: auto;
+        padding-inline: min(calc(var(--container-padding) * 1px), calc(var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
     }
 
         #wrapper {
             position: relative;
-            width: min(400px, 60%);
-
-            outline: blue solid 1px;
+            width: min(calc(var(--board-width) * 1px), 100%);
         }
 
             #wordlegrid {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
                 aspect-ratio: 5/6;
-                gap: 10px;
+                gap: min(10px, calc(10 / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
                 
-                font-size: 4rem;
+                font-size: min(64px, calc(64 / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
                 font-weight: bold;
                 text-align: center;
 
                 user-select: none;
-
             }
 
                 #wordlegrid > div {
@@ -51,8 +55,8 @@ body {
                     align-items: center;
                     line-height: 0;
 
-                    background-color:rgb(215, 237, 255);
                     color: rgb(58, 58, 58);
+                    background-color:rgb(215, 237, 255);
                 }
 
             #ans-reveal {
@@ -69,18 +73,35 @@ body {
                 background-color: rgb(215, 237, 255);
         
                 text-align: center;
-                font-weight: bold;
-                font-size: 3rem;
+                font-weight: 600;
+                font-size: 48px;
         
                 visibility: hidden;
             }
 
         #keyboard {
-            outline: blue solid 1px;
-            text-align: center;
+            width: min(calc(var(--kb-width) * 1px), 100%);
         }
 
+            .kbrow {
+                display: flex;
+                justify-content: center;
+
+                font-size: 30px;
+            }
+
                 .kbrow button {
-                    font-size: 2rem;
-                    padding: 1rem;
+                    flex: 1;
+                    padding: 0;
+
+                    text-align: center;
+                    font-size: min(32px, calc(32 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw));
+                    font-weight: 600;
+                    font-family: inherit;
+                }
+
+                .kbrow #enter-btn, .kbrow #backspace-btn {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
