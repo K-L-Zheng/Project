@@ -2,19 +2,28 @@
     --board-width: 400;
     --kb-width: 600;
     --container-padding: 60;
+
+    height: 100%;
 }
 
 body {
     position: relative;
+    height: 100%;
     margin: auto;
     background-color: rgb(141, 182, 168);
 
+    display: flex;
+    flex-direction: column;
+
     user-select: none;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    overflow-y: hidden;
 }
 
     h1 {
-        margin-block: min(48px, calc(48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
+        margin: 0;
+        padding-block: min(48px, calc(48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
         text-align: center;
         font-size: min(80px, calc(80 / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
     }
@@ -28,7 +37,8 @@ body {
         column-gap: clamp(calc(var(--container-padding) * 1px), 5.5vw, 200px);
         row-gap: clamp(calc(var(--container-padding) * 1px), 8vh, 200px);
 
-        padding-inline: min(calc(var(--container-padding) * 1px), calc(var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw));
+        margin-block: auto;
+        padding: 0 min(calc(var(--container-padding) * 1px), calc(var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw)) 20vh;
     }
 
         #wrapper {
@@ -68,15 +78,20 @@ body {
                 width: fit-content;
                 padding: 6px 8px;
 
-                border-radius: 12px;
+                border-radius: 8px;
                 border: rgb(96, 163, 168) solid 5px;
                 background-color: rgb(215, 237, 255);
         
                 text-align: center;
                 font-weight: 600;
                 font-size: 48px;
-        
+
                 visibility: hidden;
+                transition: opacity .3s;
+            }
+
+            #ans-reveal:hover {
+                opacity: 35%;
             }
 
         #keyboard {
@@ -86,8 +101,6 @@ body {
             .kbrow {
                 display: flex;
                 justify-content: center;
-
-                font-size: 30px;
             }
 
                 .kbrow button {
