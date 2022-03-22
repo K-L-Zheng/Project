@@ -1,12 +1,12 @@
 let gameStarted = false;
 let dealerSum;
-let dealerSumEl = document.querySelector("#dealer-sum-el");
+let dealerSumEl = document.querySelector("#dealer-sum");
 let dealerCards;
-let dealerCardsEl = document.querySelector("#dealer-cards-el");
+let dealerCardsEl = document.querySelector("#dealer-cards");
 let playerSum;
-let playerSumEl = document.querySelector("#player-sum-el");
+let playerSumEl = document.querySelector("#player-sum");
 let playerCards;
-let playerCardsEl = document.querySelector("#player-cards-el");
+let playerCardsEl = document.querySelector("#player-cards");
 let deck1 = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 let deck2 = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 let deck3 = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
@@ -15,10 +15,10 @@ let deck5 = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6
 let decksCombined = deck1.concat(deck2, deck3, deck4, deck5);
 let gameState = document.querySelector("#game-state");
 let chips = 100;
-let chipsEl = document.querySelector("#chips-el");
+let chipsEl = document.querySelector("#chips");
 chipsEl.textContent += " " + chips;
 let bets = 0;
-let betEl = document.querySelector("#bet-el");
+let betEl = document.querySelector("#bets");
 let setInputMax = document.querySelector("#bet-amt");
 setInputMax.setAttribute("max", chips);
 let didPlayerBet = false;
@@ -30,7 +30,6 @@ let reshufflePen = 0.20;
 function bet() {
     let i = document.querySelector("#bet-amt").value;
     if (didPlayerBet === false && gameStarted === false && i <= chips && i > 0) {
-        console.log("works");
         chips -= i;
         chipsEl.textContent = "Chips: " + chips;
         bets = i;
@@ -42,7 +41,6 @@ function bet() {
 
 function startGame() {
     if (gameStarted === false && didPlayerBet === true) {
-        console.log("works");
         gameStarted = true;
         //randomly chooses an element from decksCombined by generating a random index value
         let firstCard = decksCombined[Math.floor(Math.random() * decksCombined.length)];
@@ -95,7 +93,6 @@ function startGame() {
             }
         }
     }
-    console.log(decksCombined);
 }
 
 function dealerStart () {
@@ -124,7 +121,6 @@ function dealerStart () {
 function addCard() {
     // adds new card only if the current sum is less than 21
     if (gameStarted === true && didPlayerBust === false && didPlayerBJ === false && didPlayerStand === false && dealerSum !== 21) {
-        console.log("works");
         let newCard = decksCombined[Math.floor(Math.random() * decksCombined.length)];
         decksCombined.splice(decksCombined.indexOf(newCard), 1);
 
@@ -151,12 +147,10 @@ function addCard() {
             changeChips();
         }
     }
-    console.log(decksCombined);
 }
 
 function stand () {
     if(gameStarted === true && didPlayerBust === false && didPlayerBJ === false && didPlayerStand === false && dealerSum !== 21) {
-        console.log("works");
         didPlayerStand = true;
         dealerDraw();
     }
@@ -222,7 +216,6 @@ function changeChips() {
 
 function playAgain() {
     if (gameStarted === true && didPlayerBet === false) {
-        console.log("works");
         gameStarted = false;
 
         dealerSum = undefined;
