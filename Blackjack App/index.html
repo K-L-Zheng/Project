@@ -4,26 +4,27 @@
     </head>
     <body>
         <div class="container">
-            <div id="game-title"><p>BLACKJACK</p></div>
+            <div id="game-title">
+                <h1>BLACKJACK</h1>
+            </div>
             <div id="game-information">
-                <div id="chips">Chips:</div>
-                <div id="bets">Bet:</div>
+                <div id="chips">Chips: $</div>
+                <div id="bets">$0</div>
                 <div id="dealer-info">
                     <div id="dealer-cards">Dealer's Cards:</div>
-                    <div id="dealer-sum">Dealer's Sum:</div>
+                    <div id="dealer-sum"></div>
                 </div>
                 <div id="player-info" >
                     <div id="player-cards">Your Cards:</div>
-                    <div id="player-sum">Sum:</div>
+                    <div id="player-sum"></div>
                 </div>
-                <div id="game-state"></div>
                 <div id="game-buttons">
+                    <div id="game-state"></div>
                     <input id=bet-amt type="number" name="betAmt" min="1"> 
-                    <button id="bet-sbmt" type="submit" onclick="bet()"></button>
-                    <button id="startgame-btn" onclick="startGame()">Start Game</button>
+                    <button id="startgame-btn" type="submit" onclick="bet()">Start Game</button>
                     <button id="drawcard-btn" onclick="addCard()">Draw Card</button>
                     <button id="stand-btn" onclick="stand()">Stand</button>
-                    <button id="play-again" onclick="playAgain()">Play Again</button>
+                    <button id="playagain-btn" onclick="playAgain()">Play Again</button>
                     <button id="restart-btn" onclick="restartGame()">RESTART</button>
                 </div>
             </div>

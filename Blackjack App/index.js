@@ -16,7 +16,7 @@ let decksCombined = deck1.concat(deck2, deck3, deck4, deck5);
 let gameState = document.querySelector("#game-state");
 let chips = 100;
 let chipsEl = document.querySelector("#chips");
-chipsEl.textContent += " " + chips;
+chipsEl.textContent += chips;
 let bets = 0;
 let betEl = document.querySelector("#bets");
 let setInputMax = document.querySelector("#bet-amt");
@@ -29,68 +29,77 @@ let reshufflePen = 0.20;
 
 function bet() {
     let i = document.querySelector("#bet-amt").value;
-    if (didPlayerBet === false && gameStarted === false && i <= chips && i > 0) {
-        chips -= i;
-        chipsEl.textContent = "Chips: " + chips;
-        bets = i;
-        betEl.textContent = "Bet: " + bets;
+    if (didPlayerBet === false && gameStarted === false && i > 0 && chips > 0) {
+        bets = chips >= i ? i : chips;
+        betEl.textContent = "$" + bets;
+        chips = chips >= i ? chips - i : 0;
+        chipsEl.textContent = "Chips: $" + chips;
         setInputMax.setAttribute("max", chips);
         didPlayerBet = true;
+
+        startGame();
     }
 }
 
 function startGame() {
-    if (gameStarted === false && didPlayerBet === true) {
-        gameStarted = true;
-        //randomly chooses an element from decksCombined by generating a random index value
-        let firstCard = decksCombined[Math.floor(Math.random() * decksCombined.length)];
-        decksCombined.splice(decksCombined.indexOf(firstCard), 1);
+    gameStarted = true;
+    //randomly chooses an element from decksCombined by generating a random index value
+    let firstCard = decksCombined[Math.floor(Math.random() * decksCombined.length)];
+    decksCombined.splice(decksCombined.indexOf(firstCard), 1);
 
-        let secondCard = decksCombined[Math.floor(Math.random() * decksCombined.length)];
-        decksCombined.splice(decksCombined.indexOf(secondCard), 1);
+    let secondCard = decksCombined[Math.floor(Math.random() * decksCombined.length)];
+    decksCombined.splice(decksCombined.indexOf(secondCard), 1);
 
-        if (firstCard === 1 && secondCard === 1) {
-            secondCard = 11;
+    if (firstCard === 1 && secondCard === 1) {
+        secondCard = 11;
+    }
+    else if (firstCard === 1) {
+        firstCard = 11;
+    }
+    else if (secondCard === 1) {
+        secondCard = 11;
+    }
+
+    playerSum = firstCard + secondCard;
+    playerSumEl.textContent += " " + playerSum;
+    
+    playerCards = [firstCard, secondCard];
+    playerCardsEl.textContent += " " + playerCards.join(" ");
+
+    dealerStart();
+
+    if (playerSum < 21) {
+        if (dealerSum !== 21) {
+            gameState.textContent = "Do you want to draw a new card?";
+
+            document.querySelector("#bet-amt").style.display = "none";
+            document.querySelector("#startgame-btn").style.display = "none";
+
+            document.querySelector("#drawcard-btn").style.display = "block";
+            document.querySelector("#stand-btn").style.display = "block";
         }
-        else if (firstCard === 1) {
-            firstCard = 11;
-        }
-        else if (secondCard === 1) {
-            secondCard = 11;
-        }
-
-        playerSum = firstCard + secondCard;
-        playerSumEl.textContent += " " + playerSum;
-        
-        playerCards = [firstCard, secondCard];
-        playerCardsEl.textContent += " " + playerCards.join(" ");
-
-        dealerStart();
-
-        if (playerSum < 21) {
-            if (dealerSum !== 21) {
-                gameState.textContent = "Do you want to draw a new card?";
-            }
-            else {
-                dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
-                dealerSumEl.textContent = "Dealer's Sum: " + dealerSum;
-                gameState.textContent = "Oh no! You've Lost!";
-                changeChips();
-            }
-        }
-        else if (playerSum === 21) {
-            didPlayerBJ = true;
+        else {
             dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
-            dealerSumEl.textContent = "Dealer's Sum: " + dealerSum;
+            dealerSumEl.textContent = dealerSum;
+            gameState.textContent = "Oh no! You've Lost!";
 
-            if (dealerSum !== 21) {
-                gameState.textContent = "Wohoo! You've you got Blackjack!";
-                changeChips();
-            }
-            else {
-                gameState.textContent = "You've tied the Dealer!";
-                changeChips();
-            }
+            changeChips();
+        }
+    }
+    else if (playerSum === 21) {
+        didPlayerBJ = true;
+        dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
+        dealerSumEl.textContent = dealerSum;
+
+        if (dealerSum !== 21) {
+            gameState.textContent = "Wohoo! You've you got Blackjack!";
+
+            changeChips();
+        }
+        else {
+            gameState.textContent = "You've tied the Dealer!";
+
+            changeChips();
         }
     }
 }
@@ -139,24 +148,26 @@ function addCard() {
         }
 
         playerCardsEl.textContent = "Your Cards: " + playerCards.join(" ");
-        playerSumEl.textContent = "Sum: " + playerSum;
+        playerSumEl.textContent = playerSum;
 
         if (playerSum > 21) {
             gameState.textContent = "You're out of the game!";
             didPlayerBust = true;
+
             changeChips();
         }
     }
 }
 
-function stand () {
+function stand() {
     if(gameStarted === true && didPlayerBust === false && didPlayerBJ === false && didPlayerStand === false && dealerSum !== 21) {
         didPlayerStand = true;
+
         dealerDraw();
     }
 }
 
-function dealerDraw () {
+function dealerDraw() {
     do {
         if (dealerSum < 17) {
             let dealerNewCard = decksCombined[Math.floor(Math.random() * decksCombined.length)];
@@ -177,25 +188,28 @@ function dealerDraw () {
             }
 
             dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
-            dealerSumEl.textContent = "Dealer's Sum: " + dealerSum;
+            dealerSumEl.textContent = dealerSum;
         }
         else {
             dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
-            dealerSumEl.textContent = "Dealer's Sum: " + dealerSum;
+            dealerSumEl.textContent = dealerSum;
         }
     }
     while (dealerSum < 17);
 
     if (dealerSum > playerSum && dealerSum < 22) {
         gameState.textContent = "Oh no! You've Lost!";
+
         changeChips();
     }
     else if (dealerSum < playerSum || dealerSum > 21) {
         gameState.textContent = "Congratulations! You've Won!";
+
         changeChips();
     }
     else {
         gameState.textContent = "You've tied the Dealer!";
+
         changeChips();
     }
 }
@@ -208,10 +222,18 @@ function changeChips() {
             :playerSum < dealerSum && dealerSum > 21 ? bets * 2
             :0;
 
-    chipsEl.textContent = "Chips: " + chips;
+    chipsEl.textContent = "Chips: $" + chips;
     bets = 0;
-    betEl.textContent = "Bet:";
+    betEl.textContent = "$0";
     didPlayerBet = false;
+
+    document.querySelector("#bet-amt").style.display = "none";
+    document.querySelector("#startgame-btn").style.display = "none";
+    document.querySelector("#drawcard-btn").style.display = "none";
+    document.querySelector("#stand-btn").style.display = "none";
+
+    document.querySelector("#playagain-btn").style.display = chips > 0 ? "block" : "none";
+    document.querySelector("#restart-btn").style.display = "block";
 }
 
 function playAgain() {
@@ -219,12 +241,12 @@ function playAgain() {
         gameStarted = false;
 
         dealerSum = undefined;
-        dealerSumEl.textContent = "Dealer's Sum:"
+        dealerSumEl.textContent = ""
 
         dealerCards = undefined;
         dealerCardsEl.textContent = "Dealer's Cards:";
 
-        playerSumEl.textContent = "Sum:";
+        playerSumEl.textContent = "";
         playerSum = undefined;
 
         playerCards = undefined;
@@ -235,10 +257,16 @@ function playAgain() {
         didPlayerStand = false;
         didPlayerBJ = false;
         didPlayerBust = false;
-        //extra parentheses are for visability purposes
-        if ((decksCombined.length / 260) < (1 - reshufflePen)) {
+
+        if (decksCombined.length / 260 < 1 - reshufflePen) {
             decksCombined = deck1.concat(deck2, deck3, deck4, deck5);
         }
+
+        document.querySelector("#bet-amt").style.display = "block";
+        document.querySelector("#startgame-btn").style.display = "block";
+
+        document.querySelector("#playagain-btn").style.display = "none";
+        document.querySelector("#restart-btn").style.display = "none";
     }
 }
 
@@ -249,13 +277,13 @@ function restartGame() {
     decksCombined = deck1.concat(deck2, deck3, deck4, deck5);
 
     dealerSum = undefined;
-    dealerSumEl.textContent = "Dealer's Sum:"
+    dealerSumEl.textContent = ""
 
     dealerCards = undefined;
     dealerCardsEl.textContent = "Dealer's Cards:";
 
     playerSum = undefined;
-    playerSumEl.textContent = "Sum:";
+    playerSumEl.textContent = "";
 
     playerCards = undefined;
     playerCardsEl.textContent = "Your Cards:";
@@ -263,14 +291,20 @@ function restartGame() {
     gameState.textContent = "";
 
     chips = 100;
-    chipsEl.textContent = "Chips: " + chips;
+    chipsEl.textContent = "Chips: $" + chips;
 
     bets = 0;
-    betEl.textContent = "Bet:";
+    betEl.textContent = "$0";
 
     didPlayerBet = false;
     didPlayerStand = false;
     didPlayerBJ = false;
     didPlayerBust = false;
+
+    document.querySelector("#bet-amt").style.display = "block";
+    document.querySelector("#startgame-btn").style.display = "block";
+    
+    document.querySelector("#playagain-btn").style.display = "none";
+    document.querySelector("#restart-btn").style.display = "none";
 }
 
