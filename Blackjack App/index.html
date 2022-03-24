@@ -8,20 +8,28 @@
                 <h1>BLACKJACK</h1>
             </div>
             <div id="game-information">
-                <div id="chips">Chips: $</div>
-                <div id="bets">$0</div>
+                <div id="money">
+                    <div id="chips">Chips: $</div>
+                    <div id="bet">Bet: $</div>
+                </div>
                 <div id="dealer-info">
-                    <div id="dealer-cards">Dealer's Cards:</div>
+                    <div id="dealer-cards">
+                        Dealer's Cards:
+                        <div id="dealer-card-values"></div>
+                    </div>
                     <div id="dealer-sum"></div>
                 </div>
                 <div id="player-info" >
-                    <div id="player-cards">Your Cards:</div>
+                    <div id="player-cards">
+                        Your Cards:
+                        <div id="player-card-values"></div>
+                    </div>
                     <div id="player-sum"></div>
                 </div>
                 <div id="game-buttons">
                     <div id="game-state"></div>
                     <input id=bet-amt type="number" name="betAmt" min="1"> 
-                    <button id="startgame-btn" type="submit" onclick="bet()">Start Game</button>
+                    <button id="startgame-btn" type="submit" onclick="bets()">Start Game</button>
                     <button id="drawcard-btn" onclick="addCard()">Draw Card</button>
                     <button id="stand-btn" onclick="stand()">Stand</button>
                     <button id="playagain-btn" onclick="playAgain()">Play Again</button>

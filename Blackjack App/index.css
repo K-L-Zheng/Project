@@ -1,20 +1,22 @@
 :root {
     --main-radius: 5px;
     --main-padding: 5px;
-    --main-border: rgb(58, 41, 22) solid;
+    --main-border: rgb(119, 95, 67) solid 5px;
     --main-box-shadow: 0 0 0 0;
-    --bg-opacity: 0.75;
+    --bg-opacity: 1;
 
-    background-color: #836953;
     color: white;
 }
 
 body {
     margin: 0;
+    background-color:rgb(48, 36, 17);
 
     text-align: center;
     font-family: Garamond, Georgia, "Times New Roman";
     font-weight: bold;
+
+    user-select: none;
 }
 
     .container {
@@ -26,7 +28,6 @@ body {
             "title"
             "game-info";
         grid-gap: .25rem;
-        background: url("/images/playing-cards-svgrepo-com.svg") center/100px fixed;
     }
 
         #game-title {
@@ -37,7 +38,7 @@ body {
             justify-content: center;
             align-items: center;
             
-            background-color: purple;
+            background-color: rgb(58, 43, 21);
             border-radius: var(--main-radius);
             border: var(--main-border);
             box-shadow: var(--main-box-shadow);
@@ -58,23 +59,20 @@ body {
             font-size: 1.5rem;
         }
         
-            #chips {
+            #money {
                 width: fit-content;
                 margin: 1vh 1vw;
-                padding: var(--main-padding);
                 
                 grid-area: chips-bets;
+
+                display: flex;
+                gap: min(5px, 1vw);
                 
-                background: darkgreen;
-                border-radius: var(--main-radius);
+                background: green;
             }
 
-            #bets {
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                margin-block: 5vh;
+            #chips, #bet {
+                padding: var(--main-padding);
 
                 background-color: darkgreen;
                 border-radius: var(--main-radius);
@@ -95,8 +93,13 @@ body {
                     border-radius: var(--main-radius) var(--main-radius) 0 0;
                 }
 
+                    #dealer-card-values {
+                        height: 1em;
+                    }
+
                 #dealer-sum {
                     height: 1em;
+                    padding: 2%;
 
                     background-color:#836953;
                     border-radius: 0 0 var(--main-radius) var(--main-radius);
@@ -117,8 +120,13 @@ body {
                     border-radius: var(--main-radius) var(--main-radius) 0 0;
                 }
 
+                    #player-card-values {
+                        height: 1em;
+                    }
+
                 #player-sum{
                     height: 1em;
+                    padding: 2%;
 
                     background-color:#836953;
                     border-radius: 0 0 var(--main-radius) var(--main-radius);
@@ -143,6 +151,7 @@ body {
                     color: white;
                     font-size: 1em;
                     font-family: Garamond, Georgia, "Times New Roman";
+                    font-weight: bold;
                     border-radius: var(--main-radius);
 
                 }
@@ -153,4 +162,23 @@ body {
 
 input[type="number"] {
     width: 100%;
+    padding: 2px 5px;
+    border: none;
+    border-radius: var(--main-radius);
+
+    font-size: .8em;
+    font-weight: bold;
+
+    cursor: default;
+    caret-color: white;
+    user-select: none;
+}
+
+    input[type="number"]:focus-visible {
+        outline: black solid 2px;
+    }
+
+::selection {
+    color: white;
+    background-color: black
 }

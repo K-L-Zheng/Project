@@ -2,11 +2,11 @@ let gameStarted = false;
 let dealerSum;
 let dealerSumEl = document.querySelector("#dealer-sum");
 let dealerCards;
-let dealerCardsEl = document.querySelector("#dealer-cards");
+let dealerCardValues = document.querySelector("#dealer-card-values");
 let playerSum;
 let playerSumEl = document.querySelector("#player-sum");
 let playerCards;
-let playerCardsEl = document.querySelector("#player-cards");
+let playerCardValues = document.querySelector("#player-card-values");
 let deck1 = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 let deck2 = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
 let deck3 = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10];
@@ -17,8 +17,9 @@ let gameState = document.querySelector("#game-state");
 let chips = 100;
 let chipsEl = document.querySelector("#chips");
 chipsEl.textContent += chips;
-let bets = 0;
-let betEl = document.querySelector("#bets");
+let bet = 0;
+let betEl = document.querySelector("#bet");
+betEl.textContent += bet;
 let setInputMax = document.querySelector("#bet-amt");
 setInputMax.setAttribute("max", chips);
 let didPlayerBet = false;
@@ -27,11 +28,13 @@ let didPlayerBJ = false;
 let didPlayerBust = false;
 let reshufflePen = 0.20;
 
-function bet() {
+function bets() {
     let i = document.querySelector("#bet-amt").value;
     if (didPlayerBet === false && gameStarted === false && i > 0 && chips > 0) {
-        bets = chips >= i ? i : chips;
-        betEl.textContent = "$" + bets;
+        document.querySelector("#bet-amt").value = "";
+
+        bet = chips >= i ? i : chips;
+        betEl.textContent = "Bet: $" + bet;
         chips = chips >= i ? chips - i : 0;
         chipsEl.textContent = "Chips: $" + chips;
         setInputMax.setAttribute("max", chips);
@@ -64,7 +67,7 @@ function startGame() {
     playerSumEl.textContent += " " + playerSum;
     
     playerCards = [firstCard, secondCard];
-    playerCardsEl.textContent += " " + playerCards.join(" ");
+    playerCardValues.textContent += " " + playerCards.join(" ");
 
     dealerStart();
 
@@ -79,7 +82,7 @@ function startGame() {
             document.querySelector("#stand-btn").style.display = "block";
         }
         else {
-            dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
+            dealerCardValues.textContent = dealerCards.join(" ");
             dealerSumEl.textContent = dealerSum;
             gameState.textContent = "Oh no! You've Lost!";
 
@@ -88,7 +91,7 @@ function startGame() {
     }
     else if (playerSum === 21) {
         didPlayerBJ = true;
-        dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
+        dealerCardValues.textContent = dealerCards.join(" ");
         dealerSumEl.textContent = dealerSum;
 
         if (dealerSum !== 21) {
@@ -124,7 +127,7 @@ function dealerStart () {
     dealerSum = dealerfirstCard + dealersecondCard;
 
     dealerCards = [dealerfirstCard, dealersecondCard];
-    dealerCardsEl.textContent += " " + dealerCards[0];
+    dealerCardValues.textContent += " " + dealerCards[0];
 }
 
 function addCard() {
@@ -147,7 +150,7 @@ function addCard() {
             }
         }
 
-        playerCardsEl.textContent = "Your Cards: " + playerCards.join(" ");
+        playerCardValues.textContent = playerCards.join(" ");
         playerSumEl.textContent = playerSum;
 
         if (playerSum > 21) {
@@ -187,11 +190,11 @@ function dealerDraw() {
                 }
             }
 
-            dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
+            dealerCardValues.textContent = dealerCards.join(" ");
             dealerSumEl.textContent = dealerSum;
         }
         else {
-            dealerCardsEl.textContent = "Dealer's Cards: " + dealerCards.join(" ");
+            dealerCardValues.textContent = dealerCards.join(" ");
             dealerSumEl.textContent = dealerSum;
         }
     }
@@ -215,16 +218,16 @@ function dealerDraw() {
 }
 
 function changeChips() {
-    chips += playerSum === 21 && didPlayerBJ === true && dealerSum !== 21 ? bets * 2.5
-            :playerSum === dealerSum ? bets * 1
+    chips += playerSum === 21 && didPlayerBJ === true && dealerSum !== 21 ? bet * 2.5
+            :playerSum === dealerSum ? bet * 1
             :playerSum > 21 ? 0
-            :playerSum > dealerSum ? bets * 2
-            :playerSum < dealerSum && dealerSum > 21 ? bets * 2
+            :playerSum > dealerSum ? bet * 2
+            :playerSum < dealerSum && dealerSum > 21 ? bet * 2
             :0;
 
     chipsEl.textContent = "Chips: $" + chips;
-    bets = 0;
-    betEl.textContent = "$0";
+    bet = 0;
+    betEl.textContent = "Bet: $" + bet;
     didPlayerBet = false;
 
     document.querySelector("#bet-amt").style.display = "none";
@@ -244,13 +247,13 @@ function playAgain() {
         dealerSumEl.textContent = ""
 
         dealerCards = undefined;
-        dealerCardsEl.textContent = "Dealer's Cards:";
+        dealerCardValues.textContent = "";
 
         playerSumEl.textContent = "";
         playerSum = undefined;
 
         playerCards = undefined;
-        playerCardsEl.textContent = "Your Cards:";
+        playerCardValues.textContent = "";
 
         gameState.textContent = "";
 
@@ -280,21 +283,21 @@ function restartGame() {
     dealerSumEl.textContent = ""
 
     dealerCards = undefined;
-    dealerCardsEl.textContent = "Dealer's Cards:";
+    dealerCardValues.textContent = "";
 
     playerSum = undefined;
     playerSumEl.textContent = "";
 
     playerCards = undefined;
-    playerCardsEl.textContent = "Your Cards:";
+    playerCardValues.textContent = "";
 
     gameState.textContent = "";
 
     chips = 100;
     chipsEl.textContent = "Chips: $" + chips;
 
-    bets = 0;
-    betEl.textContent = "$0";
+    bet = 0;
+    betEl.textContent = "Bet: $" + bet;
 
     didPlayerBet = false;
     didPlayerStand = false;
