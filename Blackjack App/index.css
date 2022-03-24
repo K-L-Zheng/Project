@@ -61,7 +61,7 @@ body {
         
             #money {
                 width: fit-content;
-                margin: 1vh 1vw;
+                margin: 10px;
                 
                 grid-area: chips-bets;
 
@@ -83,7 +83,7 @@ body {
             top: 0;
             right: 0;
 
-            margin: 5vh 20vw;
+            margin: 10vh 20vw;
             }
 
                 #dealer-cards {
@@ -110,7 +110,7 @@ body {
             bottom: 0;
             left: 0;
 
-            margin: 5vh 20vw;
+            margin: 10vh 20vw;
             }
 
                 #player-cards {
@@ -153,8 +153,11 @@ body {
                     font-family: Garamond, Georgia, "Times New Roman";
                     font-weight: bold;
                     border-radius: var(--main-radius);
-
                 }
+
+                    button:hover {
+                        /* animation: focusBounce ease-in-out .5s infinite alternate; */
+                    }
 
                 #drawcard-btn, #stand-btn, #playagain-btn, #restart-btn {
                     display: none;
@@ -174,6 +177,11 @@ input[type="number"] {
     user-select: none;
 }
 
+    input[type="number"]:hover {
+        outline: black solid 1px;
+    }
+
+
     input[type="number"]:focus-visible {
         outline: black solid 2px;
     }
@@ -181,4 +189,9 @@ input[type="number"] {
 ::selection {
     color: white;
     background-color: black
+}
+
+@keyframes focusBounce {
+    0% {}
+    100% {transform: translateY(10%);}
 }
