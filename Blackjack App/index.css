@@ -95,11 +95,13 @@ body {
 
                     #dealer-card-values {
                         height: 1em;
+                        line-height: 1;
                     }
 
                 #dealer-sum {
                     height: 1em;
-                    padding: 2%;
+                    line-height: 1;
+                    padding: 3% 5%;
 
                     background-color:#836953;
                     border-radius: 0 0 var(--main-radius) var(--main-radius);
@@ -122,11 +124,13 @@ body {
 
                     #player-card-values {
                         height: 1em;
+                        line-height: 1;
                     }
 
                 #player-sum{
                     height: 1em;
-                    padding: 2%;
+                    line-height: 1;
+                    padding: 3% 5%;
 
                     background-color:#836953;
                     border-radius: 0 0 var(--main-radius) var(--main-radius);
@@ -144,54 +148,60 @@ body {
                 flex-direction: column;
             }
 
+                input {
+                    width: 100%;
+                    padding: 2px 5px;
+                    border: none;
+                    border-radius: var(--main-radius);
+                
+                    font-size: .8em;
+                    font-weight: bold;
+                
+                    /* cursor: default; */
+                    caret-color: white;
+                    user-select: none;
+                    appearance: none;
+                }
+                
+                    input[type="number"]:hover {
+                        outline: black solid 1px;
+                    }
+                
+                
+                    input[type="number"]:focus-visible {
+                        outline: black solid 2px;
+                        appearance: none;
+                    }
+
+                    ::selection {
+                        color: white;
+                        background-color: black
+                    }
+
                 button {
                     margin-top: min(1vh, 10px);
+                    padding: 5px 10px;
 
                     background-color: #cf3939;
                     color: white;
                     font-size: 1em;
                     font-family: Garamond, Georgia, "Times New Roman";
                     font-weight: bold;
+
+                    border: none;
                     border-radius: var(--main-radius);
+
+                    transition: transform .15s ease-in-out;
                 }
 
                     button:hover {
-                        /* animation: focusBounce ease-in-out .5s infinite alternate; */
+                        background-color: #ad2f2f;
+                    }
+
+                    button:active {
+                        transform: scale(.95, .95);
                     }
 
                 #drawcard-btn, #stand-btn, #playagain-btn, #restart-btn {
                     display: none;
                 }
-
-input[type="number"] {
-    width: 100%;
-    padding: 2px 5px;
-    border: none;
-    border-radius: var(--main-radius);
-
-    font-size: .8em;
-    font-weight: bold;
-
-    cursor: default;
-    caret-color: white;
-    user-select: none;
-}
-
-    input[type="number"]:hover {
-        outline: black solid 1px;
-    }
-
-
-    input[type="number"]:focus-visible {
-        outline: black solid 2px;
-    }
-
-::selection {
-    color: white;
-    background-color: black
-}
-
-@keyframes focusBounce {
-    0% {}
-    100% {transform: translateY(10%);}
-}

@@ -35,10 +35,10 @@ function bets() {
 
         bet = chips >= i ? i : chips;
         betEl.textContent = "Bet: $" + bet;
+        didPlayerBet = true;
+
         chips = chips >= i ? chips - i : 0;
         chipsEl.textContent = "Chips: $" + chips;
-        setInputMax.setAttribute("max", chips);
-        didPlayerBet = true;
 
         startGame();
     }
@@ -226,6 +226,8 @@ function changeChips() {
             :0;
 
     chipsEl.textContent = "Chips: $" + chips;
+    setInputMax.setAttribute("max", chips);
+
     bet = 0;
     betEl.textContent = "Bet: $" + bet;
     didPlayerBet = false;
