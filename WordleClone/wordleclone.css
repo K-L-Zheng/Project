@@ -30,6 +30,8 @@ body {
 
     #container {
         /* height: 100%; */
+        margin-block: auto;
+        padding: 0 min(calc(var(--container-padding) * 1px), calc(var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw)) calc(3 * min(80px, calc(80 / (var(--board-width) + 2 * var(--container-padding)) * 100vw)));
 
         display: flex;
         justify-content: center;
@@ -38,9 +40,6 @@ body {
         flex-wrap: wrap;
         column-gap: clamp(calc(var(--container-padding) * 1px), 5.5vw, 200px);
         row-gap: clamp(calc(var(--container-padding) * 1px), 8vh, 200px);
-
-        margin-block: auto;
-        padding: 0 min(calc(var(--container-padding) * 1px), calc(var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw)) calc(3 * min(80px, calc(80 / (var(--board-width) + 2 * var(--container-padding)) * 100vw)));
     }
 
         #wrapper {
@@ -109,8 +108,10 @@ body {
             }
 
                 .kbrow button {
-                    flex: 1;
+                    width: min(56px, calc(56 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw));
                     padding: 0;
+
+                    /* flex: 1; */
 
                     text-align: center;
                     font-size: min(32px, calc(32 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw));
@@ -120,7 +121,9 @@ body {
                     cursor: pointer;
                 }
 
-                .kbrow #enter-btn, .kbrow #backspace-btn {
+                .kbrow button[data-key = "Enter"], .kbrow button[data-key = "Backspace"] {
+                    width: min(75px, calc(75 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw));
+
                     display: flex;
                     justify-content: center;
                     align-items: center;
