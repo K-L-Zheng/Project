@@ -116,6 +116,8 @@ body {
                     font-size: min(32px, calc(32 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw));
                     font-weight: 600;
                     font-family: inherit;
+
+                    cursor: pointer;
                 }
 
                 .kbrow #enter-btn, .kbrow #backspace-btn {
@@ -123,3 +125,7 @@ body {
                     justify-content: center;
                     align-items: center;
                 }
+
+                    .kbrow button svg {
+                        pointer-events: none;
+                    }
