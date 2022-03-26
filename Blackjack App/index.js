@@ -297,6 +297,7 @@ function restartGame() {
 
     chips = 100;
     chipsEl.textContent = "Chips: $" + chips;
+    setInputMax.setAttribute("max", chips);
 
     bet = 0;
     betEl.textContent = "Bet: $" + bet;
