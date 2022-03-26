@@ -148,7 +148,7 @@ body {
                 flex-direction: column;
             }
 
-                input {
+                input[type="number"] {
                     width: 100%;
                     padding: 2px 5px;
                     border: none;
@@ -157,7 +157,6 @@ body {
                     font-size: .8em;
                     font-weight: bold;
                 
-                    /* cursor: default; */
                     caret-color: white;
                     user-select: none;
                     appearance: none;
@@ -170,7 +169,6 @@ body {
                 
                     input[type="number"]:focus-visible {
                         outline: black solid 2px;
-                        appearance: none;
                     }
 
                     ::selection {
