@@ -12,12 +12,14 @@ let gameEnded = false;
 function inputLetter (keypress) {
     if (gameEnded === false) {
         if (/[a-z]/.test(keypress.key) && keypress.key.length === 1 && column < 5) { //filters out numbers + special characters + function keys
+            document.querySelector("#box" + row + column).classList.add("pump-animation");
+            document.querySelector("#box" + row + column).innerHTML = "";
+            document.querySelector("#box" + row + column).innerHTML = keypress.key;
+
             if (column > 0) {
                 document.querySelector("#box" + row + (column - 1)).style.outline = "";
             }
             document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
-            document.querySelector("#box" + row + column).innerHTML = "";
-            document.querySelector("#box" + row + column).innerHTML = keypress.key;
 
             column += 1;
         }
@@ -25,11 +27,13 @@ function inputLetter (keypress) {
         if (keypress.key === "Backspace") {
             if (column === 5 || document.querySelector("#box" + row + column).style.outline === "") {
                 column = column > 0 ? column - 1 : column;
+                document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
                 document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
             }
             else { //for when clicks reassign the column
+                document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
                 column = column > 0 ? column - 1 : column;
@@ -103,13 +107,9 @@ function inputLetter (keypress) {
                 }
             }
             else { //clears the row
-                document.querySelector("#box" + row + "0").innerHTML = "";
-                document.querySelector("#box" + row + "1").innerHTML = "";
-                document.querySelector("#box" + row + "2").innerHTML = "";
-                document.querySelector("#box" + row + "3").innerHTML = "";
-                document.querySelector("#box" + row + "4").innerHTML = "";
-
                 for (let i = 0; i < 5; i++) {
+                    document.querySelector("#box" + row + i).classList.remove("pump-animation");
+                    document.querySelector("#box" + row + i).innerHTML = "";
                     document.querySelector("#box" + row + i).style.outline = "";
                 }
 
@@ -150,6 +150,7 @@ document.addEventListener("click", function(click) {
 
     if (activeEl.classList.contains("attempt" + row) && gameEnded === false) {
         for (let i = 0; i < 5; i++) { //clears the outline from non-active boxes
+            document.querySelector("#box" + row + i).classList.remove("pump-animation");
             document.querySelector("#box" + row + i).style.outline = "";
         }
         column = +activeEl.id[4];
