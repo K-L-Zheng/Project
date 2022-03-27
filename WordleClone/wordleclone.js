@@ -19,7 +19,7 @@ function inputLetter (keypress) {
             if (column > 0) {
                 document.querySelector("#box" + row + (column - 1)).style.outline = "";
             }
-            document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+            document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
 
             column += 1;
         }
@@ -30,14 +30,14 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
-                document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
             }
             else { //for when clicks reassign the column
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
                 column = column > 0 ? column - 1 : column;
-                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
             }
         }
 
@@ -95,7 +95,7 @@ function inputLetter (keypress) {
                     row += 1;                  
                     column = 0;
 
-                    document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                    document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
                 }
                 else { //lose
                     document.querySelector("#box" + row + (column - 1)).style.outline = "";
@@ -115,7 +115,7 @@ function inputLetter (keypress) {
 
                 column = 0;
 
-                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
             }
         }
     }
@@ -154,7 +154,7 @@ document.addEventListener("click", function(click) {
             document.querySelector("#box" + row + i).style.outline = "";
         }
         column = +activeEl.id[4];
-        document.getElementById(activeEl.id).style.outline = "rgb(96, 163, 168) solid min(5px, calc(5 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+        document.getElementById(activeEl.id).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
     }
 
     if (activeEl.tagName === "BUTTON") {
