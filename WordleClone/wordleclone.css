@@ -1,6 +1,5 @@
 :root {
     --board-width: 400;
-    /* --board-height: 480; */
     --kb-width: 600;
     --container-padding: 60;
 
@@ -28,8 +27,6 @@ body {
 
     user-select: none;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
-    /* overflow-y: hidden; */
 }
 
     h1 {
@@ -40,9 +37,8 @@ body {
     }
 
     #container {
-        /* height: 100%; */
         margin-block: auto;
-        padding: 0 min(var(--container-padding) * 1px, var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw) min(240px, 240 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+        padding: 0 min(var(--container-padding) * 1px, var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw) min(200px, 200 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
 
         display: flex;
         justify-content: center;
@@ -50,7 +46,7 @@ body {
         align-content: center;
         flex-wrap: wrap;
         column-gap: clamp(var(--container-padding) * 1px, 5.5vw, 200px);
-        row-gap: clamp(var(--container-padding) * 1px, 8vh, 200px);
+        row-gap: min(var(--container-padding) * 1px, var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
     }
 
         #wrapper {
@@ -59,18 +55,13 @@ body {
         }
 
             #wordlegrid {
-                /* margin: auto; */
-                /* height: min(calc(var(--board-height) * 1px), calc(var(--board-height) / 900 * 100vh)); */
-
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-                /* grid-template-rows: min(72px, 140%) min(72px, 140%) min(72px, 140%) min(72px, 140%) min(72px, 140%) min(72px, 140%); */
                 aspect-ratio: 5/6;
                 gap: min(10px, 10 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
                 
-                font-size: min(64px, 64 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+                font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
                 font-weight: bold;
-                text-align: center;
 
                 user-select: none;
             }
@@ -84,30 +75,32 @@ body {
                     background-color:rgb(215, 237, 255);
                 }
 
-            #ans-reveal {
+            #answer-reveal {
                 position: absolute;
-                top: 50%;
+                top: 0%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                        
-                width: fit-content;
-                padding: 6px 8px;
 
-                border-radius: 8px;
-                border: rgb(96, 163, 168) solid 5px;
-                background-color: rgb(215, 237, 255);
-        
-                text-align: center;
-                font-weight: 600;
-                font-size: 48px;
-
+                opacity: 0;
                 visibility: hidden;
-                transition: opacity .3s;
+                transition: opacity 1s ease-out, top 1.2s cubic-bezier(0,.1,0,1);
             }
 
-            #ans-reveal:hover {
-                opacity: 35%;
-            }
+                #answer {
+                    padding: min(6px, 6 / (var(--board-width) + 2 * var(--container-padding)) * 100vw) min(8px, 8 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+                    background-color: rgb(215, 237, 255);
+                    border-radius: 4px;
+
+                    text-align: center;
+                    font-weight: 600;
+                    font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+
+                    transition: opacity .2s;
+                }
+
+                #answer:hover {
+                    opacity: 30%;
+                }
 
         #keyboard {
             width: min(calc(var(--kb-width) * 1px), 100%);
@@ -118,9 +111,10 @@ body {
                 justify-content: center;
             }
 
-                .kbrow button {
-                    width: min(55px, 55 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
-                    margin: .4%;
+                .kbrow > button {
+                    width: min(54px, 54 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                    height: min(37.5px, 37.5 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                    margin: min(3px, 3 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
                     padding: 0;
                     background-color: rgb(215, 237, 255);
 
@@ -129,7 +123,7 @@ body {
 
                     color: rgb(58, 58, 58);
                     text-align: center;
-                    font-size: min(32px, 32 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                    font-size: min(29px, 29 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
                     font-weight: 600;
                     font-family: inherit;
 
@@ -137,7 +131,7 @@ body {
                     transition: transform .1s;
                 }
 
-                .kbrow button[data-key = "Enter"], .kbrow button[data-key = "Backspace"] {
+                .kbrow > button[data-key = "Enter"], .kbrow > button[data-key = "Backspace"] {
                     width: min(75px, 75 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
 
                     display: flex;
@@ -145,22 +139,46 @@ body {
                     align-items: center;
                 }
 
-                    .kbrow button svg {
+                    .kbrow > button > svg {
                         pointer-events: none;
                     }
 
-                .kbrow button:hover {
+                .kbrow > button:hover {
                     background-color: rgb(96, 163, 168);
                 }
 
-                .kbrow button:active {
+                .kbrow > .green-button {
+                    background-color: rgb(119, 223, 162);
+                }
+
+                .kbrow > .green-button:hover {
+                    background-color: rgb(90, 216, 142);
+                }
+
+                .kbrow > .yellow-button {
+                    background-color: rgb(255, 255, 204);
+                }
+
+                .kbrow > .yellow-button:hover {
+                    background-color: rgb(245, 245, 163);
+                }
+
+                .kbrow > .red-button {
+                    background-color: rgb(245, 132, 132);
+                }
+
+                .kbrow > .red-button:hover {
+                    background-color: rgb(244, 113, 113);
+                }
+
+                .kbrow > button:active {
                     transform: scale(90%);
                 }
 
             #kb1 {
-                padding-inline: min(33px, 33 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                padding-inline: min(29px, 29 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
             }
 
             #kb2 {
-                padding-inline: min(13px, 13 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                padding-inline: min(9px, 9 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
             }
