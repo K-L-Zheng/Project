@@ -42,6 +42,8 @@ function inputLetter (keypress) {
         }
 
         if (keypress.key === "Enter") {
+            document.activeElement.blur(); //removes focus from tabbed buttons => stops letters from being inputed when a button is tabbed and enter is pressed
+
             let answerLetters = answer.split("");
             let attempt = document.querySelector("#box" + row + "0").innerHTML + document.querySelector("#box" + row + "1").innerHTML + document.querySelector("#box" + row + "2").innerHTML + document.querySelector("#box" + row + "3").innerHTML + document.querySelector("#box" + row + "4").innerHTML;
             let matchedLetters = ["-", "-", "-", "-", "-"];
