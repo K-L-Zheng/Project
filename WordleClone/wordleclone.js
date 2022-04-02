@@ -19,7 +19,7 @@ function inputLetter (keypress) {
             if (column > 0) {
                 document.querySelector("#box" + row + (column - 1)).style.outline = "";
             }
-            document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+            document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
 
             column += 1;
         }
@@ -30,14 +30,14 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
-                document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
             }
             else { //for when clicks reassign the column
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
                 column = column > 0 ? column - 1 : column;
-                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
             }
         }
 
@@ -95,7 +95,7 @@ function inputLetter (keypress) {
                     row += 1;                  
                     column = 0;
 
-                    document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                    document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
                 }
                 else { //lose
                     document.querySelector("#box" + row + (column - 1)).style.outline = "";
@@ -117,7 +117,7 @@ function inputLetter (keypress) {
 
                 column = 0;
 
-                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
             }
         }
     }
@@ -170,7 +170,7 @@ document.addEventListener("click", function(click) {
             document.querySelector("#box" + row + i).style.outline = "";
         }
         column = +activeEl.id[4];
-        document.getElementById(activeEl.id).style.outline = "rgb(96, 163, 168) solid min(4px, calc(4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw))";
+        document.getElementById(activeEl.id).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
     }
 
     if (activeEl.tagName === "BUTTON") {

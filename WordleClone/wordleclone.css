@@ -1,7 +1,7 @@
 :root {
     --board-width: 400;
     --kb-width: 600;
-    --container-padding: 60;
+    --container-padding: 5;
 
     height: 100%;
 }
@@ -25,42 +25,46 @@ body {
     display: flex;
     flex-direction: column;
 
-    user-select: none;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    user-select: none;
+    overflow-y: hidden;
 }
 
     h1 {
         margin: 0;
         text-align: center;
-        font-size: min(80px, 80 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+        font-size: min(80px, 80 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 80 / 1000 * 100vh);
         line-height: 2.5;
     }
 
     #container {
+        box-sizing: border-box;
         margin-block: auto;
-        padding: 0 min(var(--container-padding) * 1px, var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw) min(200px, 200 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+        /* padding: 0 min(var(--container-padding) * 1px, var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw, var(--container-padding) / 1000 * 100vh) min(200px, 200 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 200 / 1000 * 100vh); */
+        padding: 0 calc(var(--container-padding) * 1px) min(200px, 200 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 200 / 1000 * 100vh);
 
         display: flex;
         justify-content: center;
         align-items: center;
         align-content: center;
         flex-wrap: wrap;
-        column-gap: clamp(var(--container-padding) * 1px, 5.5vw, 200px);
-        row-gap: min(var(--container-padding) * 1px, var(--container-padding) / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+        column-gap: clamp(min(var(--container-padding) * 1px, var(--container-padding) / 1000 * 100vh), 5.5vw, 200px);
+        /* row-gap: min(120px, 120 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 120 / 1000 * 100vh); */
+        row-gap: 15vh;
     }
 
         #wrapper {
             position: relative;
-            width: min(var(--board-width) * 1px, 100%);
+            width: min(var(--board-width) * 1px, 100%, var(--board-width) / 1000 * 100vh);
         }
 
             #wordlegrid {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
                 aspect-ratio: 5/6;
-                gap: min(10px, 10 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+                gap: min(10px, 10 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 10 / 1000 * 100vh);
                 
-                font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+                font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 48 / 1000 * 100vh);
                 font-weight: bold;
 
                 user-select: none;
@@ -87,13 +91,13 @@ body {
             }
 
                 #answer {
-                    padding: min(6px, 6 / (var(--board-width) + 2 * var(--container-padding)) * 100vw) min(8px, 8 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+                    padding: min(6px, 6 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 6 / 1000 * 100vh) min(8px, 8 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 8 / 1000 * 100vh);
                     background-color: rgb(215, 237, 255);
                     border-radius: 4px;
 
                     text-align: center;
                     font-weight: 600;
-                    font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw);
+                    font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 48 / 1000 * 100vh);
 
                     transition: opacity .2s;
                 }
@@ -103,7 +107,8 @@ body {
                 }
 
         #keyboard {
-            width: min(calc(var(--kb-width) * 1px), 100%);
+            /* width: min(var(--kb-width) * 1px, 100%, var(--board-width) / 1000 * 100vh); */
+            width: min(var(--kb-width) * 1px, 100%, var(--kb-width) / 1000 * 100vh);
         }
 
             .kbrow {
@@ -112,18 +117,18 @@ body {
             }
 
                 .kbrow > button {
-                    width: min(54px, 54 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
-                    height: min(37.5px, 37.5 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
-                    margin: min(3px, 3 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                    width: min(54px, 54 / (var(--board-width)) * 100vw, 54 / 1000 * 100vh);
+                    height: min(37.5px, 37.5 / (var(--board-width)) * 100vw, 37.5 / 1000 * 100vh);
+                    margin: min(3px, 3 / (var(--board-width)) * 100vw, 3 / 1000 * 100vh);
                     padding: 0;
                     background-color: rgb(215, 237, 255);
 
                     border: none;
-                    border-radius: 4px;
+                    border-radius: min(4px, 4 / (var(--board-width)) * 100vw, 4 / 1000 * 100vh);
 
                     color: rgb(58, 58, 58);
                     text-align: center;
-                    font-size: min(29px, 29 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                    font-size: min(29px, 29 / (var(--board-width)) * 100vw, 29 / 1000 * 100vh);
                     font-weight: 600;
                     font-family: inherit;
 
@@ -132,7 +137,7 @@ body {
                 }
 
                 .kbrow > button[data-key = "Enter"], .kbrow > button[data-key = "Backspace"] {
-                    width: min(75px, 75 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                    width: min(75px, 75 / (var(--board-width)) * 100vw, 75 / 1000 * 100vh);
 
                     display: flex;
                     justify-content: center;
@@ -176,9 +181,9 @@ body {
                 }
 
             #kb1 {
-                padding-inline: min(29px, 29 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                padding-inline: min(29px, 29 / (var(--board-width)) * 100vw, 29 / 1000 * 100vh);
             }
 
             #kb2 {
-                padding-inline: min(9px, 9 / (var(--kb-width) + 2 * var(--container-padding)) * 100vw);
+                padding-inline: min(9px, 9 / (var(--board-width)) * 100vw, 9 / 1000 * 100vh);
             }
