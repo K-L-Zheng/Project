@@ -161,9 +161,7 @@ function buttonColorChange() { //changes the bg-color of the key buttons based o
     }
 }
 
-document.addEventListener("keydown", inputLetter)
-
-document.addEventListener("click", function(click) {
+function clickElement (click) {
     let activeEl = click.path[0];
 
     if (activeEl.classList.contains("attempt" + row) && gameEnded === false) {
@@ -178,4 +176,39 @@ document.addEventListener("click", function(click) {
     if (activeEl.tagName === "BUTTON") {
         inputLetter(activeEl.dataset);
     }
-})
+}
+
+document.addEventListener("keydown", inputLetter);
+
+document.addEventListener("click", clickElement);
+
+
+
+// let confettiCanvas = document.querySelector("#confetti");
+// confettiCanvas.width = 400;
+// confettiCanvas.height = 300;
+
+
+// let ctx = confettiCanvas.getContext("2d");
+// let pieces = [];
+
+// function update() {
+//     setTimeout(update, 1);
+// }
+
+// function draw() {
+
+// }
+
+// class piece {
+//     constructor(x, y) {
+//         this.x = x;
+//         this.y = y;
+//         this.length = math.random() * 2 + 5;
+//         this.width = math.random() * 1.91 + 3.09;
+//         this.fallSpeed = (math.random() + 1) * .5;
+//         this.rotationSpeed =
+//             ;
+//     }
+// }
+

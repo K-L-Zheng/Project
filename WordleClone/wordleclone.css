@@ -3,6 +3,9 @@
     --kb-width: 600;
     --container-padding: 5;
 
+    --responsiveWidth: 100vw / (var(--board-width) + 2 * var(--container-padding));
+    --responsiveHeight: 100vh / 1000; /*doesn't need calc() since it's only used inside min()*/
+
     height: 100%;
 }
 
@@ -33,36 +36,40 @@ body {
     h1 {
         margin: 0;
         text-align: center;
-        font-size: min(80px, 80 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 80 / 1000 * 100vh);
+        font-size: min(80px, 80 * var(--responsiveWidth), 80 * var(--responsiveHeight));
         line-height: 2.5;
     }
 
     #container {
         box-sizing: border-box;
         margin-block: auto;
-        padding: 0 calc(var(--container-padding) * 1px) min(200px, 200 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 200 / 1000 * 100vh);
+        padding: 0 calc(var(--container-padding) * 1px) min(200px, 200 * var(--responsiveWidth), 200 * var(--responsiveHeight));
 
         display: flex;
         justify-content: center;
         align-items: center;
         align-content: center;
         flex-wrap: wrap;
-        column-gap: clamp(min(var(--container-padding) * 1px, var(--container-padding) / 1000 * 100vh), 5.5vw, 200px);
+        column-gap: clamp(min(var(--container-padding) * 1px, var(--container-padding) * var(--responsiveHeight)), 5.5vw, 200px);
         row-gap: 15vh;
     }
 
         #wrapper {
             position: relative;
-            width: min(var(--board-width) * 1px, 100%, var(--board-width) / 1000 * 100vh);
+            width: min(var(--board-width) * 1px, 100%, var(--board-width) * var(--responsiveHeight));
         }
+
+            /* #confetti {
+                outline: red solid 1px;
+            } */
 
             #wordlegrid {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
                 aspect-ratio: 5/6;
-                gap: min(10px, 10 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 10 / 1000 * 100vh);
+                gap: min(10px, 10 * var(--responsiveWidth), 10 * var(--responsiveHeight));
                 
-                font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 48 / 1000 * 100vh);
+                font-size: min(48px, 48 * var(--responsiveWidth), 48 * var(--responsiveHeight));
                 font-weight: bold;
 
                 user-select: none;
@@ -89,13 +96,13 @@ body {
             }
 
                 #answer {
-                    padding: min(6px, 6 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 6 / 1000 * 100vh) min(8px, 8 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 8 / 1000 * 100vh);
+                    padding: min(6px, 6 * var(--responsiveWidth), 6 * var(--responsiveHeight)) min(8px, 8 * var(--responsiveWidth), 8 * var(--responsiveHeight));
                     background-color: rgb(215, 237, 255);
-                    border-radius: 4px;
+                    border-radius: min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight));
 
                     text-align: center;
                     font-weight: 600;
-                    font-size: min(48px, 48 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 48 / 1000 * 100vh);
+                    font-size: min(48px, 48 * var(--responsiveWidth), 48 * var(--responsiveHeight));
 
                     transition: opacity .2s;
                 }
@@ -105,7 +112,7 @@ body {
                 }
 
         #keyboard {
-            width: min(var(--kb-width) * 1px, 100%, var(--kb-width) / 1000 * 100vh);
+            width: min(var(--kb-width) * 1px, 100%, var(--kb-width) * var(--responsiveHeight));
         }
 
             .kbrow {
@@ -114,18 +121,18 @@ body {
             }
 
                 .kbrow > button {
-                    width: min(54px, 54 / (var(--board-width)) * 100vw, 54 / 1000 * 100vh);
-                    height: min(37.5px, 37.5 / (var(--board-width)) * 100vw, 37.5 / 1000 * 100vh);
-                    margin: min(3px, 3 / (var(--board-width)) * 100vw, 3 / 1000 * 100vh);
+                    width: min(54px, 54 * var(--responsiveWidth), 54 * var(--responsiveHeight));
+                    height: min(37.5px, 37.5 * var(--responsiveWidth), 37.5 * var(--responsiveHeight));
+                    margin: min(3px, 3 * var(--responsiveWidth), 3 * var(--responsiveHeight));
                     padding: 0;
                     background-color: rgb(215, 237, 255);
 
                     border: none;
-                    border-radius: min(4px, 4 / (var(--board-width)) * 100vw, 4 / 1000 * 100vh);
+                    border-radius: min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight));
 
                     color: rgb(58, 58, 58);
                     text-align: center;
-                    font-size: min(29px, 29 / (var(--board-width)) * 100vw, 29 / 1000 * 100vh);
+                    font-size: min(29px, 29 * var(--responsiveWidth), 29 * var(--responsiveHeight));
                     font-weight: 600;
                     font-family: inherit;
 
@@ -134,7 +141,7 @@ body {
                 }
 
                 .kbrow > button[data-key = "Enter"], .kbrow > button[data-key = "Backspace"] {
-                    width: min(75px, 75 / (var(--board-width)) * 100vw, 75 / 1000 * 100vh);
+                    width: min(75px, 75 * var(--responsiveWidth), 75 * var(--responsiveHeight));
 
                     display: flex;
                     justify-content: center;
@@ -142,6 +149,7 @@ body {
                 }
 
                     .kbrow > button > svg {
+                        width: min(37px, 37 * var(--responsiveWidth), 37 * var(--responsiveHeight));
                         pointer-events: none;
                     }
 
@@ -178,9 +186,9 @@ body {
                 }
 
             #kb1 {
-                padding-inline: min(29px, 29 / (var(--board-width)) * 100vw, 29 / 1000 * 100vh);
+                padding-inline: min(29px, 29 / var(--board-width) * 100vw, 29 * var(--responsiveHeight));
             }
 
             #kb2 {
-                padding-inline: min(9px, 9 / (var(--board-width)) * 100vw, 9 / 1000 * 100vh);
+                padding-inline: min(9px, 9 / var(--board-width) * 100vw, 9 * var(--responsiveHeight));
             }
