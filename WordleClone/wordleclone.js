@@ -58,6 +58,7 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + (column - 1)).style.outline = "";
 
                 buttonColorChange();
+                draw();
 
                 gameEnded = true;
             }
@@ -184,47 +185,45 @@ document.addEventListener("click", clickElement);
 
 
 
-// let confettiCanvas = document.querySelector("#confetti");
-//     confettiCanvas.width = 400;
-//     confettiCanvas.height = 300;
+let canvas = document.querySelector("#confetti");
+    canvas.width = 400;
+    canvas.height = 600;
 
-// let ctx = confettiCanvas.getContext("2d");
-// let pieces = [];
+let ctx = canvas.getContext("2d");
+let pieces = [];
 
-// class piece {
-//     constructor(x, y) {
-//         this.x = x;
-//         this.y = y;
-//         this.length = Math.random() * 2 + 5;
-//         this.width = Math.random() * 1.91 + 3.09;
-//         this.fallSpeed = (Math.random() + 1) * .5;
-//         this.rotationSpeed = 1;
-//     }
-// }
+class piece {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.height = Math.random() * 2 + 10;
+        this.width = Math.random() * 2 + 5;
+        this.fallSpeed = (Math.random() + 1) * .3;
+        this.rotationSpeed = 1;
+        this.hue = (Math.random() + 1) * 360;
+        this.opacity = 1;
+    }
+}
 
-// while (pieces.length < 70) {
-//     pieces.push(new piece(Math.random() * confettiCanvas.width, 0));
-// }
+while (pieces.length < 70) {
+    pieces.push(new piece(Math.random() * canvas.width, 0));
+}
 
-// function draw() {
-//     for (let i = 0; i < pieces.length; i++) {
-//         ctx.fillStyle = "hsl(" + (Math.random() + 1) * 360 + ", 22%, 63%)";
-//         ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].length, pieces[i].width);
-//     }
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-//     requestAnimationFrame(draw);
-// }
+    for (let i = 0; i < pieces.length; i++) {
+        ctx.fillStyle = "hsl(" + pieces[i].hue + ", 70%, 63%," + pieces[i].opacity + ")";
+        ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].height, pieces[i].width);
 
-// function update() {
-//     for (let i = 0; i < pieces.length; i++) {
-//         pieces[i].y += pieces[i].fallSpeed;
-//         if (pieces[i].y > confettiCanvas.height) {
-//             pieces[i].y = 0;
-//         }
-//     }
+        if (pieces[i].y > canvas.height) {
+            pieces[i].y = 0;
+            pieces[i].x = Math.random() * canvas.width;
+        }
 
-//     setTimeout(update, 1);
-// }
+        pieces[i].opacity = 1 - pieces[i].y / canvas.height;
+        pieces[i].y += pieces[i].fallSpeed;
+    }
 
-// draw();
-// update();
+    requestAnimationFrame(draw);
+}

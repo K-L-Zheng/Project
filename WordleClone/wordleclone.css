@@ -59,9 +59,11 @@ body {
             width: min(var(--board-width) * 1px, 100%, var(--board-width) * var(--responsiveHeight));
         }
 
-            /* #confetti {
-                outline: red solid 1px;
-            } */
+            #confetti {
+                position: absolute;
+                pointer-events: none;
+                /* outline: red solid 1px; */
+            }
 
             #wordlegrid {
                 display: grid;
