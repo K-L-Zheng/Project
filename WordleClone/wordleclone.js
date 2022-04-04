@@ -185,30 +185,46 @@ document.addEventListener("click", clickElement);
 
 
 // let confettiCanvas = document.querySelector("#confetti");
-// confettiCanvas.width = 400;
-// confettiCanvas.height = 300;
-
+//     confettiCanvas.width = 400;
+//     confettiCanvas.height = 300;
 
 // let ctx = confettiCanvas.getContext("2d");
 // let pieces = [];
-
-// function update() {
-//     setTimeout(update, 1);
-// }
-
-// function draw() {
-
-// }
 
 // class piece {
 //     constructor(x, y) {
 //         this.x = x;
 //         this.y = y;
-//         this.length = math.random() * 2 + 5;
-//         this.width = math.random() * 1.91 + 3.09;
-//         this.fallSpeed = (math.random() + 1) * .5;
-//         this.rotationSpeed =
-//             ;
+//         this.length = Math.random() * 2 + 5;
+//         this.width = Math.random() * 1.91 + 3.09;
+//         this.fallSpeed = (Math.random() + 1) * .5;
+//         this.rotationSpeed = 1;
 //     }
 // }
 
+// while (pieces.length < 70) {
+//     pieces.push(new piece(Math.random() * confettiCanvas.width, 0));
+// }
+
+// function draw() {
+//     for (let i = 0; i < pieces.length; i++) {
+//         ctx.fillStyle = "hsl(" + (Math.random() + 1) * 360 + ", 22%, 63%)";
+//         ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].length, pieces[i].width);
+//     }
+
+//     requestAnimationFrame(draw);
+// }
+
+// function update() {
+//     for (let i = 0; i < pieces.length; i++) {
+//         pieces[i].y += pieces[i].fallSpeed;
+//         if (pieces[i].y > confettiCanvas.height) {
+//             pieces[i].y = 0;
+//         }
+//     }
+
+//     setTimeout(update, 1);
+// }
+
+// draw();
+// update();
