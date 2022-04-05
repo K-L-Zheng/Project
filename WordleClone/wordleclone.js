@@ -196,10 +196,9 @@ class piece {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.height = Math.random() * 2 + 10;
-        this.width = Math.random() * 2 + 5;
+        this.length = Math.random() * 2 + 10;
+        this.width = Math.random() * 5 + 5;
         this.fallSpeed = (Math.random() + 1) * .3;
-        this.rotationSpeed = 1;
         this.hue = (Math.random() + 1) * 360;
         this.opacity = 1;
     }
@@ -213,8 +212,11 @@ function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (let i = 0; i < pieces.length; i++) {
+        ctx.save();
+
+        // ctx.translate(Math.sin(Math.random() * Math.PI * 2 * pieces[i].y / canvas.height), Math.sin(Math.random() * Math.PI * 2 * pieces[i].y / canvas.height));
         ctx.fillStyle = "hsl(" + pieces[i].hue + ", 70%, 63%," + pieces[i].opacity + ")";
-        ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].height, pieces[i].width);
+        ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].length, pieces[i].width);
 
         if (pieces[i].y > canvas.height) {
             pieces[i].y = 0;
@@ -223,7 +225,11 @@ function draw() {
 
         pieces[i].opacity = 1 - pieces[i].y / canvas.height;
         pieces[i].y += pieces[i].fallSpeed;
+
+        ctx.restore();
     }
 
     requestAnimationFrame(draw);
 }
+
+// draw();
