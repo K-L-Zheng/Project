@@ -203,7 +203,7 @@ class piece {
         this.length = Math.random() * 2 + 10;
         this.width = Math.random() * 3 + 3;
         this.fallSpeed = (Math.random() + 1) * 1;
-        this.rotationSpeed = (Math.round(Math.random()) * 2 - 1) * Math.random() * 2;
+        this.rotationRange = (Math.round(Math.random()) * 2 - 1) * Math.random(); //first part randomly chooses -1 or 1 (direction of initial rotation), second part determines the period of the sine curve
         this.hue = (Math.random() + 1) * 360;
         this.opacity = 1;
     }
@@ -219,7 +219,7 @@ function draw() {
     for (let i = 0; i < pieces.length; i++) {
         ctx.save();
 
-        ctx.rotate(Math.sin(pieces[i].y / canvas.height * pieces[i].rotationSpeed * Math.PI) * Math.PI / 18);
+        ctx.rotate(Math.sin(pieces[i].y / canvas.height * 2 * Math.PI * pieces[i].rotationRange) * Math.PI / 18);
         ctx.fillStyle = "hsl(" + pieces[i].hue + ", 70%, 63%," + pieces[i].opacity + ")";
         ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].length, pieces[i].width);
 
@@ -237,4 +237,4 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-// draw();
+draw();
