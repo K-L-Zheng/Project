@@ -59,12 +59,6 @@ body {
             width: min(var(--board-width) * 1px, 100%, var(--board-width) * var(--responsiveHeight));
         }
 
-            #confetti {
-                position: absolute;
-                pointer-events: none;
-                /* outline: red solid 1px; */
-            }
-
             #wordlegrid {
                 display: grid;
                 grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -194,3 +188,8 @@ body {
             #kb2 {
                 padding-inline: min(9px, 9 / var(--board-width) * 100vw, 9 * var(--responsiveHeight));
             }
+
+    #confetti {
+        position: absolute;
+        pointer-events: none;
+    }

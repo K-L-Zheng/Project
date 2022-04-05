@@ -184,10 +184,14 @@ document.addEventListener("keydown", inputLetter);
 document.addEventListener("click", clickElement);
 
 
-
 let canvas = document.querySelector("#confetti");
-    canvas.width = 400;
-    canvas.height = 600;
+    canvas.width = document.querySelector("body").offsetWidth;
+    canvas.height = document.querySelector("body").offsetHeight;
+
+window.addEventListener("resize", () => {
+    canvas.width = document.querySelector("body").offsetWidth;
+    canvas.height = document.querySelector("body").offsetHeight;
+});
 
 let ctx = canvas.getContext("2d");
 let pieces = [];
@@ -197,14 +201,15 @@ class piece {
         this.x = x;
         this.y = y;
         this.length = Math.random() * 2 + 10;
-        this.width = Math.random() * 5 + 5;
-        this.fallSpeed = (Math.random() + 1) * .3;
+        this.width = Math.random() * 3 + 3;
+        this.fallSpeed = (Math.random() + 1) * 1;
+        this.rotationSpeed = (Math.round(Math.random()) * 2 - 1) * Math.random() * 2;
         this.hue = (Math.random() + 1) * 360;
         this.opacity = 1;
     }
 }
 
-while (pieces.length < 70) {
+while (pieces.length < 500) {
     pieces.push(new piece(Math.random() * canvas.width, 0));
 }
 
@@ -214,7 +219,7 @@ function draw() {
     for (let i = 0; i < pieces.length; i++) {
         ctx.save();
 
-        // ctx.translate(Math.sin(Math.random() * Math.PI * 2 * pieces[i].y / canvas.height), Math.sin(Math.random() * Math.PI * 2 * pieces[i].y / canvas.height));
+        ctx.rotate(Math.sin(pieces[i].y / canvas.height * pieces[i].rotationSpeed * Math.PI) * Math.PI / 18);
         ctx.fillStyle = "hsl(" + pieces[i].hue + ", 70%, 63%," + pieces[i].opacity + ")";
         ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].length, pieces[i].width);
 
