@@ -58,6 +58,7 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + (column - 1)).style.outline = "";
 
                 buttonColorChange();
+                timeNow = Date.now();
                 draw();
 
                 gameEnded = true;
@@ -195,6 +196,7 @@ window.addEventListener("resize", () => {
 
 let ctx = canvas.getContext("2d");
 let pieces = [];
+let timeNow; //initializes once game is won, otherwise the conffetis' y positions will change with time as soon as the game is loaded
 
 class piece {
     constructor(x, y) {
@@ -202,39 +204,40 @@ class piece {
         this.y = y;
         this.length = Math.random() * 2 + 10;
         this.width = Math.random() * 3 + 3;
-        this.fallSpeed = (Math.random() + 1) * 1;
+        this.fallSpeed = (Math.random() + 1) * .2;
         this.rotationRange = (Math.round(Math.random()) * 2 - 1) * Math.random(); //first part randomly chooses -1 or 1 (direction of initial rotation), second part determines the period of the sine curve
         this.hue = (Math.random() + 1) * 360;
         this.opacity = 1;
     }
 }
 
-while (pieces.length < 500) {
-    pieces.push(new piece(Math.random() * canvas.width, 0));
-}
-
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    while (pieces.length <= 500 * canvas.width / 1200) {
+        pieces.push(new piece(Math.random() * canvas.width, Math.random() * -canvas.height));
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //clears the previous rectangles & prevents the confetting from becoming long strands of confetti
+    let updatedTime = Date.now();
+    let dt = updatedTime - timeNow;
 
     for (let i = 0; i < pieces.length; i++) {
         ctx.save();
 
         ctx.rotate(Math.sin(pieces[i].y / canvas.height * 2 * Math.PI * pieces[i].rotationRange) * Math.PI / 18);
         ctx.fillStyle = "hsl(" + pieces[i].hue + ", 70%, 63%," + pieces[i].opacity + ")";
-        ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].length, pieces[i].width);
+        ctx.fillRect(pieces[i].x, pieces[i].y, pieces[i].length * Math.min(1, canvas.height / 1000), pieces[i].width * Math.min(1, canvas.height / 1000));
 
         if (pieces[i].y > canvas.height) {
-            pieces[i].y = 0;
-            pieces[i].x = Math.random() * canvas.width;
+            pieces.splice(i, 1);
         }
 
         pieces[i].opacity = 1 - pieces[i].y / canvas.height;
-        pieces[i].y += pieces[i].fallSpeed;
+        pieces[i].y += pieces[i].fallSpeed * canvas.height / 1000 * dt;
 
         ctx.restore();
     }
 
+    timeNow = Date.now();
+
     requestAnimationFrame(draw);
 }
-
-draw();
