@@ -183,14 +183,16 @@ function clickElement (click) {
         darkModeCount += 1;
         let rootStyles = document.querySelector(":root").style;
         if (darkModeCount % 2 === 0) {
-            rootStyles.setProperty("--bg-color", "rgb(36, 36, 36)");            rootStyles.setProperty("--box-color", "rgb(230, 230, 230)");
+            rootStyles.setProperty("--bg-color", "rgb(36, 36, 36)");
+            rootStyles.setProperty("--box-color", "rgb(230, 230, 230)");
             rootStyles.setProperty("--font-color", "rgb(36, 36, 36)");
-            rootStyles.setProperty("--focus-hover-color", "rgb(195, 195, 195)");
+            rootStyles.setProperty("--focus-hover-color", "rgb(32, 208, 221)");
             rootStyles.setProperty("--title-color", "rgb(230, 230, 230)");
             rootStyles.setProperty("--title-hover-color", "rgb(204, 204, 204)");
         }
         else {
-            rootStyles.setProperty("--bg-color", "rgb(141, 182, 168)");            rootStyles.setProperty("--box-color", "rgb(215, 237, 255)");
+            rootStyles.setProperty("--bg-color", "rgb(141, 182, 168)");
+            rootStyles.setProperty("--box-color", "rgb(215, 237, 255)");
             rootStyles.setProperty("--font-color", "rgb(58, 58, 58)");
             rootStyles.setProperty("--focus-hover-color", "rgb(96, 163, 168)");
             rootStyles.setProperty("--title-color", "rgb(58, 58, 58)");
