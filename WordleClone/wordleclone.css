@@ -3,6 +3,11 @@
     --kb-width: 600;
     --container-padding: 5;
 
+    --bg-color: rgb(141, 182, 168);
+    --text-color: rgb(58, 58, 58);
+    --box-color: rgb(215, 237, 255);
+    --focus-color: rgb(96, 163, 168);
+
     --responsiveWidth: 100vw / (var(--board-width) + 2 * var(--container-padding));
     --responsiveHeight: 100vh / 1000; /*doesn't need calc() since it's only used inside min()*/
 
@@ -22,7 +27,7 @@ body {
     position: relative;
     height: 100%;
     margin: auto;
-    background-color: rgb(141, 182, 168);
+    background-color: var(--bg-color);
     color: rgb(58, 58, 58);
 
     display: flex;
@@ -39,6 +44,11 @@ body {
         font-size: min(80px, 80 * var(--responsiveWidth), 80 * var(--responsiveHeight));
         line-height: 2.5;
     }
+
+        h1 > span:hover {
+            color: rgb(36, 36, 36);
+            cursor: pointer;
+        }
 
     #container {
         box-sizing: border-box;
