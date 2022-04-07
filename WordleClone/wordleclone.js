@@ -21,7 +21,7 @@ function inputLetter (keypress) {
             if (column > 0) {
                 document.querySelector("#box" + row + (column - 1)).style.outline = "";
             }
-            document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
+            document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
 
             column += 1;
         }
@@ -32,14 +32,14 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
-                document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
+                document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
             else { //for when clicks reassign the column
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "";
                 column = column > 0 ? column - 1 : column;
-                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
+                document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
         }
 
@@ -101,7 +101,7 @@ function inputLetter (keypress) {
                     row += 1;                  
                     column = 0;
 
-                    document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
+                    document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
                 }
                 else { //lose
                     document.querySelector("#box" + row + (column - 1)).style.outline = "";
@@ -123,7 +123,7 @@ function inputLetter (keypress) {
 
                 column = 0;
 
-                document.querySelector("#box" + row + column).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
+                document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
         }
     }
@@ -174,7 +174,7 @@ function clickElement (click) {
             document.querySelector("#box" + row + i).style.outline = "";
         }
         column = +activeEl.id[4];
-        document.getElementById(activeEl.id).style.outline = "rgb(96, 163, 168) solid min(4px, 4 / (var(--board-width) + 2 * var(--container-padding)) * 100vw, 4 / 1000 * 100vh)";
+        document.getElementById(activeEl.id).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
     }
     else if (activeEl.tagName === "BUTTON") {
         inputLetter(activeEl.dataset);
@@ -183,10 +183,18 @@ function clickElement (click) {
         darkModeCount += 1;
         let rootStyles = document.querySelector(":root").style;
         if (darkModeCount % 2 === 0) {
-            rootStyles.setProperty("--bg-color", "rgb(58, 58, 58)");
+            rootStyles.setProperty("--bg-color", "rgb(36, 36, 36)");            rootStyles.setProperty("--box-color", "rgb(230, 230, 230)");
+            rootStyles.setProperty("--font-color", "rgb(36, 36, 36)");
+            rootStyles.setProperty("--focus-hover-color", "rgb(195, 195, 195)");
+            rootStyles.setProperty("--title-color", "rgb(230, 230, 230)");
+            rootStyles.setProperty("--title-hover-color", "rgb(204, 204, 204)");
         }
         else {
-            rootStyles.setProperty("--bg-color", "rgb(141, 182, 168)");
+            rootStyles.setProperty("--bg-color", "rgb(141, 182, 168)");            rootStyles.setProperty("--box-color", "rgb(215, 237, 255)");
+            rootStyles.setProperty("--font-color", "rgb(58, 58, 58)");
+            rootStyles.setProperty("--focus-hover-color", "rgb(96, 163, 168)");
+            rootStyles.setProperty("--title-color", "rgb(58, 58, 58)");
+            rootStyles.setProperty("--title-hover-color", "rgb(46, 46, 46)");
         }
     }
 }
@@ -226,7 +234,7 @@ class piece {
 }
 
 function draw() {
-    while (pieces.length <= 500 * canvas.width / 1200) {
+    while (pieces.length <= .5 * canvas.width) {
         pieces.push(new piece(Math.random() * canvas.width, Math.random() * -canvas.height));
     }
 
@@ -243,9 +251,9 @@ function draw() {
 
         ctx.beginPath();
         ctx.strokeStyle = "hsla(" + pieces[i].hue + ", 70%, 63%, " + pieces[i].opacity + ")";
-        ctx.lineWidth = pieces[i].width;
+        ctx.lineWidth = pieces[i].width * Math.min(canvas.width / 420, canvas.height / 1000, 1);
         ctx.moveTo(pieces[i].x, pieces[i].y);
-        ctx.lineTo(pieces[i].x + pieces[i].xLength, pieces[i].y + pieces[i].yLength);
+        ctx.lineTo(pieces[i].x + pieces[i].xLength * Math.min(canvas.width / 420, canvas.height / 1000, 1), pieces[i].y + pieces[i].yLength * Math.min(canvas.width / 420, canvas.height / 1000, 1));
         ctx.stroke();
 
         pieces[i].opacity = opacityMod * (1 - pieces[i].y / canvas.height);

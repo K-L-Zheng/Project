@@ -1,15 +1,17 @@
 :root {
     --board-width: 400;
     --kb-width: 600;
-    --container-padding: 5;
+    --container-padding: 10;
 
     --bg-color: rgb(141, 182, 168);
-    --text-color: rgb(58, 58, 58);
     --box-color: rgb(215, 237, 255);
-    --focus-color: rgb(96, 163, 168);
-
+    --font-color: rgb(58, 58, 58);
+    --focus-hover-color: rgb(96, 163, 168);
+    --title-color: rgb(58, 58, 58);
+    --title-hover-color: rgb(46, 46, 46);
+    /*doesn't need calc() since it's only used inside min()*/
     --responsiveWidth: 100vw / (var(--board-width) + 2 * var(--container-padding));
-    --responsiveHeight: 100vh / 1000; /*doesn't need calc() since it's only used inside min()*/
+    --responsiveHeight: 100vh / 1000;
 
     height: 100%;
 }
@@ -28,7 +30,7 @@ body {
     height: 100%;
     margin: auto;
     background-color: var(--bg-color);
-    color: rgb(58, 58, 58);
+    color: var(--font-color);
 
     display: flex;
     flex-direction: column;
@@ -40,20 +42,28 @@ body {
 
     h1 {
         margin: 0;
+        color: var(--title-color);
         text-align: center;
         font-size: min(80px, 80 * var(--responsiveWidth), 80 * var(--responsiveHeight));
         line-height: 2.5;
     }
 
+        h1 > span {
+            transition: transform .2s ease-out;
+        }
+
         h1 > span:hover {
-            color: rgb(36, 36, 36);
+            display: inline-block;
+            color: var(--title-hover-color);
+            transform: translateY(-5%);
+            line-height: 1.5;
             cursor: pointer;
         }
 
     #container {
         box-sizing: border-box;
         margin-block: auto;
-        padding: 0 calc(var(--container-padding) * 1px) min(200px, 200 * var(--responsiveWidth), 200 * var(--responsiveHeight));
+        padding: 0 min(var(--container-padding) * 1px, var(--container-padding) * var(--responsiveWidth), var(--container-padding) * var(--responsiveHeight)) min(200px, 200 * var(--responsiveWidth), 200 * var(--responsiveHeight));
 
         display: flex;
         justify-content: center;
@@ -87,7 +97,7 @@ body {
                     align-items: center;
                     line-height: 0;
 
-                    background-color:rgb(215, 237, 255);
+                    background-color:var(--box-color);
                 }
 
             #answer-reveal {
@@ -103,7 +113,7 @@ body {
 
                 #answer {
                     padding: min(6px, 6 * var(--responsiveWidth), 6 * var(--responsiveHeight)) min(8px, 8 * var(--responsiveWidth), 8 * var(--responsiveHeight));
-                    background-color: rgb(215, 237, 255);
+                    background-color: var(--box-color);
                     border-radius: min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight));
 
                     text-align: center;
@@ -131,12 +141,12 @@ body {
                     height: min(37.5px, 37.5 * var(--responsiveWidth), 37.5 * var(--responsiveHeight));
                     margin: min(3px, 3 * var(--responsiveWidth), 3 * var(--responsiveHeight));
                     padding: 0;
-                    background-color: rgb(215, 237, 255);
+                    background-color: var(--box-color);
 
                     border: none;
                     border-radius: min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight));
 
-                    color: rgb(58, 58, 58);
+                    color: var(--font-color);
                     text-align: center;
                     font-size: min(29px, 29 * var(--responsiveWidth), 29 * var(--responsiveHeight));
                     font-weight: 600;
@@ -156,11 +166,12 @@ body {
 
                     .kbrow > button > svg {
                         width: min(37px, 37 * var(--responsiveWidth), 37 * var(--responsiveHeight));
+                        fill: var(--font-color);
                         pointer-events: none;
                     }
 
                 .kbrow > button:hover {
-                    background-color: rgb(96, 163, 168);
+                    background-color: var(--focus-hover-color);
                 }
 
                 .kbrow > .green-button {
