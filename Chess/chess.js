@@ -82,7 +82,7 @@ function possibleMoves(id) {
     //checks for a piece and player's turn and win-screen visibility
     if (matchStarted === true && boardSpace.children.length && boardSpace.children[0].classList.contains(players[0])) {
         //creates an array of boolean values indicating the visibility of each promo column
-        let pawnPromo = [...document.querySelectorAll(".light-promo,.dark-promo")];
+        let pawnPromo = [...document.querySelectorAll(".pawn-promo span")];
         pawnPromo = pawnPromo.map(promo => promo.style.visibility !== "visible" ? true : false);
         //ensure no player needs to make a pawn promotion before allowing piece movement
         if (!pawnPromo.includes(false)) {
@@ -161,8 +161,8 @@ function movePiece(id) {
 
         let promoVis = [];
 
-        for (let i = 0; i < document.querySelectorAll(".light-promo,.dark-promo").length; i++) {
-            promoVis.push(document.querySelectorAll(".light-promo,.dark-promo")[i].style.visibility);
+        for (let i = 0; i < document.querySelectorAll(".pawn-promo span").length; i++) {
+            promoVis.push(document.querySelectorAll(".pawn-promo span")[i].style.visibility);
         }
 
         if (!promoVis.includes("visible")) {

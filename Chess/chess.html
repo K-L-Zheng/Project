@@ -12,60 +12,60 @@
     <div id="board-wrapper">
         <div id="turn">TURN: <span id="turnCount">1</span></div>
         <div id="cap-light-pcs">
-            <div class="pawn-promo">
-                <span id= "promo-a8" class="light-promo">
+            <div id="dark-timer" class="timer"></div>
+        </div>
+        <div id="board">
+            <div id="light-promo" class="pawn-promo">
+                <span id= "promo-a8">
                     <i id="light-queen-promo-a" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-a" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-a" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-a" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-b8" class="light-promo">
+                <span id= "promo-b8">
                     <i id="light-queen-promo-b" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-b" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-b" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-b" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-c8" class="light-promo">
+                <span id= "promo-c8">
                     <i id="light-queen-promo-c" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-c" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-c" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-c" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-d8" class="light-promo">
+                <span id= "promo-d8">
                     <i id="light-queen-promo-d" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-d" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-d" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-d" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-e8" class="light-promo">
+                <span id= "promo-e8">
                     <i id="light-queen-promo-e" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-e" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-e" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-e" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-f8" class="light-promo">
+                <span id= "promo-f8">
                     <i id="light-queen-promo-f" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-f" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-f" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-f" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
-
+    
                 </span>
-                <span id= "promo-g8" class="light-promo">
+                <span id= "promo-g8">
                     <i id="light-queen-promo-g" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-g" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-g" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-g" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-h8" class="light-promo">
+                <span id= "promo-h8">
                     <i id="light-queen-promo-h" class="fas fa-chess-queen light-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-knight-promo-h" class="fas fa-chess-knight light-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-rook-promo-h" class="fas fa-chess-rook light-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="light-bishop-promo-h" class="fas fa-chess-bishop light-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
             </div>
-            <div id="dark-timer" class="timer"></div>
-        </div>
-        <div id="board">
             <div class="light-sq" id="a8" onclick="possibleMoves(this.id)">
                 <i id="dark-rook-a" class="fas fa-chess-rook dark-pc rook a"></i>
             </div>
@@ -194,58 +194,58 @@
             <div class="light-sq" id="h1" onclick="possibleMoves(this.id)">
                 <i id="light-rook-b"class="fas fa-chess-rook light-pc rook b"></i>
             </div>
-        </div>
-        <div id="cap-dark-pcs">
-            <div class="pawn-promo">
-                <span id= "promo-a1" class="dark-promo">
+            <div id="dark-promo" class="pawn-promo">
+                <span id= "promo-a1">
                     <i id="dark-bishop-promo-a" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-a" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-a" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-a" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-b1" class="dark-promo">
+                <span id= "promo-b1">
                     <i id="dark-bishop-promo-b" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-b" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-b" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-b" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-c1" class="dark-promo">
+                <span id= "promo-c1">
                     <i id="dark-bishop-promo-c" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-c" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-c" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-c" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-d1" class="dark-promo">
+                <span id= "promo-d1">
                     <i id="dark-bishop-promo-d" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-d" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-d" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-d" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-e1" class="dark-promo">
+                <span id= "promo-e1">
                     <i id="dark-bishop-promo-e" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-e" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-e" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-e" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-f1" class="dark-promo">
+                <span id= "promo-f1">
                     <i id="dark-bishop-promo-f" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-f" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-f" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-f" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-g1" class="dark-promo">
+                <span id= "promo-g1">
                     <i id="dark-bishop-promo-g" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-g" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-g" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-g" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
-                <span id= "promo-h1" class="dark-promo">
+                <span id= "promo-h1">
                     <i id="dark-bishop-promo-h" class="fas fa-chess-bishop dark-pc bishop promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-rook-promo-h" class="fas fa-chess-rook dark-pc rook promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-knight-promo-h" class="fas fa-chess-knight dark-pc knight promo" onclick="pawnPromotion(this.id)"></i>
                     <i id="dark-queen-promo-h" class="fas fa-chess-queen dark-pc queen promo" onclick="pawnPromotion(this.id)"></i>
                 </span>
             </div>
+        </div>
+        <div id="cap-dark-pcs">
             <div id="light-timer" class="timer"></div>
         </div>
         <div id="win-screen"></div>

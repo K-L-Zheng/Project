@@ -50,38 +50,9 @@ body {
                 font-size: 2.5rem;
             }
 
-            .pawn-promo {
-                position: absolute;
-                display: flex;
-                gap: 5px;
-                z-index: 2;
-                visibility: hidden;
-            }
-
-                .pawn-promo span {
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    box-sizing: border-box;
-                    padding-block: 8px;
-                    row-gap: 8px;
-                    width: 6rem;
-                    box-shadow: 2px 2px 5px #231D19;
-                    border-radius: 4px;
-                    background-color: cadetblue;
-                    opacity: 90%;
-                }
-
-                .pawn-promo .light-promo {
-                    top: 46px;
-                }
-
-                .pawn-promo .dark-promo {
-                    bottom: 372px;
-                }
-
         #board {
+            position: relative;
+
             display: grid;
             grid-template-areas: 
 
@@ -126,42 +97,34 @@ body {
                     text-shadow: 0 2px #231D19;
                 }
 
-            #veil {
+            .pawn-promo {
                 position: absolute;
-                height: 100%;
-                width: 100%;
-                background-color: hsla(0, 0%, 100%, .35);
-                transform: translate(0, -100%);
-            }
-        
-            #timer-selection {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -48%);
-                width: 35%;
                 display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 3px;
+                gap: 5px;
+                z-index: 2;
+                visibility: hidden;
             }
 
-                #timer-selection button {
-                    width: 50%;
-                    font-size: 1.5rem;
-                    color: cadetblue;
-                    font-weight: bold;
-                    padding: 8px 20px;
-                    border-radius: 12px;
-                    border: cadetblue 5px solid;
-                    background-color: white;
-                    transition: .2s;
+                .pawn-promo span {
+                    position: relative;
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-basis: 12.5%;
+                    flex-direction: column;
+                    align-items: center;
+                    box-sizing: border-box;
+                    padding-block: 8px;
+                    row-gap: 8px;
+                    width: 6rem;
+                    box-shadow: 2px 2px 5px #231D19;
+                    border-radius: 4px;
+                    background-color: cadetblue;
+                    opacity: 90%;
                 }
 
-                #timer-selection button:hover {
-                    font-size: 2rem;
-                    width: 100%;
-                }
+            #dark-promo {
+                bottom: 0;
+            }
 
         #win-screen {
             position: absolute;
@@ -177,3 +140,39 @@ body {
             transition: opacity 1s ease;
         }
 
+        #veil {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-color: hsla(0, 0%, 100%, .35);
+            transform: translate(0, -100%);
+        }
+        
+        #timer-selection {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -48%);
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+            #timer-selection button {
+                width: 50%;
+                font-size: 1.5rem;
+                color: cadetblue;
+                font-weight: bold;
+                padding: 8px 20px;
+                border-radius: 12px;
+                border: cadetblue 5px solid;
+                background-color: white;
+                transition: .2s;
+            }
+
+            #timer-selection button:hover {
+                font-size: 2rem;
+                width: 100%;
+            }
