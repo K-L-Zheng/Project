@@ -86,15 +86,15 @@ body {
             }
 
                 .dark-pc {
-                    font-size: 5rem;
-                    color: #405059;
-                    text-shadow: 0 2px #231D19;
+                    height: 5rem;
+                    fill: #405059;
+                    filter: drop-shadow(0 2px #231D19);
                 }
 
                 .light-pc {
-                    font-size: 5rem;
-                    color: #A5BDC8;
-                    text-shadow: 0 2px #231D19;
+                    height: 5rem;
+                    fill: #A5BDC8;
+                    filter: drop-shadow(0 2px #231D19);
                 }
 
             .pawn-promo {
@@ -145,7 +145,7 @@ body {
             height: 100%;
             width: 100%;
             background-color: hsla(0, 0%, 100%, .35);
-            transform: translate(0, -100%);
+            transform: translate(-5px, -100%);
         }
         
         #timer-selection {
