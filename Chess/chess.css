@@ -31,6 +31,8 @@ body {
         
         #cap-dark-pcs {
             position: relative;
+            display: flex;
+            flex-direction: row-reverse;
             height: 3rem;
             width: 100%;
             background-color: #7C6559;
@@ -49,6 +51,10 @@ body {
                 font-weight: bold;
                 font-size: 2.5rem;
             }
+
+                #light-timer {
+                    left:0;
+                }
 
         #board {
             position: relative;

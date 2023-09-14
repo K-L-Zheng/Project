@@ -124,7 +124,12 @@ function movePiece(id) {
         //captures
         if (boardSpace.children.length === 2) {
             boardSpace.children[0].style.height = "2rem";
-            boardSpace.children[0].style.paddingLeft = "10px";
+            if (boardSpace.children[0].classList.contains("light-pc")) {
+                boardSpace.children[0].style.paddingLeft = "10px";
+            }
+            else {
+                boardSpace.children[0].style.paddingRight = "10px";
+            }
             //removes the captured piece from the array of remaining pieces
             remainingPieces.splice(remainingPieces.indexOf(boardSpace.children[0].id), 1);
 
