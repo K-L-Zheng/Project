@@ -165,7 +165,7 @@ function buttonColorChange() { //changes the bg-color of the key buttons based o
 }
 
 function clickElement (click) {
-    let activeEl = click.path[0];
+    let activeEl = click.target;
 
     if (activeEl.classList.contains("attempt" + row) && gameEnded === false) {
         for (let i = 0; i < 5; i++) { //clears the outline from non-active boxes
