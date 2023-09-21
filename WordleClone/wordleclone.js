@@ -14,12 +14,8 @@ function inputLetter (keypress) {
     if (gameEnded === false) {
         if (/[a-z]/.test(keypress.key) && keypress.key.length === 1 && column < 5) { //filters out numbers + special characters + function keys
             document.querySelector("#box" + row + column).classList.add("pump-animation");
-            document.querySelector("#box" + row + column).innerHTML = "";
             document.querySelector("#box" + row + column).innerHTML = keypress.key.toUpperCase();
 
-            // if (column > 0) {
-            //     document.querySelector("#box" + row + (column - 1)).style.outline = "";
-            // }
             if (column < 4) {
                 document.querySelector("#box" + row + column).style.outline = "none";
                 document.querySelector("#box" + row + (column + 1)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
@@ -29,27 +25,18 @@ function inputLetter (keypress) {
         }
 
         if (keypress.key === "Backspace") {
-            // if (column === 5 || document.querySelector("#box" + row + column).style.outline === "none") {
-            //     column = column > 0 ? column - 1 : column;
-            //     document.querySelector("#box" + row + column).classList.remove("pump-animation");
-            //     document.querySelector("#box" + row + column).innerHTML = "";
-            //     document.querySelector("#box" + row + column).style.outline = "none";
-            //     document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
-            // }
-            if (column === 5) {
-                column = column - 1;
-                document.querySelector("#box" + row + column).classList.remove("pump-animation");
-                document.querySelector("#box" + row + column).innerHTML = "";
-                // document.querySelector("#box" + row + column).style.outline = "none";
-                // document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
-            }
-            else {
-                document.querySelector("#box" + row + column).classList.remove("pump-animation");
-                document.querySelector("#box" + row + column).style.outline = "none";
+            column = column === 5 ? column - 1 : column;
+
+            if (document.querySelector("#box" + row + column).innerHTML === "") {
+                document.querySelector("#box" + row + column).style.outline = "";
                 column = column > 0 ? column - 1 : column;
                 document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
+            else {
+                document.querySelector("#box" + row + column).innerHTML = "";
+            }
+            document.querySelector("#box" + row + column).classList.remove("pump-animation");
         }
 
         if (keypress.key === "Enter") {
@@ -135,7 +122,6 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
         }
-        console.log(column);
     }
 }
 
@@ -214,7 +200,6 @@ function clickElement (click) {
             reset();
         }
     }
-    console.log(column);
 }
 
 function reset() {
