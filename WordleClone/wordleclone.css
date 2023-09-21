@@ -100,6 +100,10 @@ body {
                     background-color:var(--box-color);
                 }
 
+                    #box00 {
+                        outline: var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight));
+                    }
+
             #answer-reveal {
                 position: absolute;
                 top: 0%;

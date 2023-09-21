@@ -17,27 +17,37 @@ function inputLetter (keypress) {
             document.querySelector("#box" + row + column).innerHTML = "";
             document.querySelector("#box" + row + column).innerHTML = keypress.key.toUpperCase();
 
-            if (column > 0) {
-                document.querySelector("#box" + row + (column - 1)).style.outline = "";
+            // if (column > 0) {
+            //     document.querySelector("#box" + row + (column - 1)).style.outline = "";
+            // }
+            if (column < 4) {
+                document.querySelector("#box" + row + column).style.outline = "none";
+                document.querySelector("#box" + row + (column + 1)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
-            document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
 
             column += 1;
         }
 
         if (keypress.key === "Backspace") {
-            if (column === 5 || document.querySelector("#box" + row + column).style.outline === "") {
-                column = column > 0 ? column - 1 : column;
+            // if (column === 5 || document.querySelector("#box" + row + column).style.outline === "none") {
+            //     column = column > 0 ? column - 1 : column;
+            //     document.querySelector("#box" + row + column).classList.remove("pump-animation");
+            //     document.querySelector("#box" + row + column).innerHTML = "";
+            //     document.querySelector("#box" + row + column).style.outline = "none";
+            //     document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
+            // }
+            if (column === 5) {
+                column = column - 1;
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
                 document.querySelector("#box" + row + column).innerHTML = "";
-                document.querySelector("#box" + row + column).style.outline = "";
-                document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
+                // document.querySelector("#box" + row + column).style.outline = "none";
+                // document.querySelector("#box" + row + (column > 0 ? column - 1 : column)).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
-            else { //for when clicks reassign the column
+            else {
                 document.querySelector("#box" + row + column).classList.remove("pump-animation");
-                document.querySelector("#box" + row + column).innerHTML = "";
-                document.querySelector("#box" + row + column).style.outline = "";
+                document.querySelector("#box" + row + column).style.outline = "none";
                 column = column > 0 ? column - 1 : column;
+                document.querySelector("#box" + row + column).innerHTML = "";
                 document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
         }
@@ -56,7 +66,7 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + "3").style.backgroundColor = "rgb(120, 223, 163)";
                 document.querySelector("#box" + row + "4").style.backgroundColor = "rgb(120, 223, 163)";
 
-                document.querySelector("#box" + row + (column - 1)).style.outline = "";
+                document.querySelector("#box" + row + (column - 1)).style.outline = "none";
 
                 buttonColorChange();
                 timeNow = Date.now();
@@ -95,7 +105,7 @@ function inputLetter (keypress) {
                 buttonColorChange();
 
                 if (row < 5) {
-                    document.querySelector("#box" + row + (column - 1)).style.outline = "";
+                    document.querySelector("#box" + row + (column - 1)).style.outline = "none";
 
                     row += 1;                  
                     column = 0;
@@ -103,7 +113,7 @@ function inputLetter (keypress) {
                     document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
                 }
                 else { //lose
-                    document.querySelector("#box" + row + (column - 1)).style.outline = "";
+                    document.querySelector("#box" + row + (column - 1)).style.outline = "none";
 
                     document.querySelector("#answer").innerHTML = answer;
                     document.querySelector("#answer-reveal").style.visibility = "visible";
@@ -117,7 +127,7 @@ function inputLetter (keypress) {
                 for (let i = 0; i < 5; i++) {
                     document.querySelector("#box" + row + i).classList.remove("pump-animation");
                     document.querySelector("#box" + row + i).innerHTML = "";
-                    document.querySelector("#box" + row + i).style.outline = "";
+                    document.querySelector("#box" + row + i).style.outline = "none";
                 }
 
                 column = 0;
@@ -125,6 +135,7 @@ function inputLetter (keypress) {
                 document.querySelector("#box" + row + column).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
             }
         }
+        console.log(column);
     }
 }
 
@@ -170,7 +181,7 @@ function clickElement (click) {
     if (activeEl.classList.contains("attempt" + row) && gameEnded === false) {
         for (let i = 0; i < 5; i++) { //clears the outline from non-active boxes
             document.querySelector("#box" + row + i).classList.remove("pump-animation");
-            document.querySelector("#box" + row + i).style.outline = "";
+            document.querySelector("#box" + row + i).style.outline = "none";
         }
         column = +activeEl.id[4];
         document.getElementById(activeEl.id).style.outline = "var(--focus-hover-color) solid min(4px, 4 * var(--responsiveWidth), 4 * var(--responsiveHeight))";
@@ -203,6 +214,7 @@ function clickElement (click) {
             reset();
         }
     }
+    console.log(column);
 }
 
 function reset() {
