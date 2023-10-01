@@ -17,8 +17,11 @@
 }
 
 @keyframes pump {/*pump animation for when letters is inputed or a box is selected*/
-    0% {}
     100% {transform: scale(110%);}
+}
+
+@keyframes bounce {
+    50% {transform: translateY(-5%);}
 }
 
 .pump-animation {
@@ -48,14 +51,10 @@ body {
         line-height: 2.5;
     }
 
-        h1 > span {
-            transition: transform .2s ease-out;
-        }
-
         h1 > span:hover {
             display: inline-block;
             color: var(--title-hover-color);
-            transform: translateY(-5%);
+            animation: bounce 1s infinite ease;
             line-height: 1.5;
             cursor: pointer;
         }
