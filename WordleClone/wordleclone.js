@@ -12,7 +12,7 @@ let darkModeCount = 1;
 
 function inputLetter (keypress) {
     if (gameEnded === false) {
-        if (/[a-z]/.test(keypress.key) && keypress.key.length === 1 && column < 5) { //filters out numbers + special characters + function keys
+        if (/[a-zA-Z]/.test(keypress.key) && keypress.key.length === 1 && column < 5) { //filters out numbers + special characters + function keys
             document.querySelector("#box" + row + column).classList.add("pump-animation");
             document.querySelector("#box" + row + column).innerHTML = keypress.key.toUpperCase();
 
