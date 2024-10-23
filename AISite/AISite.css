@@ -43,13 +43,13 @@ ul {
     }
 
 #Sec1 {
-    display: flex;
-    justify-content: flex-start;
     margin: 0 10px;
 }
 
-    #Sec1 > h2 {
-        
+    #Sec1slide {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
     }
 
 #Sec2 {
@@ -63,10 +63,14 @@ ul {
     }
 
 #Sec3 {
-    display: flex;
-    justify-content: flex-start;
     margin: 0 10px;
 }
+
+    #Sec3slide {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+    }
 
 #Sec4 {
     text-align: center;
