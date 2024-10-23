@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    height: 5em;
+    box-shadow: 0px 2px 8px grey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+    nav > ul > li{
+        display: inline-block;
+        padding: 10px;
+    }
+
+    nav > a {
+        font-size: 2em;
+    }
+
+#Hero {
+    background-image: url("Images/Hero Image.png");
+    height: 65.5vh;
+    background-size: cover;
+    position: relative;
+    z-index: -1;
+    color: white;
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+    #Hero > h1 {
+        margin-bottom: 90px;
+    }
+
+#Sec1 {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 10px;
+}
+
+    #Sec1 > h2 {
+        
+    }
+
+#Sec2 {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+    #Sec2\.1, #Sec2\.2, #Sec2\.3 {
+        text-align: left;
+    }
+
+#Sec3 {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0 10px;
+}
+
+#Sec4 {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+    #Sec4 > h1 {
+        margin: 10vh 0;
+    }
+
+footer {
+    background-color: black;
+    color: white;
+}
+
+    #NewsLetter {
+        text-align: center;
+        padding: 20px;
+    }
+
+        #NewsLetter > a {
+            display: inline-block;
+            margin-top: 30px;
+        }
+
+    #FooterLinks {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+        #FooterLinks h3 {
+            margin: 40px 0;
+        }
+
+        #ClientServices, #About, #Contact {
+            flex-basis: 100%;
+            margin: 0 40px;
+        }
+
+        #FooterLinks ul > li {
+            margin-bottom: 20px;
+        }
+
+        #Contact #ssmedia > svg {
+            margin-right: 30px;
+        } 
