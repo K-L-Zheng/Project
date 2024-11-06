@@ -49,7 +49,8 @@ ul {
     #Sec1slide {
         display: flex;
         flex-direction: row;
-        overflow-x: auto;
+        overflow-x: scroll;
+        scrollbar-width: none;
     }
 
 #Sec2 {
@@ -69,7 +70,8 @@ ul {
     #Sec3slide {
         display: flex;
         flex-direction: row;
-        overflow-x: auto;
+        overflow-x: scroll;
+        scrollbar-width: none;
     }
 
 #Sec4 {
